@@ -1,7 +1,7 @@
 import kotlin.io.path.absolutePathString
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.5.16-unstable"
+    id("dev.isxander.modstitch.base") version "0.8.5"
 }
 
 fun prop(name: String, consumer: (prop: String) -> Unit) {
@@ -23,6 +23,7 @@ modstitch {
     javaTarget = when (minecraft) {
         "1.20.1" -> 17
         "1.21.1" -> 21
+        "26.2" -> 25
         else -> throw IllegalArgumentException("Please store the java version for ${property("deps.minecraft")} in build.gradle.kts!")
     }
 
@@ -43,7 +44,7 @@ modstitch {
         modDescription = "Expands the fishing system and adds 100+ new fish."
         modLicense = "MPL-2.0"
 
-        fun <K, V> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
+        fun <K : Any, V: Any> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
             block()
         }
 
@@ -55,6 +56,7 @@ modstitch {
             put("pack_format", when (property("deps.minecraft")) {
                 "1.20.1" -> 15
                 "1.21.1" -> 34
+                "26.2" -> 88
                 else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
             }.toString())
             put("mc_version", minecraft)
@@ -65,7 +67,7 @@ modstitch {
     loom {
         // It's not recommended to store the Fabric Loader version in properties.
         // Make sure it's up to date.
-        fabricLoaderVersion = "0.17.0"
+        fabricLoaderVersion = "0.19.3"
 
         // Configure loom like normal in this block.
         configureLoom {
@@ -156,6 +158,19 @@ stonecutter {
 // use the modstitch.createProxyConfigurations(sourceSets["client"]) function.
 dependencies {
     modstitch.loom {
+        if (minecraft == "26.2") {
+                // fabric 26.2
+                modstitchModApi("me.shedaniel.cloth:cloth-config-fabric:15.0.140") { exclude("net.fabricmc.fabric-api") }
+                modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:0.152.x+26.2")
+                modstitchModImplementation("com.terraformersmc:modmenu:11.0.3")
+                modstitchModCompileOnly("dev.emi:trinkets:3.10.0")
+                modstitchModCompileOnly("curse.maven:fabric-seasons-413523:5789846")
+                modstitchModCompileOnly("curse.maven:serene-seasons-291874:6182595")
+                modstitchModCompileOnly("curse.maven:fishing-real-348834:6465669")
+                modstitchModCompileOnly("curse.maven:hybrid-aquatic-834427:7694020")
+                modstitchModCompileOnly("software.bernie.geckolib:geckolib-fabric-1.21.1:4.8.2")
+        }
+
         if (minecraft == "1.21.1") {
             // fabric 1.21.1
             modstitchModApi("me.shedaniel.cloth:cloth-config-fabric:15.0.140") { exclude("net.fabricmc.fabric-api") }

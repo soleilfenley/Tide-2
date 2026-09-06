@@ -18,15 +18,6 @@ modstitch {
 
     minecraftVersion = minecraft
 
-    // Alternatively use stonecutter.eval if you have a lot of versions to target.
-    // https://stonecutter.kikugie.dev/stonecutter/guide/setup#checking-versions
-    javaTarget = when (minecraft) {
-        "1.20.1" -> 17
-        "1.21.1" -> 21
-        "26.2" -> 25
-        else -> throw IllegalArgumentException("Please store the java version for ${property("deps.minecraft")} in build.gradle.kts!")
-    }
-
     // If parchment doesn't exist for a version yet, you can safely
     // omit the "deps.parchment" property from your versioned gradle.properties
     parchment {
@@ -71,60 +62,56 @@ modstitch {
 
         // Configure loom like normal in this block.
         configureLoom {
-            val aw = rootProject.file("src/main/resources/accesswideners/tide-$minecraft.accesswidener")
-            if (aw.exists()) accessWidenerPath = aw
+                val aw = rootProject.file("src/main/resources/accesswideners/tide-$minecraft.accesswidener")
+                if (aw.exists()) accessWidenerPath = aw
 
-            runs {
-                create("data") {
-                    client()
+                runs {
+                        create("data") {
+                        client()
 
-                    name = "Data Generation"
-                    runDir = "build/datagen"
+                        name = "Data Generation"
+                        runDir = "build/datagen"
 
-                    vmArg("-Dfabric-api.datagen")
-                    vmArg("-Dfabric-api.datagen.output-dir=" + project.rootDir.toPath().resolve("src/generated-$minecraft/resources"))
-                    vmArg("-Dfabric-api.datagen.modid=tide")
+                        vmArg("-Dfabric-api.datagen")
+                        vmArg("-Dfabric-api.datagen.output-dir=" + project.rootDir.toPath().resolve("src/generated-$minecraft/resources"))
+                        vmArg("-Dfabric-api.datagen.modid=tide")
+                        }
                 }
-            }
         }
     }
 
     // ModDevGradle (NeoForge, Forge, Forgelike)
+    val datagenPath =
+        if (isModDevGradleRegular) "src/generated-$minecraft/neoforge-resources"
+        else "src/generated-$minecraft/forge-resources"
+
     moddevgradle {
-        enable {
-            prop("deps.forge") { forgeVersion = it }
-            prop("deps.neoform") { neoFormVersion = it }
-            prop("deps.neoforge") { neoForgeVersion = it }
-            prop("deps.mcp") { mcpVersion = it }
-        }
+        prop("deps.forge") { forgeVersion = it }
+        prop("deps.neoform") { neoFormVersion = it }
+        prop("deps.neoforge") { neoForgeVersion = it }
+        prop("deps.mcp") { mcpVersion = it }
 
         // Configures client and server runs for MDG, it is not done by default
         defaultRuns()
 
         // This block configures the `neoforge` extension that MDG exposes by default,
         // you can configure MDG like normal from here
-        configureNeoforge {
-            validateAccessTransformers = false
+        configureNeoForge {
+            sourceSets["main"].resources.srcDir(file(datagenPath))
             val at = rootProject.file("src/main/resources/accesstransformers/$minecraft.cfg")
             if (at.exists()) accessTransformers.from(at)
+        }
+    }
 
-            runs.all {
-                disableIdeRun()
-            }
-
-            val datagenPath =
-                if (isModDevGradleRegular) "src/generated-$minecraft/neoforge-resources"
-                else "src/generated-$minecraft/forge-resources"
-            sourceSets["main"].resources.srcDir(file(datagenPath))
-
-            runs {
+    runs {
+            if (isModDevGradle) {
                 create("data") {
-                    data()
-                    programArguments.addAll("--mod", metadata.modId.get(), "--all",
-                        "--output", project.rootDir.toPath().resolve(datagenPath).absolutePathString())
+                        client()
+                        datagen = true
+                        programArgs.addAll("--mod", metadata.modId.get(), "--all",
+                        "--output", project.rootDir.toPath().resolve("src/generated-$minecraft/neoforge-resources").absolutePathString())
                 }
             }
-        }
     }
 
     mixin {
@@ -135,6 +122,7 @@ modstitch {
         configs.register("tide")
         if (isModDevGradle) configs.register("tide-neoforge")
     }
+
 }
 
 sourceSets["main"].resources.srcDir(file("src/generated-$minecraft/resources"))
@@ -160,15 +148,15 @@ dependencies {
     modstitch.loom {
         if (minecraft == "26.2") {
                 // fabric 26.2
-                modstitchModApi("me.shedaniel.cloth:cloth-config-fabric:15.0.140") { exclude("net.fabricmc.fabric-api") }
-                modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:0.152.x+26.2")
-                modstitchModImplementation("com.terraformersmc:modmenu:11.0.3")
-                modstitchModCompileOnly("dev.emi:trinkets:3.10.0")
+                modstitchModApi("me.shedaniel.cloth:cloth-config-fabric:26.2.155") { exclude("net.fabricmc.fabric-api") }
+                modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:0.157.0+26.2")
+                modstitchModImplementation("com.terraformersmc:modmenu:20.0.0-beta.2")
+                modstitchModCompileOnly("eu.pb4:trinkets:4.1.0-beta.3+26.2")
                 modstitchModCompileOnly("curse.maven:fabric-seasons-413523:5789846")
                 modstitchModCompileOnly("curse.maven:serene-seasons-291874:6182595")
                 modstitchModCompileOnly("curse.maven:fishing-real-348834:6465669")
                 modstitchModCompileOnly("curse.maven:hybrid-aquatic-834427:7694020")
-                modstitchModCompileOnly("software.bernie.geckolib:geckolib-fabric-1.21.1:4.8.2")
+                modstitchModCompileOnly("com.geckolib:geckolib-fabric-26.2:5.5.4")
         }
 
         if (minecraft == "1.21.1") {

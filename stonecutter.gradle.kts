@@ -24,12 +24,14 @@ allprojects {
         maven("https://maven.theillusivec4.top/")
         maven("https://cursemaven.com")
         maven("https://api.modrinth.com/maven")
+        maven("https://maven.nucleoid.xyz/releases")
         exclusiveContent {
             forRepository {
                 maven("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
             }
             filter {
                 includeGroup("software.bernie.geckolib")
+                includeGroup("com.geckolib")
                 includeGroup("com.eliotlash.mclib")
             }
         }

@@ -45,7 +45,7 @@ stonecutter {
 
         // This is the default target.
         // https://stonecutter.kikugie.dev/stonecutter/guide/setup#settings-settings-gradle-kts
-        vcsVersion = "1.21.1-fabric"
+        vcsVersion = "26.2-fabric"
     }
 }
 

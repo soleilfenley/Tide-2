@@ -10,7 +10,11 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.resources.ResourceLocation;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 import net.minecraft.world.InteractionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,15 +60,26 @@ public class Tide {
     public static TideServerConfig SERVER_CONFIG;
 
     public static TideFishingManager FISHING_MANAGER;
-
-    public static ResourceLocation resource(String path) {
+    //? if >=26.2 {
+    public static Identifier resource(String path) {
         return resource(MOD_ID, path);
     }
-
-    public static ResourceLocation resource(String namespace, String path) {
-        /*? if >=1.21 {*/ return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    //?} else {
+    /*public static ResourceLocation resource(String path) {
+        return resource(MOD_ID, path);
+    }
+    *///?}
+    //? if >=26.2 {
+    public static Identifier resource(String namespace, String path) {
+        /*? if >=1.21 {*/ return Identifier.fromNamespaceAndPath(namespace, path);
         /*?} else*/ /*return new ResourceLocation(namespace, path);*/
     }
+    //?} else {
+    /*public static ResourceLocation resource(String namespace, String path) {
+        /^? if >=1.21 {^/ return ResourceLocation.fromNamespaceAndPath(namespace, path);
+        /^?} else^/ /^return new ResourceLocation(namespace, path);^/
+    }
+    *///?}
 
     public static void initialize() {
         Tide.setupConfigs();

@@ -6,13 +6,25 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class TideToasts {
     // TODO: maybe make some custom art for this?
-    /*? if >=1.21*/private static final ResourceLocation TEXTURE = Tide.resource("minecraft", "toast/recipe");
+    //? if >=26.2 {
+    private static final Identifier TEXTURE = Tide.resource("minecraft", "toast/recipe");
+    //?} else {
+    /*
+    private static final ResourceLocation TEXTURE = Tide.resource("minecraft", "toast/recipe");
+    */
+    //?}
 
     public static void display(Toast toast) {
         Minecraft.getInstance().getToasts().addToast(toast);

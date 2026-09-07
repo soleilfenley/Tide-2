@@ -6,15 +6,28 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 
 import java.util.function.Function;
 
 public abstract class TideRenderTypes {
+        //? if >=26.2 {
+    private static final Function<Identifier, RenderType> FULL_WHITE_RENDER_TYPE;
+    private static final Function<Identifier, RenderType> FULL_WHITE_ITEM_RENDER_TYPE;
+    private static final RenderStateShard.ShaderStateShard FULL_WHITE_SHADER;
+    private static final RenderStateShard.ShaderStateShard FULL_WHITE_ITEM_SHADER;
+        //?} else {
+        /*
     private static final Function<ResourceLocation, RenderType> FULL_WHITE_RENDER_TYPE;
     private static final Function<ResourceLocation, RenderType> FULL_WHITE_ITEM_RENDER_TYPE;
     private static final RenderStateShard.ShaderStateShard FULL_WHITE_SHADER;
-    private static final RenderStateShard.ShaderStateShard FULL_WHITE_ITEM_SHADER;
+    private static final RenderStateShard.ShaderStateShard FULL_WHITE_ITEM_SHADER; 
+        */
+        //?}
 
     static {
         FULL_WHITE_SHADER = new RenderStateShard.ShaderStateShard(TideCoreShaders::fullWhite);
@@ -45,11 +58,17 @@ public abstract class TideRenderTypes {
                         .createCompositeState(false))
         );
     }
-
+    //? if >=26.2 {
+    public static RenderType singleColor(Identifier location) {
+        return FULL_WHITE_RENDER_TYPE.apply(location);
+    }
+    //?} else {
+    /*
     public static RenderType singleColor(ResourceLocation location) {
         return FULL_WHITE_RENDER_TYPE.apply(location);
     }
-
+    */
+    //?}
     @SuppressWarnings("deprecation")
     public static RenderType singleColorItem() {
         return FULL_WHITE_ITEM_RENDER_TYPE.apply(TextureAtlas.LOCATION_BLOCKS);

@@ -5,7 +5,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
@@ -32,7 +38,13 @@ public class FishingHookItem extends AbstractTooltipItem {
         tooltip.accept(Component.translatable(description).setStyle(blue));
     }
 
+    //? if >=26.2 {
+    public static Identifier getTexture(ItemStack stack) {
+    //?} else {
+    /*
     public static ResourceLocation getTexture(ItemStack stack) {
+    */
+    //?}
         return Tide.resource("textures/entity/fishing_hook/" + BuiltInRegistries.ITEM
                 .getKey(stack.getItem()).getPath() + ".png");
     }

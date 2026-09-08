@@ -4,7 +4,13 @@ import com.li64.tide.data.SendableDataMap;
 import com.li64.tide.data.fishing.FishData;
 import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +40,13 @@ public class FishDataLoader extends LayeredDataLoader<FishData> {
         FishData.buildMaps();
     }
 
+    //? if >=26.2 {
+    public Map<Identifier, FishData> acceptGenerated(Map<Identifier, FishData> entries) {
+    //?} else {
+    /*
     public Map<ResourceLocation, FishData> acceptGenerated(Map<ResourceLocation, FishData> entries) {
+    */
+    //?}
         this.hasGenerated = true;
         this.data = SendableDataMap.merge(this.data, entries);
         return entries;

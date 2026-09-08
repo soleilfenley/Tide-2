@@ -15,7 +15,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
@@ -35,7 +41,13 @@ import java.util.Map;
 public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> implements RenderLayerParent<TideFishingHook, TideFishingHookModel<TideFishingHook>> {
     private final TideFishingHookModel<TideFishingHook> model;
     private final TideFishingBobberLayer bobberLayer;
+    //? if >=26.2 {
+    private static final Identifier HOOK_TEX_LOCATION = Tide.resource("textures/entity/fishing_hook/fishing_hook.png");
+    //?} else {
+    /*
     private static final ResourceLocation HOOK_TEX_LOCATION = Tide.resource("textures/entity/fishing_hook/fishing_hook.png");
+    */
+    //?}
 
     public static final Map<Item, Vec2> OFFSETS = Map.of(
             TideItems.STONE_FISHING_ROD, new Vec2(0.05f, -0.1f),
@@ -197,9 +209,21 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
     }
 
     @Override
+    //? if >=26.2 {
+    public @NotNull Identifier getTextureLocation(@NotNull TideFishingHook hookEntity) {
+    //?} else {
+    /*
     public @NotNull ResourceLocation getTextureLocation(@NotNull TideFishingHook hookEntity) {
+    */
+    //?}
         if (!allowModifiers()) return HOOK_TEX_LOCATION;
+        //? if >=26.2 {
         return FishingHookItem.getTexture(hookEntity.getHook());
+        //?} else {
+        /*
+        return FishingHookItem.getTexture(hookEntity.getHook());
+        */
+        //?}
     }
 
     /** Override this to disable bobber, hook, and line modifiers */

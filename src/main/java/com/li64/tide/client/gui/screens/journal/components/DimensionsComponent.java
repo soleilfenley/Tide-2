@@ -10,14 +10,26 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class DimensionsComponent extends ProfileComponent {
+        //? if >=26.2 {
+    private static final Identifier DIMENSIONS = Tide.resource("textures/gui/journal/dimensions.png");
+        //?} else {
+        /*
     private static final ResourceLocation DIMENSIONS = Tide.resource("textures/gui/journal/dimensions.png");
+        */
+        //?}
     private static final Component TITLE = Component.translatable("journal.info.dimensions.title");
 
     public List<ResourceKey<Level>> dimensions;

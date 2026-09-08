@@ -12,7 +12,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,11 +63,18 @@ public class TideUtils {
                 TideUtils.removeRawTextInName(stack.getHoverName()),
                 stack), player);
     }
-
-    public static Item itemFromLocation(ResourceLocation location) {
-        return BuiltInRegistries.ITEM.getOptional(location).orElse(
-                BuiltInRegistries.ITEM.get(BuiltInRegistries.ITEM.getKey(Items.AIR)));
-    }
+        //? if >=26.2 {
+        public static Item itemFromLocation(Identifier location) {
+                return BuiltInRegistries.ITEM.getOptional(location).orElse(Items.AIR);
+        }
+        //?} else {
+        /*
+        public static Item itemFromLocation(ResourceLocation location) {
+                return BuiltInRegistries.ITEM.getOptional(location).orElse(
+                        BuiltInRegistries.ITEM.get(BuiltInRegistries.ITEM.getKey(Items.AIR)));
+        }
+        */
+        //?}
 
     public static Optional<FishData> getStrongest(List<ItemStack> hookedItems) {
         float bestStrength = 0.0f;
@@ -170,19 +183,40 @@ public class TideUtils {
         }
         return String.format("%02d:%02d", hour, minute);
     }
-
+    //? if >=26.2 {
+    public static Identifier sprite(String path) {
+    //?} else {
+    /*
     public static ResourceLocation sprite(String path) {
+    */
+    //?}
         /*? if >=1.21 {*/ return Tide.resource(path);
         /*?} else*//*return Tide.resource("textures/gui/sprites/" + path + ".png");*/
     }
 
+    //? if >=26.2 {
+    public static Identifier holderId(Holder<Item> holder) {
+        return holder.unwrap().map(ResourceKey::identifier, BuiltInRegistries.ITEM::getKey);
+    }
+    //?} else {
+    /*
     public static ResourceLocation holderId(Holder<Item> holder) {
         return holder.unwrap().map(ResourceKey::location, BuiltInRegistries.ITEM::getKey);
     }
+    */
+    //?}
 
+    //? if >=26.2 {
+    public static long getTimeOfDay(ServerLevel level) {
+        return level.getOverworldClockTime() % 24000;
+    }
+    //?} else {
+    /*
     public static long getTimeOfDay(ServerLevel level) {
         return level.getDayTime() % 24000;
     }
+    */
+    //?}
 
     //? if >=1.21 {
     public static LootTable getLootTable(ResourceKey<LootTable> key, MinecraftServer server) {

@@ -8,7 +8,13 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -21,21 +27,39 @@ public class FabricNetworkPlatform implements NetworkPlatform {
     public ArrayList<ClientMsgRegistration<? extends CustomPacketPayload>> clientMessages = new ArrayList<>();
 
     @Override
+    //? if >=26.2 {
+    public <T extends CustomPacketPayload> void registerClientBoundPacket(Class<T> msgClass, Identifier id, BiConsumer<T, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, T> decoder, BiConsumer<T, Player> handler) {
+    //?} else {
+    /*
     public <T extends CustomPacketPayload> void registerClientBoundPacket(Class<T> msgClass, ResourceLocation id, BiConsumer<T, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, T> decoder, BiConsumer<T, Player> handler) {
+    */
+    //?}
         CustomPacketPayload.Type<T> type = this.idToType(id);
         PayloadTypeRegistry.playS2C().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
         clientMessages.add(new ClientMsgRegistration<>(type, handler));
     }
 
     @Override
+    //? if >=26.2 {
+    public <T extends CustomPacketPayload> void registerServerBoundPacket(Class<T> msgClass, Identifier id, BiConsumer<T, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, T> decoder, BiConsumer<T, Player> handler) {
+    //?} else {
+    /*
     public <T extends CustomPacketPayload> void registerServerBoundPacket(Class<T> msgClass, ResourceLocation id, BiConsumer<T, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, T> decoder, BiConsumer<T, Player> handler) {
+    */
+    //?}
         CustomPacketPayload.Type<T> type = this.idToType(id);
         PayloadTypeRegistry.playC2S().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
         ServerPlayNetworking.registerGlobalReceiver(type, (payload, context) ->
                 context.player().server.execute(() -> handler.accept(payload, context.player())));
     }
 
+    //? if >=26.2 {
+    private <T extends CustomPacketPayload> CustomPacketPayload.Type<T> idToType(Identifier id) {
+    //?} else {
+    /*
     private <T extends CustomPacketPayload> CustomPacketPayload.Type<T> idToType(ResourceLocation id) {
+    */
+    //?}
         return (CustomPacketPayload.Type<T>) TideMessages.ID_TO_TYPE.computeIfAbsent(id, CustomPacketPayload.Type::new);
     }
 

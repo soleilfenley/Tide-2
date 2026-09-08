@@ -26,7 +26,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -132,7 +138,13 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
     }
 
     public static Optional<FishData> get(EntityType<?> entityType) {
+            //? if >=26.2 {
+        Identifier key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+            //?} else {
+            /*
         ResourceLocation key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+            */
+            //?}
         return BuiltInRegistries.ITEM.getOptional(key).flatMap(FishData::get);
     }
 
@@ -268,7 +280,13 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
 
         public Builder fish(Item fish) {
             this.fish = BuiltInRegistries.ITEM.wrapAsHolder(fish);
+            //? if >=26.2 {
+            Identifier key = BuiltInRegistries.ITEM.getKey(fish);
+            //?} else {
+            /*
             ResourceLocation key = BuiltInRegistries.ITEM.getKey(fish);
+            */
+            //?}
             return this.journalDescription("journal.description." + key.getNamespace() + "." + key.getPath());
         }
 
@@ -416,7 +434,13 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
         public Builder displayData(Consumer<DisplayData.Builder> modifiers) {
             DisplayData.Builder builder = DisplayData.builder();
             if (this.fish instanceof Holder.Reference<Item>) {
+                    //? if >=26.2 {
+                Identifier id = TideUtils.holderId(this.fish);
+                    //?} else {
+                    /*
                 ResourceLocation id = TideUtils.holderId(this.fish);
+                    */
+                    //?}
                 builder.entityType(ResourceKey.create(Registries.ENTITY_TYPE, id));
             }
             else builder.entityType(BuiltInRegistries.ENTITY_TYPE.get(TideUtils.holderId(this.fish)));

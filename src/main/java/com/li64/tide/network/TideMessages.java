@@ -5,13 +5,25 @@ import com.li64.tide.loaders.NetworkPlatform;
 import com.li64.tide.network.messages.*;
 //? if >=1.21 {
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import java.util.HashMap;
 import java.util.Map;
 //?}
 
 public class TideMessages {
-    /*? if >=1.21*/public static final Map<ResourceLocation, CustomPacketPayload.Type<? extends CustomPacketPayload>> ID_TO_TYPE = new HashMap<>();
+        //? if >=26.2 {
+        //?} elif >=1.21 {
+        /*
+        public static final Map<ResourceLocation, CustomPacketPayload.Type<? extends CustomPacketPayload>> ID_TO_TYPE = new HashMap<>();
+        */
+        //?} else {
+        //?}
 
     public static void init(NetworkPlatform network) {
         network.registerClientBoundPacket(OpenJournalMsg.class, OpenJournalMsg.ID, OpenJournalMsg::encode, OpenJournalMsg::new, OpenJournalMsg::handle);

@@ -5,13 +5,25 @@ import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class MoonPhaseComponent extends ProfileComponent {
+        //? if >=26.2 {
+    private static final Identifier MOON_PHASES = Tide.resource("textures/gui/journal/moon_phases.png");
+        //?} else {
+        /*
     private static final ResourceLocation MOON_PHASES = Tide.resource("textures/gui/journal/moon_phases.png");
+        */
+        //?}
     private static final Component TITLE = Component.translatable("journal.info.moon_phase.title");
 
     public List<Integer> phases;

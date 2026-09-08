@@ -6,13 +6,25 @@ import com.li64.tide.data.fishing.conditions.types.WeatherType;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class WeatherComponent extends ProfileComponent {
+        //? if >=26.2 {
+    private static final Identifier ICONS = Tide.resource("textures/gui/journal/weather.png");
+        //?} else {
+        /*
     private static final ResourceLocation ICONS = Tide.resource("textures/gui/journal/weather.png");
+        */
+        //?}
     private static final Component TITLE = Component.translatable("journal.info.weather.title");
 
     public List<WeatherType> weatherTypes;

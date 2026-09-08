@@ -26,7 +26,13 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -40,15 +46,28 @@ import java.util.stream.Collectors;
 public class FishingJournal extends Screen {
     public static final int TEXT_COLOR = 0xc09473;
 
-    static final ResourceLocation BACKGROUND = Tide.resource("textures/gui/journal/journal_bg.png");
     static final int BG_WIDTH = 400;
     static final int BG_HEIGHT = 260;
+    
+    //? if >=26.2 {
+    static final Identifier BACKGROUND = Tide.resource("textures/gui/journal/journal_bg.png");
+
+    static final Identifier LINE_TOP = TideUtils.sprite("journal/line_top");
+    static final Identifier LINE_BOTTOM = TideUtils.sprite("journal/line_bottom");
+
+    static final Identifier FISHY_NOTE_ICON = Tide.resource("textures/gui/journal/fishy_note_icon.png");
+    static final Identifier FISHY_NOTE_ICON_SELECTED = Tide.resource("textures/gui/journal/fishy_note_icon_selected.png");
+    //?} else {
+    /*
+    static final ResourceLocation BACKGROUND = Tide.resource("textures/gui/journal/journal_bg.png");
 
     static final ResourceLocation LINE_TOP = TideUtils.sprite("journal/line_top");
     static final ResourceLocation LINE_BOTTOM = TideUtils.sprite("journal/line_bottom");
 
     static final ResourceLocation FISHY_NOTE_ICON = Tide.resource("textures/gui/journal/fishy_note_icon.png");
     static final ResourceLocation FISHY_NOTE_ICON_SELECTED = Tide.resource("textures/gui/journal/fishy_note_icon_selected.png");
+    */
+    //?}
 
     private static final int AREA_HEIGHT = 190;
     private static final int CELL_SIZE = 22;
@@ -385,7 +404,13 @@ public class FishingJournal extends Screen {
         for (int[] off : offs) renderItemSilhouette(graphics, stack, x + off[0], y + off[1]);
     }
 
+    //? if >=26.2 {
+    public static void renderTextureSilhouette(GuiGraphics graphics, Identifier texture, int x, int y, int w, int h) {
+    //?} else {
+    /*
     public static void renderTextureSilhouette(GuiGraphics graphics, ResourceLocation texture, int x, int y, int w, int h) {
+    */
+    //?}
         RenderSystem.setShaderTexture(0, texture);
         RenderSystem.setShader(TideCoreShaders::fullWhite);
         Matrix4f pose = graphics.pose().last().pose();

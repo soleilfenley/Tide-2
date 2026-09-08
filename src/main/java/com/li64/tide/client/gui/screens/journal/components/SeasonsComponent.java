@@ -6,13 +6,25 @@ import com.li64.tide.compat.seasons.Season;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class SeasonsComponent extends ProfileComponent {
+        //? if >=26.2 {
+    private static final Identifier SEASONS = Tide.resource("textures/gui/journal/seasons.png");
+        //?} else {
+        /*
     private static final ResourceLocation SEASONS = Tide.resource("textures/gui/journal/seasons.png");
+        */
+        //?}
     private static final Component TITLE = Component.translatable("journal.info.seasons.title");
 
     public List<Season> seasons;

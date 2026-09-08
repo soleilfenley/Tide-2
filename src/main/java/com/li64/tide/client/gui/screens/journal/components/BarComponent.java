@@ -4,12 +4,26 @@ import com.li64.tide.Tide;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
 public abstract class BarComponent extends ProfileComponent {
+        //? if >=26.2 {
+    protected static final Identifier EMPTY_BAR = Tide.resource("textures/gui/journal/empty_bar.png");
+    protected static final Identifier DIVIDER = Tide.resource("textures/gui/journal/bar_divider.png");
+    protected static final Identifier CURSOR = Tide.resource("textures/gui/journal/bar_cursor.png");
+        //?} else {
+        /*
     protected static final ResourceLocation EMPTY_BAR = Tide.resource("textures/gui/journal/empty_bar.png");
     protected static final ResourceLocation DIVIDER = Tide.resource("textures/gui/journal/bar_divider.png");
     protected static final ResourceLocation CURSOR = Tide.resource("textures/gui/journal/bar_cursor.png");
+        */
+        //?}
     protected static final int BAR_WIDTH = 129;
     protected static final int BAR_HEIGHT = 9;
     protected static final int BAR_X = 22;
@@ -17,7 +31,13 @@ public abstract class BarComponent extends ProfileComponent {
     protected static final int DIV_WIDTH = 3;
     protected static final int DIV_HEIGHT = 11;
 
+    //? if >=26.2 {
+    protected void renderFilledBar(Identifier bar, GuiGraphics graphics,
+    //?} else {
+    /*
     protected void renderFilledBar(ResourceLocation bar, GuiGraphics graphics,
+    */
+    //?}
                                    int x, int y, float min, float max) {
         int minX = Math.max((int)(min * BAR_WIDTH), 0);
         int maxX = Math.min((int)(max * BAR_WIDTH), BAR_WIDTH);

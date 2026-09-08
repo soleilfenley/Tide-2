@@ -6,12 +6,24 @@ import com.li64.tide.util.TideUtils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class TemperatureComponent extends BarComponent {
+        //? if >=26.2 {
+    private static final Identifier TEMP_BAR = Tide.resource("textures/gui/journal/temp_bar.png");
+        //?} else {
+        /*
     private static final ResourceLocation TEMP_BAR = Tide.resource("textures/gui/journal/temp_bar.png");
+        */
+        //?}
     private static final Component TITLE = Component.translatable("journal.info.climate.title");
 
     private final float minTemp;

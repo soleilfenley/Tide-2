@@ -4,7 +4,13 @@ import com.li64.tide.Tide;
 import com.li64.tide.registries.entities.misc.fishing.TideFishingHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -12,10 +18,22 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class WaterMedium implements FishingMedium {
-    private final ResourceLocation id = Tide.resource("water");
+        //? if >=26.2 {
+        private final Identifier id = Tide.resource("water");
+        //?} else {
+        /*
+        private final ResourceLocation id = Tide.resource("water");
+        */
+        //?}
 
     @Override
+    //? if >=26.2 {
+    public Identifier id() {
+    //?} else {
+    /*
     public ResourceLocation id() {
+    */
+    //?}
         return id;
     }
 

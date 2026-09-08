@@ -10,7 +10,13 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -45,7 +51,13 @@ public class FabricPlatform implements LoaderPlatform {
     }
 
     @Override
+    //? if >=26.2 {
+    public <T> T register(Registry<? super T> registry, Identifier id, T toRegister) {
+    //?} else {
+    /*
     public <T> T register(Registry<? super T> registry, ResourceLocation id, T toRegister) {
+    */
+    //?}
         return Registry.register(registry, id, toRegister);
     }
 
@@ -56,7 +68,13 @@ public class FabricPlatform implements LoaderPlatform {
 
     //? if >=1.21 {
     @Override
+    //? if >=26.2 {
+    public <T> Holder.Reference<T> registerForHolder(Registry<T> registry, Identifier id, T toRegister) {
+    //?} else {
+    /*
     public <T> Holder.Reference<T> registerForHolder(Registry<T> registry, ResourceLocation id, T toRegister) {
+    */
+    //?}
         return Registry.registerForHolder(registry, id, toRegister);
     }
     //?}

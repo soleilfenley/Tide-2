@@ -9,7 +9,13 @@ import com.li64.tide.data.loaders.LayeredDataLoader;
 import com.li64.tide.data.rods.AccessoryData;
 import com.li64.tide.data.rods.BaitData;
 import net.minecraft.network.FriendlyByteBuf;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 
 import java.util.ArrayList;
@@ -30,9 +36,17 @@ public class TideData {
         return loader;
     }
 
+    //? if >=26.2 {
+    public static void onRegisterReloadListeners(BiConsumer<Identifier, PreparableReloadListener> registry) {
+        LOADERS.forEach(loader -> registry.accept(loader.getDirectory(), loader));
+    }
+    //?} else {
+    /*
     public static void onRegisterReloadListeners(BiConsumer<ResourceLocation, PreparableReloadListener> registry) {
         LOADERS.forEach(loader -> registry.accept(loader.getDirectory(), loader));
     }
+    */
+    //?}
 
     public static void readFromPacket(FriendlyByteBuf buf) {
         LOADERS.forEach(loader -> loader.decode(buf));

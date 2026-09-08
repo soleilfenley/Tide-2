@@ -16,7 +16,13 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +45,13 @@ public class TideFishDataProvider extends SimpleDataProvider<FishData> {
         TideFish.DATA_BUILDERS.forEach((item, constructor) -> {
             FishData.Builder builder = FishData.builder();
             constructor.accept(builder.fish(item));
+            //? if >=26.2 {
+            Identifier itemKey = BuiltInRegistries.ITEM.getKey(item);
+            //?} else {
+            /*
             ResourceLocation itemKey = BuiltInRegistries.ITEM.getKey(item);
+            */
+            //?}
             if (TideFish.ENTITY_DATA.containsKey(itemKey.getPath())) {
                 // add bucket item
                 builder.bucket(BuiltInRegistries.ITEM.get(itemKey.withSuffix("_bucket")));

@@ -15,7 +15,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,8 +29,15 @@ import java.util.List;
 import java.util.Random;
 
 public class FishyNoteScreen extends Screen {
+        //? if >=26.2 {
+    private static final Identifier BG = Tide.resource("textures/gui/journal/fishy_note.png");
+    private static final Identifier CHECKMARK = Tide.resource("textures/gui/journal/checkmark.png");
+        //?} else {
+        /*
     private static final ResourceLocation BG = Tide.resource("textures/gui/journal/fishy_note.png");
     private static final ResourceLocation CHECKMARK = Tide.resource("textures/gui/journal/checkmark.png");
+        */
+        //?}
     public static final int WIDTH = 200;
     public static final int HEIGHT = 230;
 

@@ -6,7 +6,13 @@ import com.li64.tide.data.fishing.conditions.FishingConditionType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.Registries;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
@@ -20,21 +26,39 @@ public class BiomeWhitelistCondition extends FishingCondition {
     ).apply(instance, BiomeWhitelistCondition::fromData));
 
     private final List<TagKey<Biome>> tags;
+    //? if >=26.2 {
+    private final List<Identifier> biomes;
+    //?} else {
+    /*
     private final List<ResourceLocation> biomes;
+    */
+    //?}
 
     private static BiomeWhitelistCondition fromData(List<ExtraCodecs.TagOrElementLocation> data) {
         List<TagKey<Biome>> tags = data.stream()
                 .filter(ExtraCodecs.TagOrElementLocation::tag)
                 .map(entry -> TagKey.create(Registries.BIOME, entry.id()))
                 .toList();
+        //? if >=26.2 {
+        List<Identifier> biomes = data.stream()
+        //?} else {
+        /*
         List<ResourceLocation> biomes = data.stream()
+        */
+        //?}
                 .filter(entry -> !entry.tag())
                 .map(ExtraCodecs.TagOrElementLocation::id)
                 .toList();
         return new BiomeWhitelistCondition(tags, biomes);
     }
 
+    //? if >=26.2 {
+    public BiomeWhitelistCondition(List<TagKey<Biome>> tags, List<Identifier> biomes) {
+    //?} else {
+    /*
     public BiomeWhitelistCondition(List<TagKey<Biome>> tags, List<ResourceLocation> biomes) {
+    */
+    //?}
         this.tags = tags;
         this.biomes = biomes;
     }

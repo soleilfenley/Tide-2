@@ -5,19 +5,31 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public record ClientFishingRodTooltip(int slots, BaitContents contents) implements ClientTooltipComponent {
-    private static final ResourceLocation SLOT_BACKGROUND_SPRITE = TideUtils.sprite("bait/slot_background");
-    private static final Component MESSAGE = Component.translatable("text.tide.rod_tooltip.bait_desc");
-    private static final int OFFSET_Y = 10;
-    private static final int MARGIN_Y = 4;
-    private static final int BG_BORDER = 1;
-    private static final int SLOT_SIZE_X = 20;
-    private static final int SLOT_SIZE_Y = 20;
+        //? if >=26.2 {
+        private static final Identifier SLOT_BACKGROUND_SPRITE = TideUtils.sprite("bait/slot_background");
+        //?} else {
+        /*
+        private static final ResourceLocation SLOT_BACKGROUND_SPRITE = TideUtils.sprite("bait/slot_background");
+        */
+        //?}
+        private static final Component MESSAGE = Component.translatable("text.tide.rod_tooltip.bait_desc");
+        private static final int OFFSET_Y = 10;
+        private static final int MARGIN_Y = 4;
+        private static final int BG_BORDER = 1;
+        private static final int SLOT_SIZE_X = 20;
+        private static final int SLOT_SIZE_Y = 20;
 
     @Override
     public int getHeight() {

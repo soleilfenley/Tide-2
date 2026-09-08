@@ -63,7 +63,13 @@ public class DimensionsComponent extends ProfileComponent {
             graphics.blit(DIMENSIONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10);
 
             if (mouseX >= spriteX && mouseX <= spriteX + 10 && mouseY >= spriteY && mouseY <= spriteY + 10)
-                graphics.renderTooltip(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).location().getPath()), mouseX, mouseY);
+            //? if >=26.2 {
+            graphics.renderTooltip(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).identifier().getPath()), mouseX, mouseY);
+            //?} else {
+            /*
+            graphics.renderTooltip(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).location().getPath()), mouseX, mouseY);
+            */
+            //?}
         }
     }
 

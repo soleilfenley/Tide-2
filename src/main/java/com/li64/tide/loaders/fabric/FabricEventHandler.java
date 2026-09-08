@@ -120,13 +120,16 @@ public class FabricEventHandler {
             ));
         });
 
-        //? if >=1.21 {
+        //? if >=26.2 {
         LootTableEvents.ALL_LOADED.register((resourceManager, registry) ->
-                FishData.VANILLA_FISH_TABLE = registry.get(BuiltInLootTables.FISHING_FISH.location()));
+                FishData.VANILLA_FISH_TABLE = registry.get(BuiltInLootTables.FISHING_FISH.identifier()).map(net.minecraft.core.Holder.Reference::value).orElse(null));
+        //?} elif >=1.21 {
+        /*LootTableEvents.ALL_LOADED.register((resourceManager, registry) ->
+                FishData.VANILLA_FISH_TABLE = registry.get(BuiltInLootTables.FISHING_FISH.location()));*/
         //?} else {
         /*LootTableEvents.ALL_LOADED.register((resourceManager, lootDataManager) ->
-                FishData.VANILLA_FISH_TABLE = lootDataManager.getLootTable(BuiltInLootTables.FISHING_FISH));
-        *///?}
+                FishData.VANILLA_FISH_TABLE = lootDataManager.getLootTable(BuiltInLootTables.FISHING_FISH));*/
+        //?}
     }
 }
 //?}

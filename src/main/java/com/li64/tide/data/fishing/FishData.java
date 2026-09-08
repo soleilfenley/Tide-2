@@ -460,9 +460,15 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
         }
 
         public Builder journalAltSprite(int size) {
-            ResourceLocation location = this.fish.unwrap().map(ResourceKey::location, BuiltInRegistries.ITEM::getKey);
-            this.profile.altSprite(location.withPath(path -> "textures/item/" + path + "_full.png"), size);
-            return this;
+                //? if >=26.2 {
+                Identifier location = this.fish.unwrap().map(ResourceKey::identifier, BuiltInRegistries.ITEM::getKey);
+                //?} else {
+                /*
+                ResourceLocation location = this.fish.unwrap().map(ResourceKey::location, BuiltInRegistries.ITEM::getKey);
+                */
+                //?}
+                this.profile.altSprite(location.withPath(path -> "textures/item/" + path + "_full.png"), size);
+                return this;
         }
 
         public Builder journalRarity(FishRarity rarity) {
@@ -480,14 +486,26 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
             return this;
         }
 
+        //? if >=26.2 {
+        public void build(Identifier path, SimpleDataOutput<FishData> output) {
+        //?} else {
+        /*
         public void build(ResourceLocation path, SimpleDataOutput<FishData> output) {
+        */
+        //?}
             output.accept(path, build());
         }
 
         public void build(String group, SimpleDataOutput<FishData> output) {
-            ResourceLocation key = TideUtils.holderId(this.fish);
-            output.accept(Tide.resource(key.getNamespace().replace('-', '_'),
-                    group + "/" + key.getPath()), build());
+                //? if >=26.2 {
+                Identifier key = TideUtils.holderId(this.fish);
+                //?} else {
+                /*
+                ResourceLocation key = TideUtils.holderId(this.fish);
+                */
+                //?}
+                output.accept(Tide.resource(key.getNamespace().replace('-', '_'),
+                        group + "/" + key.getPath()), build());
         }
 
         public void build(SimpleDataOutput<FishData> output) {
@@ -516,8 +534,15 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
         }
     }
 
+    //? if >=26.2 {
+    public static Map<Identifier, FishData> createGeneratedFishData() {
+        Map<Identifier, FishData> entries = new HashMap<>();
+    //?} else {
+    /*
     public static Map<ResourceLocation, FishData> createGeneratedFishData() {
         Map<ResourceLocation, FishData> entries = new HashMap<>();
+    */
+    //?}
         if (VANILLA_FISH_TABLE == null || VANILLA_FISH_TABLE == LootTable.EMPTY) {
             Tide.LOG.error("Failed to find vanilla fishing loot table during post-process! Some compat functionality may not be present.");
             return entries;
@@ -526,7 +551,13 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
             for (LootPoolEntryContainer container : pool.entries) {
                 if (!(container instanceof LootItem lootItem)) continue;
                 Item item = lootItem.item/*? if >=1.21 {*/.value()/*?}*/;
+                //? if >=26.2 {
+                Identifier key = BuiltInRegistries.ITEM.getKey(item);
+                //?} else {
+                /*
                 ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
+                */
+                //?}
                 if (Tide.SERVER_CONFIG.general.autoFishDataBlacklist.contains(key.toString()) || get(item).isPresent()) continue;
                 Tide.LOG.info("Found unknown fish \"{}\" in vanilla fishing loot table, auto-generating fish data", item);
                 FishData data = builder().fish(item)

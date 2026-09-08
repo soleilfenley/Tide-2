@@ -72,7 +72,7 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
         return Component.translatable("commands.fishing.entries.loot_table").append(" \"").append(Component.literal(
                 //? if >=26.2 {
                 lootTable.identifier().toString())).append("\"");
-                //? elif >=26.2 {
+                //?} elif >=26.2 {
                 /*lootTable.location().toString())).append("\"");*/
                 //?} else {
                 /*lootTable.toString())).append("\"");*/
@@ -188,7 +188,7 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
         public void build(SimpleDataOutput<FishingLootData> output) {
                 //? if >=26.2 {
                 this.build(this.lootKey.identifier(), output);
-                //? elif >=1.21 {
+                //?} elif >=1.21 {
                 /*
                 this.build(this.lootKey.location(), output);
                 */

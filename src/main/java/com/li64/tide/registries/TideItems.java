@@ -11,7 +11,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 
@@ -216,7 +222,13 @@ public class TideItems {
                     FishData.get(stack).ifPresent(data -> TideItemData.FISH_LENGTH.set(stack, data.getAverageLength()));
                 DISPLAY_ITEMS.add(stack);
 
+                //? if >=26.2 {
+                Identifier itemKey = BuiltInRegistries.ITEM.getKey(item);
+                //?} else {
+                /*
                 ResourceLocation itemKey = BuiltInRegistries.ITEM.getKey(item);
+                */
+                //?}
 
                 var bucketItem = BuiltInRegistries.ITEM.getOptional(itemKey.withSuffix("_bucket"));
                 bucketItem.ifPresent(value -> DISPLAY_ITEMS.add(new ItemStack(value)));

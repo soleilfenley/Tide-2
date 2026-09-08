@@ -4,7 +4,13 @@ import com.li64.tide.util.TideUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.Item;
 
 public record BaitData(String item, int speedBonus, int luckBonus) {
@@ -19,6 +25,12 @@ public record BaitData(String item, int speedBonus, int luckBonus) {
     }
 
     public Item getItem() {
-        return TideUtils.itemFromLocation(ResourceLocation.tryParse(item));
+            //? if >=26.2 {
+            return TideUtils.itemFromLocation(Identifier.tryParse(item));
+            //?} else {
+            /*
+            return TideUtils.itemFromLocation(ResourceLocation.tryParse(item));
+            */
+            //?}
     }
 }

@@ -16,7 +16,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +52,13 @@ public class TidePlayerData {
         fishList.forEach(t -> {
             if (!(t instanceof CompoundTag fishTag) || !fishTag.contains("fish")) return;
             Holder<Item> item = BuiltInRegistries.ITEM.wrapAsHolder(BuiltInRegistries.ITEM.get(
+                    //? if >=26.2 {
+                    Identifier.tryParse(fishTag.getString("fish"))));
+                    //?} else {
+                    /*
                     ResourceLocation.tryParse(fishTag.getString("fish"))));
+                    */
+                    //?}
             fishPlayerData.put(item, FishPlayerData.readFrom(fishTag, "data").orElse(new FishPlayerData()));
         });
     }

@@ -1,14 +1,49 @@
 package com.li64.tide.loaders;
-//? if >=1.21 {
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+//?} elif >=1.21 {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+*/
+//?} else {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+*/
+//?}
+
+//? if >=26.2 {
+public interface NetworkPlatform {
+    <T extends CustomPacketPayload> void registerClientBoundPacket(Class<T> msgClass, Identifier id,
+                                                                   BiConsumer<T, RegistryFriendlyByteBuf> encoder,
+                                                                   Function<RegistryFriendlyByteBuf, T> decoder,
+                                                                   BiConsumer<T, Player> handler);
+
+    <T extends CustomPacketPayload> void registerServerBoundPacket(Class<T> msgClass, Identifier id,
+                                                                   BiConsumer<T, RegistryFriendlyByteBuf> encoder,
+                                                                   Function<RegistryFriendlyByteBuf, T> decoder,
+                                                                   BiConsumer<T, Player> handler);
+
+    void sendToPlayer(CustomPacketPayload message, ServerPlayer player);
+
+    void sendToServer(CustomPacketPayload message);
+
+    default void registerHandlers() {}
+
+    record ClientMsgRegistration<T extends CustomPacketPayload>(CustomPacketPayload.Type<T> type,
+                                                                BiConsumer<T, Player> handler) {}
+}
+//?} elif >=1.21 {
+/*
 public interface NetworkPlatform {
     <T extends CustomPacketPayload> void registerClientBoundPacket(Class<T> msgClass, ResourceLocation id,
                                                                    BiConsumer<T, RegistryFriendlyByteBuf> encoder,
@@ -29,15 +64,9 @@ public interface NetworkPlatform {
     record ClientMsgRegistration<T extends CustomPacketPayload>(CustomPacketPayload.Type<T> type,
                                                                 BiConsumer<T, Player> handler) {}
 }
+*/
 //?} else {
-/*import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-
+/*
 public interface NetworkPlatform {
     <T> void registerClientBoundPacket(Class<T> msgClass, ResourceLocation id,
                                        BiConsumer<T, FriendlyByteBuf> encoder,

@@ -1,7 +1,13 @@
 package com.li64.tide.data.loot;
 
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.loot.LootTable;
 
@@ -11,7 +17,13 @@ public interface LootTableRef {
     //? if >=1.21 {
     default ResourceKey<LootTable> get() { return this.getKey(); }
 
+    //? if >=26.2 {
+    static LootTableRef createNew(Identifier id) {
+    //?} else {
+    /*
     static LootTableRef createNew(ResourceLocation id) {
+    */
+    //?}
         return of(ResourceKey.create(Registries.LOOT_TABLE, id));
     }
 
@@ -31,6 +43,12 @@ public interface LootTableRef {
     *///?}
 
     ResourceKey<LootTable> getKey();
+    //? if >=26.2 {
+    Identifier getId();
+    //?} else {
+    /*
     ResourceLocation getId();
+    */
+    //?}
     LootTable getTable(MinecraftServer server);
 }

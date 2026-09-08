@@ -5,7 +5,13 @@ import com.li64.tide.data.SendableDataMap;
 import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.FileToIdConverter;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,10 +42,22 @@ public abstract class LayeredDataLoader<T> extends AbstractDataLoader<T, Sendabl
 
     @Override
     protected SendableDataMap<T> prepareData(ResourceManager manager, FileToIdConverter lister) {
+            //? if >=26.2 {
+        Map<Identifier, List<SourcedValue<T>>> collected = new HashMap<>();
+            //?} else {
+            /*
         Map<ResourceLocation, List<SourcedValue<T>>> collected = new HashMap<>();
+            */
+            //?}
 
         lister.listMatchingResourceStacks(manager).forEach((path, resources) -> {
-            ResourceLocation key = lister.fileToId(path);
+                //? if >=26.2 {
+                Identifier key = lister.fileToId(path);
+                //?} else {
+                /*
+                ResourceLocation key = lister.fileToId(path);
+                */
+                //?}
             resources.forEach(resource -> {
                 try (Reader reader = resource.openAsReader()) {
                     parseOrLog(path, reader, value -> collected
@@ -58,8 +76,15 @@ public abstract class LayeredDataLoader<T> extends AbstractDataLoader<T, Sendabl
         return data.count();
     }
 
+    //? if >=26.2 {
+    private Map<Identifier, T> mergeDuplicates(Map<Identifier, List<SourcedValue<T>>> input) {
+        Map<Identifier, T> output = new TreeMap<>();
+    //?} else {
+    /*
     private Map<ResourceLocation, T> mergeDuplicates(Map<ResourceLocation, List<SourcedValue<T>>> input) {
         Map<ResourceLocation, T> output = new TreeMap<>();
+    */
+    //?}
         input.forEach((key, list) -> output.put(key, list.stream()
                 .sorted(Comparator.comparingInt(SourcedValue::loadOrder))
                 .map(SourcedValue::value)

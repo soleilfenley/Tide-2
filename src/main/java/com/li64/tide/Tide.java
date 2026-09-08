@@ -71,16 +71,17 @@ public class Tide {
     *///?}
     //? if >=26.2 {
     public static Identifier resource(String namespace, String path) {
-        /*? if >=1.21 {*/ return Identifier.fromNamespaceAndPath(namespace, path);
-        /*?} else*/ /*return new ResourceLocation(namespace, path);*/
+        return Identifier.fromNamespaceAndPath(namespace, path);
     }
+    //?} else if >=1.21 {
+    /*public static ResourceLocation resource(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }*/
     //?} else {
     /*public static ResourceLocation resource(String namespace, String path) {
-        /^? if >=1.21 {^/ return ResourceLocation.fromNamespaceAndPath(namespace, path);
-        /^?} else^/ /^return new ResourceLocation(namespace, path);^/
-    }
-    *///?}
-
+        return new ResourceLocation(namespace, path);
+    }*/
+    //?}
     public static void initialize() {
         Tide.setupConfigs();
         LOG.info("Initialized Tide on {} {}", PLATFORM.getPlatformName(), PLATFORM.getMCVersion());

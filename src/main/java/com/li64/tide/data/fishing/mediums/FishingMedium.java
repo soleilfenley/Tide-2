@@ -2,7 +2,13 @@ package com.li64.tide.data.fishing.mediums;
 
 import com.li64.tide.registries.entities.misc.fishing.TideFishingHook;
 import net.minecraft.core.BlockPos;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.ArrayList;
@@ -20,7 +26,13 @@ public interface FishingMedium {
         return medium;
     }
 
+    //? if >=26.2 {
+    Identifier id();
+    //?} else {
+    /*
     ResourceLocation id();
+    */
+    //?}
 
     boolean canFishIn(TideFishingHook hook);
 

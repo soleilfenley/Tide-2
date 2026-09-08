@@ -10,7 +10,13 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +47,13 @@ public class FishingRealConversions extends SimpleDataProvider<FishingConversion
             constructor.accept(builder.fish(item));
             FishData data = builder.build();
             if (data.display().isEmpty()) return;
+            //? if >=26.2 {
+            Identifier path = Tide.resource(MOD_ID, BuiltInRegistries.ITEM.getKey(data.fish().value()).getPath());
+            //?} else {
+            /*
             ResourceLocation path = Tide.resource(MOD_ID, BuiltInRegistries.ITEM.getKey(data.fish().value()).getPath());
+            */
+            //?}
             output.accept(path, new FishingConversion(
                 new ItemStack(data.fish().value()),
                 new FishingConversion.FishingResult(data.display().get().entityHolder(), Optional.empty())

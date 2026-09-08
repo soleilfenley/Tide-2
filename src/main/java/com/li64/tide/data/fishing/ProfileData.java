@@ -4,20 +4,38 @@ import com.li64.tide.data.journal.FishRarity;
 import com.li64.tide.data.journal.JournalGroup;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
 import java.util.Optional;
 
 public record ProfileData(Optional<String> description,
                           Optional<String> location,
+                          //? if >=26.2 {
+                          Optional<Identifier> altSprite,
+                          //?} else {
+                          /*
                           Optional<ResourceLocation> altSprite,
+                          */
+                          //?}
                           Optional<Integer> altSpriteSize,
                           FishRarity rarity,
                           JournalGroup group) {
     public static final Codec<ProfileData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.optionalFieldOf("description").forGetter(ProfileData::description),
             Codec.STRING.optionalFieldOf("location").forGetter(ProfileData::location),
+            //? if >=26.2 {
+            Identifier.CODEC.optionalFieldOf("alt_sprite").forGetter(ProfileData::altSprite),
+            //?} else {
+            /*
             ResourceLocation.CODEC.optionalFieldOf("alt_sprite").forGetter(ProfileData::altSprite),
+            */
+            //?}
             Codec.INT.optionalFieldOf("alt_sprite_size").forGetter(ProfileData::altSpriteSize),
             FishRarity.CODEC.optionalFieldOf("rarity", FishRarity.COMMON).forGetter(ProfileData::rarity),
             JournalGroup.CODEC.optionalFieldOf("group", JournalGroup.MISC).forGetter(ProfileData::group)
@@ -36,7 +54,13 @@ public record ProfileData(Optional<String> description,
     public static class Builder {
         private String description;
         private String location;
+        //? if >=26.2 {
+        private Identifier altSprite;
+        //?} else {
+        /*
         private ResourceLocation altSprite;
+        */
+        //?}
         private int altSpriteSize = 16;
         private FishRarity rarity = FishRarity.COMMON;
         private JournalGroup group = JournalGroup.MISC;
@@ -53,7 +77,13 @@ public record ProfileData(Optional<String> description,
             return this;
         }
 
+        //? if >=26.2 {
+        public Builder altSprite(Identifier path, int size) {
+        //?} else {
+        /*
         public Builder altSprite(ResourceLocation path, int size) {
+        */
+        //?}
             this.altSprite = path;
             this.altSpriteSize = size;
             return this;

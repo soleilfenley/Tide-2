@@ -20,7 +20,13 @@ import net.minecraft.data.models.blockstates.PropertyDispatch;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.*;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 
@@ -135,7 +141,13 @@ public class TideModelProvider extends FabricModelProvider {
         );
     }
 
+    //? if >=26.2 {
+    private JsonObject fishingRodWithOverrides(Identifier modelLocation, Map<TextureSlot, Identifier> modelGetter) {
+    //?} else {
+    /*
     private JsonObject fishingRodWithOverrides(ResourceLocation modelLocation, Map<TextureSlot, ResourceLocation> modelGetter) {
+    */
+    //?}
         JsonObject base = ModelTemplates.FLAT_HANDHELD_ROD_ITEM.createBaseTemplate(modelLocation, modelGetter);
         JsonArray overrides = new JsonArray();
         JsonObject override = new JsonObject();
@@ -149,7 +161,13 @@ public class TideModelProvider extends FabricModelProvider {
     }
 
     private void generateBlockItem(ItemModelGenerators generator, Item blockItem) {
-        ResourceLocation path = BuiltInRegistries.ITEM.getKey(blockItem);
+            //? if >=26.2 {
+            Identifier path = BuiltInRegistries.ITEM.getKey(blockItem);
+            //?} else {
+            /*
+            ResourceLocation path = BuiltInRegistries.ITEM.getKey(blockItem);
+            */
+            //?}
         generator.generateFlatItem(blockItem, new ModelTemplate(
                 Optional.of(path.withPrefix("block/")),
                 Optional.empty()

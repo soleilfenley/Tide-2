@@ -13,7 +13,13 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import com.li64.tide.Tide;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.item.ItemDisplayContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,10 +52,16 @@ public class TideFishingBobberLayer extends RenderLayer<TideFishingHook, TideFis
                     poseStack, buffer, hookEntity.level(), hookEntity.getId());
             poseStack.popPose();
         } else {
-            ResourceLocation textureLocation = FishingBobberItem.getTexture(hookEntity.getBobber());
-            VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(textureLocation));
-            /*? if >=1.21 {*/this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255 ,255));
-            /*?} else*//*this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 255, 255, 255 ,255);*/
+                //? if >=26.2 {
+                Identifier textureLocation = FishingBobberItem.getTexture(hookEntity.getBobber());
+                //?} else {
+                /*
+                ResourceLocation textureLocation = FishingBobberItem.getTexture(hookEntity.getBobber());
+                */
+                //?}
+                VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(textureLocation));
+                /*? if >=1.21 {*/this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255 ,255));
+                /*?} else*//*this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 255, 255, 255 ,255);*/
         }
     }
 }

@@ -16,7 +16,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -64,7 +70,13 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
     @Override
     public MutableComponent getTestKey() {
         return Component.translatable("commands.fishing.entries.loot_table").append(" \"").append(Component.literal(
-                lootTable/*? if >=1.21 {*/.location()/*?}*/.toString())).append("\"");
+                //? if >=26.2 {
+                lootTable.identifier().toString())).append("\"");
+                //? elif >=26.2 {
+                /*lootTable.location().toString())).append("\"");*/
+                //?} else {
+                /*lootTable.toString())).append("\"");*/
+                //?}
     }
 
     public static Builder builder() {
@@ -174,14 +186,29 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
         }
 
         public void build(SimpleDataOutput<FishingLootData> output) {
-            this.build(this.lootKey/*? if >=1.21 {*/.location()/*?}*/, output);
+                //? if >=26.2 {
+                this.build(this.lootKey.identifier(), output);
+                //? elif >=1.21 {
+                /*
+                this.build(this.lootKey.location(), output);
+                */
+                //?} else {
+                /*
+                this.build(this.lootKey, output);
+                */
+                //?}
         }
 
         public void build(String path, SimpleDataOutput<FishingLootData> output) {
             this.build(Tide.resource(path), output);
         }
-
+        //? if >=26.2 {
+        public void build(Identifier path, SimpleDataOutput<FishingLootData> output) {
+        //?} else {
+        /*
         public void build(ResourceLocation path, SimpleDataOutput<FishingLootData> output) {
+        */
+        //?}
             output.accept(path, build());
         }
 

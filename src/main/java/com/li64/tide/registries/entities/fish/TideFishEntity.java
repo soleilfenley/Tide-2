@@ -10,7 +10,13 @@ import com.li64.tide.util.TideUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -35,7 +41,13 @@ public class TideFishEntity extends AbstractSchoolingFish {
 
     public TideFishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
         super(entityType, level);
+        //? if >=26.2 {
+        Identifier key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+        //?} else {
+        /*
         ResourceLocation key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+        */
+        //?}
         this.bucketItem = BuiltInRegistries.ITEM.getOptional(key.withSuffix("_bucket")).orElseThrow();
     }
 

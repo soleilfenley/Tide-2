@@ -5,11 +5,23 @@ import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import com.li64.tide.data.journal.FishRarity;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import org.jetbrains.annotations.NotNull;
 
 public class RarityComponent extends ProfileComponent {
+        //? if >=26.2 {
+    private static final Identifier STAR = Tide.resource("textures/gui/journal/star_note.png");
+        //?} else {
+        /*
     private static final ResourceLocation STAR = Tide.resource("textures/gui/journal/star_note.png");
+        */
+        //?}
 
     public int numStars;
 

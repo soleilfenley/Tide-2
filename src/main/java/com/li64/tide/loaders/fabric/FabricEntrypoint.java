@@ -19,7 +19,13 @@ import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -67,7 +73,13 @@ public class FabricEntrypoint implements ModInitializer {
         TideData.onRegisterReloadListeners((id, listener) -> ResourceManagerHelper.get(PackType.SERVER_DATA)
             .registerReloadListener(new IdentifiableResourceReloadListener() {
                 @Override
+                //? if >=26.2 {
+                public Identifier getFabricId() {
+                //?} else {
+                /*
                 public ResourceLocation getFabricId() {
+                */
+                //?}
                     return id;
                 }
 

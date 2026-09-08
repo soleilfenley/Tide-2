@@ -5,7 +5,13 @@ import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +19,13 @@ public class DepthComponent extends BarComponent {
     public static final int MIN_Y = -64; // min build height
     public static final int MAX_Y = 63; // sea level
 
+    //? if >=26.2 {
+    private static final Identifier DEPTH_BAR = Tide.resource("textures/gui/journal/depth_bar.png");
+    //?} else {
+    /*
     private static final ResourceLocation DEPTH_BAR = Tide.resource("textures/gui/journal/depth_bar.png");
+    */
+    //?}
     private static final Component TITLE = Component.translatable("journal.info.depth.title");
 
     private final float minDepth;

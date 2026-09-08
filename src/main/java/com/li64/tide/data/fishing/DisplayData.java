@@ -8,7 +8,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 import net.minecraft.world.entity.EntityType;
 
 import java.util.Optional;
@@ -50,8 +56,13 @@ public record DisplayData(ResourceKey<EntityType<?>> entityKey, Optional<Compoun
         public Builder entityType(EntityType<?> entityType) {
             return this.entityType(BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).orElseThrow());
         }
-
+        //? if >=26.2 {
+        public Builder entityType(Identifier id) {
+        //?} else {
+        /*
         public Builder entityType(ResourceLocation id) {
+        */
+        //?}
             this.entityType = ResourceKey.create(Registries.ENTITY_TYPE, id);
             return this;
         }

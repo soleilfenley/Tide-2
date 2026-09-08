@@ -22,7 +22,7 @@ public class VoidHeightLoader extends SimpleJsonResourceReloadListener {
 
     
     //? if >=26.2 {
-    protected void apply(Map<Identifier, JsonElement> object, Identifier resourceManager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> object, Identifier resourceManager, ProfilerFiller profiler) {
     //?} else {
     /*
     @Override

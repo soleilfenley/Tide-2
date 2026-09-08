@@ -3153,7 +3153,11 @@ public class TideFish {
             }
 
             if (entityData != null) {
-                String path = key.location().getPath();
+                //? if >=26.2 {
+                String path = key.identifier().getPath();
+                //?} else {
+                /*String path = key.location().getPath();*/
+                //?}
                 ENTITY_DATA.put(path, entityData);
                 createSpawningItems(path, entityData);
             }

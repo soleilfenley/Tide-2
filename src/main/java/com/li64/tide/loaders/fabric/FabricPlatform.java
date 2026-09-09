@@ -63,7 +63,11 @@ public class FabricPlatform implements LoaderPlatform {
 
     @Override
     public <T> T register(Registry<? super T> registry, ResourceKey<T> id, T toRegister) {
-        return Registry.register(registry, id.location(), toRegister);
+            //? if >=26.2 {
+                return Registry.register(registry, id.identifier(), toRegister);
+            //?} else {
+                /*return Registry.register(registry, id.location(), toRegister);*/
+            //?}
     }
 
     //? if >=1.21 {

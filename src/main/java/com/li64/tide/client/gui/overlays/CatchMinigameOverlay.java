@@ -10,13 +10,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
@@ -110,7 +111,7 @@ public class CatchMinigameOverlay {
         timer = 0f;
     }
 
-    public static void render(GuiGraphics graphics, float dt) {
+    public static void render(/*? if >=26.2 {*/GuiGraphicsExtractor/*?} else {*//*GuiGraphics*//*?}*/ graphics, float dt) {
         if (CompatHelper.useStarcatcherMinigame()) return;
         if (timer >= 20f) return;
         if (!isActive) timer += dt;

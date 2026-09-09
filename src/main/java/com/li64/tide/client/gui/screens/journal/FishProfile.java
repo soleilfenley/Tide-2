@@ -12,14 +12,15 @@ import com.li64.tide.data.player.TidePlayerData;
 import com.li64.tide.util.TideUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
@@ -173,6 +174,11 @@ public class FishProfile implements Renderable {
     }
 
     @Override
+    //? if >=26.2 {
+    //?} else {
+    /*
+    */
+    //?}
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         // render background
         int tlX = (graphics.guiWidth() - BG_WIDTH) / 2;

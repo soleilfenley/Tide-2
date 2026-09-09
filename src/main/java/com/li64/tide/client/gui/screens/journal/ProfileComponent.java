@@ -1,11 +1,12 @@
 package com.li64.tide.client.gui.screens.journal;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
@@ -18,13 +19,15 @@ public abstract class ProfileComponent {
     //? if >=26.2 {
     protected static final Identifier LINE_TOP = FishingJournal.LINE_TOP;
     protected static final Identifier LINE_BOTTOM = FishingJournal.LINE_BOTTOM;
+
+    public abstract void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick);
     //?} else {
     /*
     protected static final ResourceLocation LINE_TOP = FishingJournal.LINE_TOP;
     protected static final ResourceLocation LINE_BOTTOM = FishingJournal.LINE_BOTTOM;
-    */
-    //?}
 
     public abstract void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick);
+    */
+    //?}
     public abstract int getRequiredHeight();
 }

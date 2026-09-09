@@ -6,24 +6,35 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import com.li64.tide.Tide;
 //? if >=26.2 {
 import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.util.ARGB;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
+*/
 //?} else {
 /*
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
 import net.minecraft.world.item.ItemDisplayContext;
 import org.jetbrains.annotations.NotNull;
 
-/*? if >=1.21*/import net.minecraft.util.FastColor;
 
 public class TideFishingBobberLayer extends RenderLayer<TideFishingHook, TideFishingHookModel<TideFishingHook>> {
     public static final ModelLayerLocation MODEL_LOCATION = new ModelLayerLocation(Tide.resource("fishing_hook"), "bobber");
@@ -60,8 +71,17 @@ public class TideFishingBobberLayer extends RenderLayer<TideFishingHook, TideFis
                 */
                 //?}
                 VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(textureLocation));
-                /*? if >=1.21 {*/this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255 ,255));
-                /*?} else*//*this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 255, 255, 255 ,255);*/
+                //? if >=26.2 {
+                this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, ARGB.color(255, 255, 255 ,255));
+                //?} elif >= 1.21 {
+                /*
+                this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255 ,255));
+                */
+                //?} else
+                /*
+                this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 255, 255, 255 ,255);
+                */
+                //?}
         }
     }
 }

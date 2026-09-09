@@ -20,7 +20,6 @@ import com.li64.tide.registries.entities.misc.LootCrateEntity;
 import com.li64.tide.registries.items.TideFishingRodItem;
 import com.li64.tide.util.BaitUtils;
 import com.li64.tide.util.TideUtils;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -67,6 +66,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+//? if >=26.2 {
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+//?} else {
+/*
+import net.minecraft.advancements.CriteriaTriggers;
+*/
+//?}
 
 //? if neoforge {
 /*import net.neoforged.neoforge.common.NeoForge;

@@ -5,9 +5,9 @@ import com.li64.tide.Tide;
 import com.li64.tide.data.loot.ApplyFishEntityLengthFunction;
 import com.li64.tide.data.loot.LootTableRef;
 import com.li64.tide.registries.TideFish;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.predicates.DataComponentPredicate;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -20,12 +20,30 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
-//? if >=1.21 {
+//? if >= 26.2 {
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.advancements.predicates.entity.*;
+import net.minecraft.advancements.predicates.MinMaxBounds;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.EnchantmentPredicate;
+import net.minecraft.advancements.predicates.DataComponentMatchers;
+import net.minecraft.advancements.predicates.entity.EntityEquipmentPredicate;
+import net.minecraft.advancements.predicates.entity.EntityFlagsPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
 import net.minecraft.core.registries.Registries;
 import java.util.List;
+//?} elif >=1.21 {
+/*
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
+import net.minecraft.core.registries.Registries;
+import java.util.List;
+*/
 //?}
 
 import java.util.concurrent.CompletableFuture;
@@ -43,7 +61,23 @@ public class TideEntityLootProvider extends TideAbstractLootProvider {
         });
     }
 
-    //? if >=1.21 {
+    //? if >= 26.2 {    
+    protected static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {
+        HolderLookup.RegistryLookup<Enchantment> registryLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return AnyOfCondition.anyOf(LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity()
+                                .flags(EntityFlagsPredicate.Builder.flags().setOnFire(true))),
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.DIRECT_ATTACKER, EntityPredicate.Builder.entity()
+                                .equipment(EntityEquipmentPredicate.Builder.equipment().mainhand(ItemPredicate.Builder.item()
+                                        .withComponents(DataComponentMatchers.Builder.components()
+                                                .partial(DataComponentPredicates.ENCHANTMENTS,
+                                                        EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(
+                                                                registryLookup.getOrThrow(EnchantmentTags.SMELTS_LOOT), MinMaxBounds.Ints.ANY))))
+                                                .build())))));
+    }
+    //?} elif >=1.21 {
+    /*
     protected static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {
         HolderLookup.RegistryLookup<Enchantment> registryLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         return AnyOfCondition.anyOf(LootItemEntityPropertyCondition.hasProperties(
@@ -56,10 +90,13 @@ public class TideEntityLootProvider extends TideAbstractLootProvider {
                                                 ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(
                                                         registryLookup.getOrThrow(EnchantmentTags.SMELTS_LOOT), MinMaxBounds.Ints.ANY))))))));
     }
+    */
     //?} else {
-    /*protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity()
+    /*
+    protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity()
             .flags(EntityFlagsPredicate.Builder.flags().setOnFire(true).build());
-    *///?}
+    */
+    //?}
 
     public LootTable.Builder simpleFishLootTable(Item fishItem) {
         return LootTable.lootTable().withPool(LootPool.lootPool()

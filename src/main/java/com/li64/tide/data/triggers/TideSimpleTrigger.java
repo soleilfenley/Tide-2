@@ -1,17 +1,33 @@
 package com.li64.tide.data.triggers;
+import org.jetbrains.annotations.NotNull;
+import net.minecraft.server.level.ServerPlayer;
 
-//? if >= 1.21 {
-
+//? if >=26.2 {
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import java.util.Optional;
+//?} elif >= 1.21 {
+/*
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Optional;
+*/
+//?} else {
+/*
+import com.li64.tide.Tide;
+import net.minecraft.advancements.critereon.*;
+import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
+//? if >= 1.21 {
 public class TideSimpleTrigger extends SimpleCriterionTrigger<TideSimpleTrigger.TriggerInstance> {
     @SuppressWarnings("unused")
     public TideSimpleTrigger(String name) {}
@@ -31,13 +47,7 @@ public class TideSimpleTrigger extends SimpleCriterionTrigger<TideSimpleTrigger.
     }
 }
 //?} else {
-/*import com.li64.tide.Tide;
-import net.minecraft.advancements.critereon.*;
-import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import org.jetbrains.annotations.NotNull;
-
+/*
 public class TideSimpleTrigger extends SimpleCriterionTrigger<TideSimpleTrigger.TriggerInstance> {
     private final ResourceLocation id;
 

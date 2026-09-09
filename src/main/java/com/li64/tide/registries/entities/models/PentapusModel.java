@@ -4,7 +4,14 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+
+//? if >=26.2 {
+import net.minecraft.util.ARGB;
+//?} elif >= 1.21 {
+/*
 import net.minecraft.util.FastColor;
+*/
+//?}
 
 public class PentapusModel extends FishModel {
     public static final ModelLayerLocation MODEL_LOCATION = createModelLocation("pentapus");
@@ -30,7 +37,13 @@ public class PentapusModel extends FishModel {
 
     @Override
     public int tint() {
+        //? if >=26.2 {
+        return ARGB.color(150, 255, 255, 255);
+        //?} else {
+        /*
         return FastColor.ARGB32.color(150, 255, 255, 255);
+        */
+        //?}
     }
 
     @Override

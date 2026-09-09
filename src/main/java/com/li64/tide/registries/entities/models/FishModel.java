@@ -9,11 +9,16 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
-
-/*if >=1.21*/import net.minecraft.util.FastColor;
-
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
+
+//? if >=26.2 {
+import net.minecraft.util.ARGB;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.util.FastColor;
+*/
+//?}
 
 public abstract class FishModel extends EntityModel<Mob> {
     private final ArrayList<SwimAnimConfig> swimConfigs = new ArrayList<>();
@@ -96,12 +101,18 @@ public abstract class FishModel extends EntityModel<Mob> {
     public boolean flipInAir() {
         return true;
     }
-
-    //? if >=1.21 {
+    //? if ?= 1.21 {
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+        this.root().render(poseStack, buffer, packedLight, packedOverlay, ARGB.multiply(color, this.tint()));
+    }
+    //?} elif >=1.21 {
+    /*
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         this.root().render(poseStack, buffer, packedLight, packedOverlay, FastColor.ARGB32.multiply(color, this.tint()));
     }
+    */
     //?} else {
     /*@Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float r, float g, float b, float a) {

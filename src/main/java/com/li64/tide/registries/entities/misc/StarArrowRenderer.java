@@ -5,24 +5,35 @@ import com.li64.tide.registries.entities.misc.fishing.StarArrowModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 //? if >=26.2 {
+import net.minecraft.client.renderer.Lightmap;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
+*/
 //?} else {
 /*
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-/*? if >=1.21*/import net.minecraft.util.FastColor;
 
 public class StarArrowRenderer extends EntityRenderer<StarArrow> {
         //? if >=26.2 {
@@ -65,8 +76,18 @@ public class StarArrowRenderer extends EntityRenderer<StarArrow> {
                 poseStack.scale(1, -1, 1);
                 poseStack.translate(0, -1.28, 0);
                 VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity)));
-                /*? if >=1.21 {*/model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));
-                /*?} else*//*model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);*/
+                // TODO: 26.2 needs LightTexture and FastColor renamed to Lightmap and ARGB respectively. ARGB seems fixed, but Lightmap needs work.
+                //? if >= 26.2 {
+                model.renderToBuffer(poseStack, buffer, Lightmap.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, ARGB.color(255, 255, 255, 255));
+                //?} elif >=1.21 {
+                /*
+                model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));
+                */
+                //?} else {
+                /*
+                model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
+                */
+                //?}
                 poseStack.popPose();
         }
 }

@@ -3,11 +3,12 @@ package com.li64.tide.client.gui.screens.journal.components;
 import com.li64.tide.Tide;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
 //? if >=26.2 {
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}

@@ -12,10 +12,8 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -27,10 +25,26 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-/*? if >=1.21 {*/
+
+//? if >= 26.2 {
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.world.item.trading.ItemCost;
-/*?} else*//*import net.fabricmc.fabric.api.loot.v2.LootTableEvents;*/
+//?} elif >=1.21 {
+/*
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.world.item.trading.ItemCost;
+*/
+//?} else {
+/*
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+*/
+//?}
 
 public class FabricEventHandler {
     public static void init() {

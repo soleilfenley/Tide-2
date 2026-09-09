@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -25,12 +24,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Consumer;
-
-/*? if >=1.21 {*/
+//? if >= 26.2{
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.component.BundleContents;
 import java.util.List;
-/*?} else*//*import net.minecraft.core.NonNullList;*/
+//?} elif >=1.21 {
+/*
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.component.BundleContents;
+import java.util.List;
+*/
+//?} else
+/*
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.InteractionResultHolder;
+*/
+//?}
 
 public class FishSatchelItem extends AbstractTooltipItem {
     private static final int BAR_COLOR = Mth.color(0.4f, 0.4f, 1.0f);
@@ -52,14 +63,35 @@ public class FishSatchelItem extends AbstractTooltipItem {
     public static int getRemainingSlots(ItemStack stack) {
         return SatchelContents.MAX_STACKS - getFishCount(stack);
     }
-
+    //? if >=26.2 {
+    @Override
+    public @NotNull InteractionResult use(Level level, Player player, InteractionHand used) {
+        ItemStack satchel = player.getItemInHand(used);
+        TideItemData.FISH_SATCHEL_OPENED.set(satchel, !TideItemData.FISH_SATCHEL_OPENED.getOrDefault(satchel, false));
+        player.playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 0.8f, 0.8f + player.level().getRandom().nextFloat() * 0.4f);
+        return InteractionResult.SUCCESS.heldItemTransformedTo(satchel);
+    }
+    //?} elif >= 1.21 {
+    /*
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand used) {
         ItemStack satchel = player.getItemInHand(used);
         TideItemData.FISH_SATCHEL_OPENED.set(satchel, !TideItemData.FISH_SATCHEL_OPENED.getOrDefault(satchel, false));
-        player.playSound(SoundEvents.ARMOR_EQUIP_LEATHER/*? if >=1.21 {*/.value()/*?}*/, 0.8f, 0.8f + player.level().getRandom().nextFloat() * 0.4f);
+        player.playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 0.8f, 0.8f + player.level().getRandom().nextFloat() * 0.4f);
         return InteractionResultHolder.success(satchel);
     }
+    */
+    //?} else {
+    /*
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand used) {
+        ItemStack satchel = player.getItemInHand(used);
+        TideItemData.FISH_SATCHEL_OPENED.set(satchel, !TideItemData.FISH_SATCHEL_OPENED.getOrDefault(satchel, false));
+        player.playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 0.8f, 0.8f + player.level().getRandom().nextFloat() * 0.4f);
+        return InteractionResultHolder.success(satchel);
+    }
+    */
+    //?}
 
     @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {

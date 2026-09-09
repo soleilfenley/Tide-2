@@ -4,8 +4,15 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.level.Level;
+
+//? if >=26.2 {
+import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
+//?} else {
+/*
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+*/
+//?}
 
 public class SmoothSwimmingVoidFish extends TideVoidFish {
     public SmoothSwimmingVoidFish(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {

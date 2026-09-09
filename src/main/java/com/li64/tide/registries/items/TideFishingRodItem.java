@@ -28,7 +28,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -39,7 +38,6 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -48,10 +46,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-//? if >=1.21 {
-import com.li64.tide.data.item.TideDataComponents;
+//? if >= 26.2 {
 import net.minecraft.core.component.DataComponents;
+import com.li64.tide.data.item.TideDataComponents;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.UseAnim;
+//?} elif >=1.21 {
+/*
+import net.minecraft.core.component.DataComponents;
+import com.li64.tide.data.item.TideDataComponents;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.UseAnim;
+*/
+//?} else {
+/*
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.UseAnim;
+*/
 //?}
 
 public class TideFishingRodItem extends FishingRodItem {
@@ -190,8 +201,13 @@ public class TideFishingRodItem extends FishingRodItem {
     public boolean isVoidproof(ItemStack stack) {
         return CustomRodManager.getHook(stack).is(TideItems.VOID_HOOK);
     }
-
+    //? if >=26.2 {
+    public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    //?} else {
+    /*
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    */
+    //?}
         if (isHookActive(player)) {
             TideFishingHook hook = getHook(player);
 
@@ -251,11 +267,23 @@ public class TideFishingRodItem extends FishingRodItem {
                     CatchMinigameOverlay.interact();
                 }
             }
+            //? if >=26.2 {
+            return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
+            //?} else {
+            /*
             return InteractionResultHolder.success(player.getItemInHand(hand));
+            */
+            //?}
         }
         else {
             if (!level.isClientSide() && FishCatchMinigame.delayActive((ServerPlayer) player))
+                //? if >=26.2 {
+                return InteractionResult.CONSUME.heldItemTransformedTo(player.getItemInHand(hand));
+                //?} else {
+                /*
                 return InteractionResultHolder.consume(player.getItemInHand(hand));
+                */
+                //?}
 
             if (Tide.SERVER_CONFIG.general.holdToCast) {
                 // Charge the cast if the hook isn't active
@@ -267,7 +295,13 @@ public class TideFishingRodItem extends FishingRodItem {
             else {
                 // Cast the hook normally
                 castHook(player.getItemInHand(hand), player, level, 1f);
+                //? if >=26.2 {
+                return InteractionResult.SUCCESS.heldItemTransformedTo(player.getItemInHand(hand));
+                //?} else {
+                /*
                 return InteractionResultHolder.success(player.getItemInHand(hand));
+                */
+                //?}
             }
         }
     }

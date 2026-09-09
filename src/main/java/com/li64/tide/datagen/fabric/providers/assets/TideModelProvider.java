@@ -10,9 +10,22 @@ import com.li64.tide.registries.TideFish;
 import com.li64.tide.registries.TideItems;
 import com.li64.tide.registries.blocks.FishDisplayBlock;
 import com.li64.tide.registries.blocks.FishDisplayShape;
+import net.minecraft.core.registries.BuiltInRegistries;
+//? if >=26.2 {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.*;
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.blockstates.MultiVariantGenerator;
@@ -20,10 +33,6 @@ import net.minecraft.data.models.blockstates.PropertyDispatch;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.*;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
 import net.minecraft.resources.ResourceLocation;
 */
 //?}

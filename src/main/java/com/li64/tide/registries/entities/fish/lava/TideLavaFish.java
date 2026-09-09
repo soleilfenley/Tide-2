@@ -3,20 +3,12 @@ package com.li64.tide.registries.entities.fish.lava;
 import com.li64.tide.data.FishLengthHolder;
 import com.li64.tide.data.TideTags;
 import com.li64.tide.data.fishing.FishData;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
-import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -34,7 +26,6 @@ import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,9 +35,26 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-//? if >=1.21 {
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+import net.minecraft.world.entity.Bucketable;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
+*/
+//?} else {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.world.entity.animal.Bucketable;
+*/
 //?}
 
 import java.util.Optional;

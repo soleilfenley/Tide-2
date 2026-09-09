@@ -31,12 +31,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-//? if >=1.21 {
+import java.util.Map;
+
+//? if >=26.2 {
+import com.mojang.serialization.MapCodec;
+//?} elif >=1.21 {
+/*
 import net.minecraft.world.ItemInteractionResult;
 import com.mojang.serialization.MapCodec;
+*/
 //?}
 
-import java.util.Map;
 
 @SuppressWarnings({"deprecation", "unused"})
 public class FishDisplayBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
@@ -152,7 +157,7 @@ public class FishDisplayBlock extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+    protected @NotNull /*? if >=26.2 {*/InteractionResult/*?} else*//*ItemInteractionResult*//*?*/ useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
                                                        @NotNull Level level, @NotNull BlockPos pos,
                                                        @NotNull Player player, @NotNull InteractionHand hand,
                                                        @NotNull BlockHitResult hitResult) {
@@ -161,7 +166,7 @@ public class FishDisplayBlock extends BaseEntityBlock implements SimpleWaterlogg
             if (display.setDisplayStack(displayed)) {
                 if (!player.hasInfiniteMaterials()) stack.shrink(1);
                 level.playSound(null, pos, SoundEvents.COD_FLOP, SoundSource.BLOCKS, 1.0f, 1.0f);
-                return ItemInteractionResult.SUCCESS;
+                return /*? if >=26.2 {*/InteractionResult.SUCCESS/*?} else*//*ItemInteractionResult.SUCCESS*//*?*/;
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

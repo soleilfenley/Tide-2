@@ -12,7 +12,6 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,6 +23,14 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
+
+//? if >=26.2 {
+import net.minecraft.world.level.gamerules.GameRules;
+//?} else {
+/*
+import net.minecraft.world.level.GameRules;
+*/
+//?}
 
 public class LootCrateEntity extends FallingBlockEntity {
     private LootTableRef tableKey;

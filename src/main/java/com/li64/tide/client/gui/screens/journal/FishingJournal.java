@@ -20,16 +20,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 //? if >=26.2 {
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}

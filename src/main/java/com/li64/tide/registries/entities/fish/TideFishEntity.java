@@ -10,13 +10,6 @@ import com.li64.tide.util.TideUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
-import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -24,8 +17,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,6 +25,18 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
+//?} else {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+*/
+//?}
 
 @SuppressWarnings("unused")
 public class TideFishEntity extends AbstractSchoolingFish {
@@ -76,10 +79,12 @@ public class TideFishEntity extends AbstractSchoolingFish {
         if (leader.getType() == this.getType()) return super.startFollowing(leader);
         return this;
     }
-
+    
     @SuppressWarnings("deprecation")
-    public static <T extends Mob> boolean checkWaterFishSpawnRules(EntityType<T> entityType, ServerLevelAccessor level,
-                                                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+    public static <T extends Mob> boolean checkWaterFishSpawnRules(
+            EntityType<T> entityType, 
+            ServerLevelAccessor level,
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > level.getSeaLevel()
                 || !level.getFluidState(pos.below()).is(FluidTags.WATER)
                 || !level.getBlockState(pos.above()).is(Blocks.WATER)) return false;
@@ -88,8 +93,10 @@ public class TideFishEntity extends AbstractSchoolingFish {
     }
 
     @SuppressWarnings("deprecation")
-    public static <T extends Mob> boolean checkLavaFishSpawnRules(EntityType<T> entityType, ServerLevelAccessor level,
-                                                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+    public static <T extends Mob> boolean checkLavaFishSpawnRules(
+            EntityType<T> entityType, 
+            ServerLevelAccessor level, 
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > level.getSeaLevel()
                 || !level.getFluidState(pos.below()).is(FluidTags.LAVA)
                 || !level.getBlockState(pos.above()).is(Blocks.LAVA)) return false;
@@ -97,8 +104,10 @@ public class TideFishEntity extends AbstractSchoolingFish {
         return checkTideFishSpawnRules(entityType, level, pos, random, FishingMedium.LAVA);
     }
 
-    public static <T extends Mob> boolean checkVoidFishSpawnRules(EntityType<T> entityType, ServerLevelAccessor level,
-                                                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+    public static <T extends Mob> boolean checkVoidFishSpawnRules(
+            EntityType<T> entityType, 
+            ServerLevelAccessor level,
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > VoidMedium.VOID.getVoidSurface(level.getLevel())
                 || !level.getBlockState(pos).isAir()) return false;
 

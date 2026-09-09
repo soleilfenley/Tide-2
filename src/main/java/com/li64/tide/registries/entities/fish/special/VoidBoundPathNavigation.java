@@ -3,7 +3,6 @@ package com.li64.tide.registries.entities.fish.special;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.pathfinder.Path;
@@ -12,6 +11,14 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+
+//? if >=26.2 {
+import net.minecraft.world.entity.animal.fish.WaterAnimal;
+//?} else {
+/*
+import net.minecraft.world.entity.animal.WaterAnimal;
+*/
+//?}
 
 public class VoidBoundPathNavigation extends PathNavigation {
     private boolean allowBreaching;

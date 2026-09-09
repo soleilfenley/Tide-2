@@ -8,21 +8,23 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 //? if >=26.2 {
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 //?} else {
 /*
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 */
 //?}
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -81,8 +83,17 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
         model.setupAnim(hookEntity, partialTick, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(hookEntity)));
 
-        /*? if >=1.21 {*/model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));
-        /*?} else*//*model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);*/
+        //? if >=26.2 {
+        model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, ARGB.color(255, 255, 255, 255));
+        //?} elif >= 1.21 {
+        /*
+        model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));
+        */
+        //?} else
+        /*
+        model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
+        */
+        //?}
         bobberLayer.render(poseStack, buffer, packedLight, hookEntity, 0, 0, 0, 0, 0, 0);
 
         poseStack.popPose();
@@ -190,17 +201,24 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
         int r = (int) (color.getRed() * colorBrightness);
         int g = (int) (color.getGreen() * colorBrightness);
         int b = (int) (color.getBlue() * colorBrightness);
-
-        //? if >=1.21 {
+        //? if >= 26.2 {
+        vertexConsumer.addVertex(pose.pose(), f, f1, f2)
+                .setColor(ARGB.color(255, r, g, b))
+                .setNormal(pose, f3, f4, f5);
+        //?} elif >=1.21 {
+        /*
         vertexConsumer.addVertex(pose.pose(), f, f1, f2)
                 .setColor(FastColor.ARGB32.color(255, r, g, b))
                 .setNormal(pose, f3, f4, f5);
+        */
         //?} else {
-        /*vertexConsumer.vertex(pose.pose(), f, f1, f2)
+        /*
+        vertexConsumer.vertex(pose.pose(), f, f1, f2)
                 .color(FastColor.ARGB32.color(255, r, g, b))
                 .normal(pose.normal(), f3, f4, f5)
                 .endVertex();
-        *///?}
+        */
+        //?}
     }
 
     @Override

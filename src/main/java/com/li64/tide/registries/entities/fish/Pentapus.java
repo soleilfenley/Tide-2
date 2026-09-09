@@ -4,10 +4,17 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
+//?} else {
+/*
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+*/
+//?}
 
 public class Pentapus extends TideVoidFish {
     public Pentapus(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {

@@ -2,15 +2,25 @@ package com.li64.tide.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
+//? if >=26.2 {
+import net.minecraft.util.Util;
+//?} else {
+/*
 import net.minecraft.Util;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
+*/
+//?}
 import net.minecraft.client.renderer.texture.TextureAtlas;
 //? if >=26.2 {
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.resources.Identifier;
 //?} else {
-/*import net.minecraft.resources.ResourceLocation;
-*///?}
+/*
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderStateShard;
+import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
 import java.util.function.Function;
 

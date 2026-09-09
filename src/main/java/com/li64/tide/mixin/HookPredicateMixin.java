@@ -1,7 +1,6 @@
 package com.li64.tide.mixin;
 
 import com.li64.tide.registries.entities.misc.fishing.TideFishingHook;
-import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -11,8 +10,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import java.util.Optional;
+
+//? if >=26.2 {
+import net.minecraft.advancements.predicates.entity.FishingHookPredicate;
+//?} else {
+/*
+import net.minecraft.advancements.critereon.FishingHookPredicate;
+*/
+//?}
 
 @Mixin(FishingHookPredicate.class)
 public class HookPredicateMixin {

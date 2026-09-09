@@ -7,13 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
-import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -23,8 +16,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +23,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Bucketable;
+import net.minecraft.world.entity.animal.fish.WaterAnimal;
+//?} else {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.WaterAnimal;
+*/
+//?}
 
 //? if >=1.21 {
 import net.minecraft.core.component.DataComponents;

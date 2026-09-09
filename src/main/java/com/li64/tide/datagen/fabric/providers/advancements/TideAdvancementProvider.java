@@ -6,32 +6,55 @@ import com.li64.tide.data.TideCriteriaTriggers;
 import com.li64.tide.data.TideTags;
 import com.li64.tide.registries.TideFish;
 import com.li64.tide.registries.TideItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.critereon.FishingRodHookedTrigger;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 
-//? if >= 1.21 {
+//? if >= 26.2 {
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.advancements.triggers.FishingRodHookedTrigger;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
+import java.util.Optional;
+//?} elif >= 1.21 {
+/*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.advancements.critereon.FishingRodHookedTrigger;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.CriteriaTriggers;
 import java.util.Optional;
+*/
 //?} else {
-/*import net.minecraft.advancements.FrameType;
+/*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.advancements.critereon.FishingRodHookedTrigger;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-*///?}
+*/
+//?}
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class TideAdvancementProvider extends FabricAdvancementProvider {
     @SuppressWarnings("unused")
+    //? if >=26.2 {
+    public TideAdvancementProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    //?} else {
+    /*
     public TideAdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    */
+    //?}
         super(output/*? if >=1.21 {*/, registryLookup/*?}*/);
     }
 

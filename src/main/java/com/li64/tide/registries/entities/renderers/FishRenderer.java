@@ -4,14 +4,15 @@ import com.li64.tide.Tide;
 import com.li64.tide.registries.entities.models.FishModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
 //? if >=26.2 {
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
@@ -52,11 +53,11 @@ public class FishRenderer<M extends FishModel> extends MobRenderer<Mob, FishMode
                 return this.texLocation;
         }
         
-        @Override
         //? if >=26.2 {
-        public @NotNull Identifier getTextureLocation(@NotNull Mob entity) {
+        public @NotNull Identifier getTextureIdentifier(@NotNull Mob entity) {
         //?} else {
         /*
+        @Override
         public @NotNull ResourceLocation getTextureLocation(@NotNull Mob entity) {
         */
         //?}
@@ -95,7 +96,7 @@ public class FishRenderer<M extends FishModel> extends MobRenderer<Mob, FishMode
         @Override
         protected @Nullable RenderType getRenderType(@NotNull Mob fish, boolean isVisible, boolean renderTranslucent, boolean appearsGlowing) {
                 //? if >=26.2 {
-                Identifier texture = this.getTextureLocation(fish);
+                Identifier texture = this.getTextureIdentifier(fish);
                 //?} else {
                 /*
                 ResourceLocation texture = this.getTextureLocation(fish);

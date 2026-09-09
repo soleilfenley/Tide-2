@@ -10,13 +10,21 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import net.minecraft.world.InteractionResult;
+//?} else {
+/*
+import net.minecraft.world.InteractionResultHolder; 
+*/
+//?}
+
 
 public class FishyNoteItem extends Item {
     public static final int MAX_REROLLS = 2;
@@ -58,7 +66,30 @@ public class FishyNoteItem extends Item {
         return TideItemData.FISHY_NOTE_VARIANT.getOrDefault(note,
                 BuiltInRegistries.ITEM.getResourceKey(Items.SALMON).orElseThrow());
     }
+    
+    //? if >=26.2 {
+    @Override
+    public @NotNull InteractionResult use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
+        ItemStack note = player.getItemInHand(hand);
+        if (player instanceof ServerPlayer serverPlayer) {
+            finalizeData(note, serverPlayer);
+            TideItemData.FISHY_NOTE_VARIANT.set(note, getFishKey(note));
 
+            int slot = player.getInventory().findSlotMatchingItem(note);
+            player.getInventory().setItem(slot, note);
+            Tide.NETWORK.sendToPlayer(new ViewNoteMsg(getFish(note)), serverPlayer);
+
+            TidePlayerData data = TidePlayerData.getOrCreate(serverPlayer);
+            Item fish = BuiltInRegistries.ITEM.get(getFishKey(note));
+            if (fish != null) {
+                data.markNoteUnlocked(fish);
+                data.syncTo(serverPlayer);
+            }
+        }
+        return InteractionResult.SUCCESS.heldItemTransformedTo(note);
+    }
+    //?} else {
+    /*
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack note = player.getItemInHand(hand);
@@ -79,4 +110,6 @@ public class FishyNoteItem extends Item {
         }
         return InteractionResultHolder.success(note);
     }
+    */
+    //?}
 }

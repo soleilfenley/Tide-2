@@ -16,10 +16,17 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.util.RandomPos;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
+//?} else {
+/*
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+*/
+//?}
 
 public class TideVoidFish extends TideFishEntity {
     public TideVoidFish(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {

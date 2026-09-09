@@ -1,19 +1,37 @@
 package com.li64.tide.registries;
-//? if >=1.21 {
+
 import com.li64.tide.Tide;
-import net.minecraft.Util;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+
+//? if >=26.2 {
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.util.Util;
 
 import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
+*/
+//?} else {
+/*
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.Util;
+*/
+//?}
 
 public class TideArmorMaterials {
     public static final Holder<ArmorMaterial> DRAGONFIN = register("dragonfin", Util.make(new EnumMap<>(ArmorItem.Type.class),enumMap -> {
@@ -56,15 +74,7 @@ public class TideArmorMaterials {
     public static void init() {}
 }
 //?} else {
-/*import com.li64.tide.Tide;
-import net.minecraft.Util;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
+/*
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;

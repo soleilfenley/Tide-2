@@ -38,7 +38,7 @@ public class ApplyFishEntityLengthFunction implements LootItemFunction {
     /*
     LootItemFunctionType<ApplyFishEntityLengthFunction> getType() {
     */
-    //?} else
+    //?} else {
     /*
     LootItemFunctionType getType() {
     */

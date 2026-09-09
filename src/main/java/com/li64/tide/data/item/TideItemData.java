@@ -5,6 +5,12 @@ import com.li64.tide.data.rods.BaitContents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+//? if <1.21 {
+/*
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
+*/
+//?}
 
 public final class TideItemData {
     //? if >=1.21 {
@@ -19,9 +25,6 @@ public final class TideItemData {
     public static final ItemDataKey<Boolean> FISH_SATCHEL_OPENED = new ComponentItemDataKey<>(TideDataComponents.FISH_SATCHEL_OPENED);
     //?} else {
     /*
-    import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.registries.Registries;
-    
     public static final ItemDataKey<Double> FISH_LENGTH = new NbtItemDataKey<>(
             "FishLength", tag -> tag.getDouble("FishLength"),
             (tag, value) -> tag.putDouble("FishLength", value));

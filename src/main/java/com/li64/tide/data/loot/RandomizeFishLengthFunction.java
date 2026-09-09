@@ -31,7 +31,7 @@ public class RandomizeFishLengthFunction implements LootItemFunction {
     /*
     LootItemFunctionType<RandomizeFishLengthFunction> getType() {
     */
-    //?} else
+    //?} else {
     /*
     LootItemFunctionType getType() {
     */

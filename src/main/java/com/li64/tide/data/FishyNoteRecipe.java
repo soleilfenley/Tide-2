@@ -17,7 +17,7 @@ import net.minecraft.network.codec.StreamCodec;
 /*
 import net.minecraft.core.HolderLookup;
 */
-//?} else
+//?} else {
 /*
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

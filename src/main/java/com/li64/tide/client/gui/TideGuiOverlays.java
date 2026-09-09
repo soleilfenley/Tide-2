@@ -5,7 +5,15 @@ import com.li64.tide.client.gui.overlays.CatchMinigameOverlay;
 import com.li64.tide.client.gui.overlays.SonarOverlay;
 import com.li64.tide.client.gui.overlays.FishingInfoOverlay;
 import net.minecraft.client.Minecraft;
+
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+//?} else {
+/*
 import net.minecraft.client.gui.GuiGraphics;
+*/
+//?}
 
 public class TideGuiOverlays {
     public static void render(GuiGraphics graphics) {

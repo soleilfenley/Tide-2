@@ -101,7 +101,7 @@ public abstract class FishModel extends EntityModel<Mob> {
     public boolean flipInAir() {
         return true;
     }
-    //? if ?= 1.21 {
+    //? if >= 1.21 {
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         this.root().render(poseStack, buffer, packedLight, packedOverlay, ARGB.multiply(color, this.tint()));

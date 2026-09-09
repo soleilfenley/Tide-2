@@ -77,7 +77,7 @@ public class TideFishingBobberLayer extends RenderLayer<TideFishingHook, TideFis
                 /*
                 this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255 ,255));
                 */
-                //?} else
+                //?} else {
                 /*
                 this.model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 255, 255, 255 ,255);
                 */

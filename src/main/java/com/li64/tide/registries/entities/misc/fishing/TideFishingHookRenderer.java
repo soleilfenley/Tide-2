@@ -1,4 +1,4 @@
-﻿package com.li64.tide.registries.entities.misc.fishing;
+package com.li64.tide.registries.entities.misc.fishing;
 
 import com.li64.tide.registries.TideItems;
 import com.li64.tide.registries.items.FishingHookItem;
@@ -89,7 +89,7 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
         /*
         model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));
         */
-        //?} else
+        //?} else {
         /*
         model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
         */

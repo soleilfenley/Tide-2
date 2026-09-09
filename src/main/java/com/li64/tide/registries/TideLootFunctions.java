@@ -37,7 +37,7 @@ public class TideLootFunctions {
     /*
     LootItemFunctionType<?>
     */
-    //?} else
+    //?} else {
     /*
     LootItemFunctionType
     */

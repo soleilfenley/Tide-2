@@ -33,6 +33,7 @@ import net.minecraft.Util;
 */
 //?}
 
+//? if >=1.21 {
 public class TideArmorMaterials {
     public static final Holder<ArmorMaterial> DRAGONFIN = register("dragonfin", Util.make(new EnumMap<>(ArmorItem.Type.class),enumMap -> {
         enumMap.put(ArmorItem.Type.BOOTS, 5);

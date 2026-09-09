@@ -36,7 +36,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.component.BundleContents;
 import java.util.List;
 */
-//?} else
+//?} else {
 /*
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionResultHolder;

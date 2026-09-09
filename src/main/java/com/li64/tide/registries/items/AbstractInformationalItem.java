@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 import net.minecraft.world.InteractionResult;
 //?} else {
 /*
-import net.minecraft.world.44;
+import net.minecraft.world.InteractionResultHolder;
 */
 //?}
 

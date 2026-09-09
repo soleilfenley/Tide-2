@@ -8,18 +8,35 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-//? if >= 1.21 {
+//? if >=26.2 {
 import net.minecraft.core.HolderLookup;
-//?} else {
-/*import net.minecraft.core.RegistryAccess;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+//?} elif >= 1.21 {
+/*
+import net.minecraft.core.HolderLookup;
+*/
+//?} else
+/*
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
-*///?}
+*/
+//?}
 
 public class FishyNoteRecipe extends CustomRecipe {
-    public FishyNoteRecipe(/*? if <1.21 {*//*ResourceLocation id, *//*?}*/CraftingBookCategory category) {
-        super(/*? if <1.21 {*//*id, *//*?}*/category);
-    }
+        //? if >=26.2 {
+        public static final MapCodec<FishyNoteRecipe> MAP_CODEC =
+                MapCodec.unit(() -> new FishyNoteRecipe(CraftingBookCategory.MISC));
+        public static final StreamCodec<RegistryFriendlyByteBuf, FishyNoteRecipe> STREAM_CODEC =
+                StreamCodec.unit(new FishyNoteRecipe(CraftingBookCategory.MISC));
+        public static final RecipeSerializer<FishyNoteRecipe> SERIALIZER =
+                new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+        //?}
+        public FishyNoteRecipe(/*? if <1.21 {*//*ResourceLocation id, *//*?}*/CraftingBookCategory category) {
+            super(/*? if <1.21 {*//*id, *//*?}*/category);
+}
 
     private ItemStack getFishToConvert(/*? if >=1.21 {*/CraftingInput/*?} else {*//*CraftingContainer*//*?}*/ input) {
         ItemStack stack1 = null, stack2 = null;

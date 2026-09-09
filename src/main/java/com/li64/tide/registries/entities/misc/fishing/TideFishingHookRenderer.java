@@ -1,4 +1,4 @@
-package com.li64.tide.registries.entities.misc.fishing;
+﻿package com.li64.tide.registries.entities.misc.fishing;
 
 import com.li64.tide.registries.TideItems;
 import com.li64.tide.registries.items.FishingHookItem;
@@ -22,8 +22,6 @@ import net.minecraft.util.ARGB;
 /*
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.util.FastColor;
 */
 //?}
@@ -249,3 +247,4 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
     /** Override this to disable bobber, hook, and line modifiers */
     protected boolean allowModifiers() { return true; }
 }
+

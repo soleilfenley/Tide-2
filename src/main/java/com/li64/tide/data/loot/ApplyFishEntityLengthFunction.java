@@ -11,10 +11,18 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import com.mojang.serialization.MapCodec;
+import net.minecraft.util.context.ContextKey;
+//?} else {
+/*
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+*/
+//?}
 
 import java.util.Set;
 
@@ -23,12 +31,23 @@ public class ApplyFishEntityLengthFunction implements LootItemFunction {
 
     public ApplyFishEntityLengthFunction() {}
 
-    public @NotNull LootItemFunctionType/*? if >=1.21 {*/<ApplyFishEntityLengthFunction>/*?}*/ getType() {
+    public @NotNull 
+    //? if >=26.2 {
+    MapCodec<? extends LootItemFunction> codec() {
+    //?} elif >= 1.21 {
+    /*
+    LootItemFunctionType<ApplyFishEntityLengthFunction> getType() {
+    */
+    //?} else
+    /*
+    LootItemFunctionType getType() {
+    */
+    //?}
         return TideLootFunctions.APPLY_FISH_ENTITY_LENGTH;
     }
 
     @Override
-    public @NotNull Set<LootContextParam<?>> getReferencedContextParams() {
+    public @NotNull Set</*? if >=26.2 {*/ContextKey/*?} else*//*LootContextParam*//*?*/<?>> getReferencedContextParams() {
         return Set.of(LootContextParams.THIS_ENTITY);
     }
 

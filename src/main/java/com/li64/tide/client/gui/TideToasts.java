@@ -4,17 +4,19 @@ import com.li64.tide.Tide;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
 //? if >=26.2 {
+import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 public class TideToasts {
     // TODO: maybe make some custom art for this?
@@ -39,7 +41,7 @@ public class TideToasts {
         }
 
         @Override
-        public @NotNull Visibility render(GuiGraphics graphics, ToastComponent component, long time) {
+        public @NotNull Visibility render(GuiGraphics graphics, /*? if >=26.2 {*/ToastManager/*?} else*//*ToastComponent*//*?*/ component, long time) {
             /*? if >=1.21 {*/graphics.blitSprite(TEXTURE, 0, 0, this.width(), this.height());
             /*?} else*//*graphics.blit(TEXTURE, 0, 0, 0, 32, this.width(), this.height());*/
             graphics.drawString(component.getMinecraft().font, title, 30, 7, -11534256, false);

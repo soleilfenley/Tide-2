@@ -50,7 +50,7 @@ import java.util.Optional;
 import net.minecraft.core.component.DataComponents;
 import com.li64.tide.data.item.TideDataComponents;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 //?} elif >=1.21 {
 /*
 import net.minecraft.core.component.DataComponents;
@@ -431,8 +431,8 @@ public class TideFishingRodItem extends FishingRodItem {
         // return CustomRodManager.getLine(rod).is(TideItems.BRAIDED_LINE) ? 15 : 25;
     }
 
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.BOW;
+    public @NotNull /*? if >=26.2 {*/ItemUseAnimation/*?} else*//*UseAnim*//*?*/ getUseAnimation(@NotNull ItemStack stack) {
+        return /*? if >=26.2 {*/ItemUseAnimation/*?} else*//*UseAnim*//*?*/.BOW;
     }
 
     public void onItemBroken(ItemStack stack, ServerPlayer player) {

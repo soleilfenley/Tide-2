@@ -2,14 +2,29 @@
 package com.li64.tide.datagen.fabric.providers.loot;
 
 import com.li64.tide.data.loot.LootTableRef;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 
-/*? if >=1.21 {*/import net.minecraft.resources.ResourceKey;
-/*?} else*//*import net.minecraft.resources.ResourceLocation;*/
+//? if >=26.2 {
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.context.ContextKeySet;
+//?} elif >= 1.21 {
+/*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+*/
+//?} else
+/*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+*/
+//?}
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -18,9 +33,9 @@ public abstract class TideAbstractLootProvider extends SimpleFabricLootTableProv
     /*? if >=1.21*/protected final HolderLookup.Provider registries;
 
     @SuppressWarnings("unused")
-    public TideAbstractLootProvider(FabricDataOutput output,
+    public TideAbstractLootProvider(FabricPackOutput output,
                                     CompletableFuture<HolderLookup.Provider> registryLookup,
-                                    LootContextParamSet lootType) {
+                                    /*? if >=26.2 {*/ContextKeySet/*?} else*//*LootContextParamSet*//*?*/ lootType) {
         super(output/*? if >=1.21 {*/, registryLookup/*?}*/, lootType);
         /*? if >=1.21*/this.registries = registryLookup.join();
     }

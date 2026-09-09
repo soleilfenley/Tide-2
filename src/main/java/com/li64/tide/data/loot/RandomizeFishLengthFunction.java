@@ -9,15 +9,33 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import com.mojang.serialization.MapCodec;
+//?} else {
+/*
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+*/
+//?}
 
 public class RandomizeFishLengthFunction implements LootItemFunction {
     public static final MapCodec<RandomizeFishLengthFunction> CODEC = MapCodec.unit(RandomizeFishLengthFunction::new);
 
     public RandomizeFishLengthFunction() {}
 
-    public @NotNull LootItemFunctionType/*? if >=1.21 {*/<RandomizeFishLengthFunction>/*?}*/ getType() {
+    public @NotNull 
+    //? if >=26.2 {
+    MapCodec<? extends LootItemFunction> codec() {
+    //?} elif >= 1.21 {
+    /*
+    LootItemFunctionType<RandomizeFishLengthFunction> getType() {
+    */
+    //?} else
+    /*
+    LootItemFunctionType getType() {
+    */
+    //?}
         return TideLootFunctions.RANDOMIZE_FISH_LENGTH;
     }
 

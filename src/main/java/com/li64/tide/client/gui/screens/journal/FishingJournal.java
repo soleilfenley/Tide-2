@@ -19,17 +19,18 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 //? if >=26.2 {
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 */
@@ -451,7 +452,7 @@ public class FishingJournal extends Screen {
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBuffer(graphics.bufferSource(), renderType, true, stack.hasFoil());
 
         Minecraft.getInstance().getItemRenderer().renderModelLists(
-                model, stack, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
+                model, stack, /*? if >=26.2 {*/LightCoordsUtil/*?} else*//*LightTexture*//*?*/.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
                 graphics.pose(), vertexConsumer
         );
 

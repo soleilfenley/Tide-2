@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 //? if >=26.2 {
-import net.minecraft.client.renderer.Lightmap;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
@@ -76,9 +76,8 @@ public class StarArrowRenderer extends EntityRenderer<StarArrow> {
                 poseStack.scale(1, -1, 1);
                 poseStack.translate(0, -1.28, 0);
                 VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity)));
-                // TODO: 26.2 needs LightTexture and FastColor renamed to Lightmap and ARGB respectively. ARGB seems fixed, but Lightmap needs work.
                 //? if >= 26.2 {
-                model.renderToBuffer(poseStack, buffer, Lightmap.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, ARGB.color(255, 255, 255, 255));
+                model.renderToBuffer(poseStack, buffer, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, ARGB.color(255, 255, 255, 255));
                 //?} elif >=1.21 {
                 /*
                 model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(255, 255, 255, 255));

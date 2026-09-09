@@ -2,10 +2,17 @@ package com.li64.tide.registries.items;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+
+//? if >=26.2 {
+import net.minecraft.world.item.ToolMaterial;
+//?} else {
+/*
 import net.minecraft.world.item.Tiers;
+*/
+//?}
 
 public class BlazingSwordfishItem extends SwordfishItem {
-    public BlazingSwordfishItem(Tiers tier, int damageMod, float speedMod, Properties properties) {
+    public BlazingSwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else*//*Tiers*//*?*/ tier, int damageMod, float speedMod, Properties properties) {
         super(tier, damageMod, speedMod, properties);
     }
 

@@ -5,7 +5,14 @@ import com.li64.tide.data.loot.RandomizeFishLengthFunction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+
+//? if >=26.2 {
+import com.mojang.serialization.MapCodec;
+//?} else {
+/*
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+*/
+//?}
 
 import java.util.HashMap;
 
@@ -22,15 +29,28 @@ import net.minecraft.world.level.storage.loot.Serializer;
 *///?}
 
 public class TideLootFunctions {
-    public static final HashMap<String, LootItemFunctionType/*? if >=1.21 {*/<?>/*?}*/> LOOT_FUNCTIONS = new HashMap<>();
+    public static final HashMap<
+    String, 
+    //? if >=26.2 {
+    MapCodec<? extends LootItemFunction>
+    //?} elif >= 1.21 {
+    /*
+    LootItemFunctionType<?>
+    */
+    //?} else
+    /*
+    LootItemFunctionType
+    */
+    //?}
+    > LOOT_FUNCTIONS = new HashMap<>();
 
     //? if >=1.21 {
-    public static final LootItemFunctionType<ApplyFishEntityLengthFunction> APPLY_FISH_ENTITY_LENGTH = register(
-            "apply_fish_entity_length", new LootItemFunctionType<>(ApplyFishEntityLengthFunction.CODEC));
-    public static final LootItemFunctionType<RandomizeFishLengthFunction> RANDOMIZE_FISH_LENGTH = register(
-            "randomize_fish_length", new LootItemFunctionType<>(RandomizeFishLengthFunction.CODEC));
+    public static final /*? if >=26.2 {*/MapCodec<ApplyFishEntityLengthFunction>/*?} else*//*LootItemFunctionType<ApplyFishEntityLengthFunction>*//*?*/ APPLY_FISH_ENTITY_LENGTH = register(
+            "apply_fish_entity_length", /*? if >=26.2 {*/ApplyFishEntityLengthFunction.CODEC/*?} else*//*new LootItemFunctionType<>(ApplyFishEntityLengthFunction.CODEC)*//*?*/);
+    public static final /*? if >=26.2 {*/MapCodec<RandomizeFishLengthFunction>/*?} else*//*LootItemFunctionType<RandomizeFishLengthFunction>*//*?*/ RANDOMIZE_FISH_LENGTH = register(
+            "randomize_fish_length", /*? if >=26.2 {*/RandomizeFishLengthFunction.CODEC/*?} else*//*new LootItemFunctionType<>(RandomizeFishLengthFunction.CODEC)*//*?*/);
 
-    public static <T extends LootItemFunction> LootItemFunctionType<T> register(String key, LootItemFunctionType<T> type) {
+    public static <T extends LootItemFunction> /*? if >=26.2 {*/MapCodec/*?} else*//*LootItemFunctionType*//*?*/<T> register(String key, /*? if >=26.2 {*/MapCodec/*?} else*//*LootItemFunctionType*//*?*/<T> type) {
         LOOT_FUNCTIONS.put(key, type);
         return Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, Tide.resource(key), type);
     }

@@ -4,7 +4,6 @@ import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
@@ -14,6 +13,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+//? if >=26.2 {
+import net.minecraft.world.entity.EntitySpawnReason;
+//?} else {
+/*
+import net.minecraft.world.entity.MobSpawnType;
+*/
+//?}
 
 public class TideSchoolingLavaFish extends TideLavaFish {
     private TideSchoolingLavaFish leader;
@@ -103,7 +110,12 @@ public class TideSchoolingLavaFish extends TideLavaFish {
 
     //? if >=1.21 {
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData) {
+    public @Nullable SpawnGroupData finalizeSpawn(
+            ServerLevelAccessor level, 
+            DifficultyInstance difficulty, 
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, 
+            @Nullable SpawnGroupData groupData
+    ) {
         super.finalizeSpawn(level, difficulty, spawnType, groupData);
         if (groupData == null) groupData = new SchoolSpawnGroupData(this);
         else this.startFollowing(((SchoolSpawnGroupData) groupData).leader);

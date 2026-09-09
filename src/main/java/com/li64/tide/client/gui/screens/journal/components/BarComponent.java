@@ -9,6 +9,10 @@ import net.minecraft.resources.Identifier;
 //?} else {
 /*
 import net.minecraft.client.renderer.RenderType;
+//? if >=26.2 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
 import net.minecraft.resources.ResourceLocation;
 */
 //?}

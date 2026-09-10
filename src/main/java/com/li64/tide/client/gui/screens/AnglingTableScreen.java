@@ -2,18 +2,22 @@ package com.li64.tide.client.gui.screens;
 
 import com.li64.tide.Tide;
 import com.li64.tide.client.gui.menus.AnglingTableMenu;
-import net.minecraft.client.gui.GuiGraphics;
+
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+
+import org.jetbrains.annotations.NotNull;
+
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
-import net.minecraft.world.entity.player.Inventory;
-import org.jetbrains.annotations.NotNull;
 
 public class AnglingTableScreen extends ItemCombinerScreen<AnglingTableMenu> {
 
@@ -38,10 +42,21 @@ public class AnglingTableScreen extends ItemCombinerScreen<AnglingTableMenu> {
                 this.titleLabelY = 8;
         }
 
+        //? if >=26.2 {
+        @Override
+        protected void extractErrorIcon(
+                @NotNull GuiGraphicsExtractor graphics,
+                int p_266822_,
+                int p_267045_
+        ) {}
+        //?} else {
+        /*
         @Override
         protected void renderErrorIcon(
                 @NotNull GuiGraphics graphics,
                 int p_266822_,
                 int p_267045_
         ) {}
+        */
+        //?}
 }

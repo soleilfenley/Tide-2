@@ -1,28 +1,44 @@
 package com.li64.tide.registries.entities.models;
 
 import com.li64.tide.Tide;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Mob;
+
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
 //? if >=26.2 {
-import net.minecraft.util.ARGB;
+import com.li64.tide.registries.entities.renderers.FishRenderState;
 //?} elif >= 1.21 {
 /*
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
+import net.minecraft.world.entity.Mob;
 import net.minecraft.util.FastColor;
 */
 //?}
 
+//? if >=26.2 {
+public abstract class FishModel extends EntityModel<FishRenderState> {
+//?} else {
+/*
 public abstract class FishModel extends EntityModel<Mob> {
+*/
+//?}
     private final ArrayList<SwimAnimConfig> swimConfigs = new ArrayList<>();
+    
+    //? if >=26.2 {
 
+    protected FishModel(EntityRendererProvider.Context context, ModelLayerLocation modelLocation) {
+        super(context.bakeLayer(modelLocation));
+    }
+    //?} else {
+    /*
     private final ModelPart root;
 
     protected FishModel(EntityRendererProvider.Context context, ModelLayerLocation modelLocation) {
@@ -32,6 +48,8 @@ public abstract class FishModel extends EntityModel<Mob> {
     protected ModelPart root() {
         return this.root;
     }
+    */
+    //?}
 
     protected void addSwimAnimation(String path, float speed, float magnitude) {
         this.addSwimAnimation(path, speed, magnitude, 0f);
@@ -65,10 +83,19 @@ public abstract class FishModel extends EntityModel<Mob> {
     }
 
     @Override
+    //? if >=26.2 {
+    public void setupAnim(FishRenderState state) {
+        float multiplier = (state.isInWater || state.isInLava) ? 1.0F : 1.5F;
+        this.swimConfigs.forEach(config -> config.animate(state.ageInTicks, multiplier, state.ageInTicks == 0));
+    }
+    //?} else {
+    /*
     public void setupAnim(Mob fish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float multiplier = (fish.isInWaterOrBubble() || fish.isInLava()) ? 1.0F : 1.5F;
         this.swimConfigs.forEach(config -> config.animate(ageInTicks, multiplier, ageInTicks == 0));
     }
+    */
+    //?}
 
     public double xTiltScale() {
         return 1.0;
@@ -102,11 +129,6 @@ public abstract class FishModel extends EntityModel<Mob> {
         return true;
     }
     //? if >= 1.21 {
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        this.root().render(poseStack, buffer, packedLight, packedOverlay, ARGB.multiply(color, this.tint()));
-    }
-    //?} elif >=1.21 {
     /*
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {

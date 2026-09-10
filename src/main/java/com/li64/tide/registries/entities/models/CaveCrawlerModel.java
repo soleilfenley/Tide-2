@@ -8,6 +8,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 
+//? if >=26.2 {
+import com.li64.tide.registries.entities.renderers.FishRenderState;
+//?}
+
 public class CaveCrawlerModel extends FishModel {
     public static final ModelLayerLocation MODEL_LOCATION = createModelLocation("cave_crawler");
 
@@ -57,6 +61,17 @@ public class CaveCrawlerModel extends FishModel {
 	}
 
     @Override
+    //? if >=26.2 {
+    public void setupAnim(FishRenderState state) {
+        super.setupAnim(state);
+        float value = Mth.cos(1.4f * state.walkAnimationPos) * 0.32f;
+        legFL.yRot = value;
+        legFR.yRot = -value;
+        legBL.yRot = -value;
+        legBR.yRot = value;
+    }
+    //?} else {
+    /*
     public void setupAnim(Mob fish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         super.setupAnim(fish, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         float value = Mth.cos(1.4f * fish.walkAnimation.position()) * 0.32f;
@@ -65,4 +80,6 @@ public class CaveCrawlerModel extends FishModel {
         legBL.yRot = -value;
         legBR.yRot = value;
     }
+    */
+    //?}
 }

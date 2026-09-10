@@ -10,20 +10,10 @@ import com.li64.tide.data.journal.FishRarity;
 import com.li64.tide.data.player.FishStats;
 import com.li64.tide.data.player.TidePlayerData;
 import com.li64.tide.util.TideUtils;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-//? if >=26.2 {
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +21,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+//?} else {
+/*
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
 public class FishProfile implements Renderable {
         //? if >=26.2 {
@@ -175,10 +179,79 @@ public class FishProfile implements Renderable {
 
     @Override
     //? if >=26.2 {
-    //?} else {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        // render background
+        int tlX = (graphics.guiWidth() - BG_WIDTH) / 2;
+        int tlY = (graphics.guiHeight() - BG_HEIGHT) / 2;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BORDERS, tlX, tlY, 0, 0, BG_WIDTH, BG_HEIGHT, BG_WIDTH, BG_HEIGHT);
+
+        // render title
+        int titleX = tlX + 110;
+        int titleY = tlY + 30;
+        Component title = TideUtils.removeRawTextInName(fish.getHoverName());
+        int titleWidth = font.width(title);
+        int underlineWidth = titleWidth + 6;
+        graphics.text(font, title, titleX - titleWidth / 2, titleY, TEXT_COLOR, false);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FishingJournal.LINE_BOTTOM, titleX - underlineWidth / 2,
+                titleY + font.lineHeight + 2, underlineWidth, 2);
+
+        // get fish sizing and offsets
+        boolean isLarge = data.profile().altSprite().isPresent();
+        Identifier alternateTexture = data.profile().altSprite().orElse(null);
+        int fishSize = isLarge ? data.profile().altSpriteSize().orElse(16) : 16;
+        int itemCenterX = tlX + 109;
+        int itemCenterY = tlY + 100;
+        final float scale = 2f;
+
+        // scale around the fish's center
+        graphics.pose().pushMatrix();
+        graphics.pose().scaleAround(itemCenterX, itemCenterY, scale, scale);
+
+        // render fish silhouette
+        if (!isLarge) FishingJournal.renderItemSilhouette(graphics, fish,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2, ARGB.color(255, 215, 181, 148));
+        else FishingJournal.renderTextureSilhouette(graphics, alternateTexture,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2, fishSize, fishSize);
+
+        // pop fish scaling
+        graphics.pose().popMatrix();
+
+        if (!isLarge) graphics.item(fish, itemCenterX - fishSize / 2, itemCenterY - fishSize / 2);
+        else graphics.blit(RenderPipelines.GUI_TEXTURED, alternateTexture,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2,
+                0, 0, fishSize, fishSize, fishSize, fishSize);
+
+        // render rarity text
+        int stars = rarity.getNumStars();
+        int rarityX = tlX + 40;
+        int rarityY = tlY + 167;
+        graphics.text(font, rarityPrefix, rarityX, rarityY, TEXT_COLOR, false);
+        for (int i = 0; i < stars; i++) graphics.blit(RenderPipelines. GUI_TEXTURED, STAR,
+                rarityX + font.width(rarityPrefix) + i * 8, rarityY, 0, 0,
+                7, 6, 7, 6);
+        graphics.text(font, ")", rarityX + font.width(rarityPrefix) + stars * 8, rarityY, TEXT_COLOR, false);
+
+        // render description
+        int descX = tlX + 38;
+        int descY = tlY + 207;
+        List<FormattedCharSequence> descriptionLines = font.split(this.description, 156);
+        descY -= (descriptionLines.size() * font.lineHeight) / 2;
+        for (int i = 0; i < descriptionLines.size(); i++) {
+            graphics.text(font, descriptionLines.get(i), descX,
+                    descY + i * font.lineHeight, TEXT_COLOR, false);
+        }
+
+        // render profile components
+        int padding = 4;
+        int cursorY = padding + 8;
+        for (ProfileComponent area : profileComponents) {
+            area.render(graphics, font, tlX + ProfileComponent.AREA_X,
+                    tlY + ProfileComponent.AREA_Y + cursorY, mouseX, mouseY, partialTick);
+            cursorY += area.getRequiredHeight() + padding;
+        }
+    }
+    //?} elif >= 1.21 {
     /*
-    */
-    //?}
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         // render background
         int tlX = (graphics.guiWidth() - BG_WIDTH) / 2;
@@ -192,24 +265,12 @@ public class FishProfile implements Renderable {
         int titleWidth = font.width(title);
         int underlineWidth = titleWidth + 6;
         graphics.drawString(font, title, titleX - titleWidth / 2, titleY, TEXT_COLOR, false);
-        //? if >=1.21 {
         graphics.blitSprite(FishingJournal.LINE_BOTTOM, titleX - underlineWidth / 2,
                 titleY + font.lineHeight + 2, underlineWidth, 2);
-        //?} else {
-        /*TideUtils.blitNineSliced(graphics, FishingJournal.LINE_BOTTOM, titleX - underlineWidth / 2,
-                titleY + font.lineHeight + 2, underlineWidth, 2, 3, 0,
-                71, 2, 0, 0, 71, 2);
-        *///?}
 
         // get fish sizing and offsets
         boolean isLarge = data.profile().altSprite().isPresent();
-        //? if >=26.2 {
-        Identifier alternateTexture = data.profile().altSprite().orElse(null);
-        //?} else {
-        /*
         ResourceLocation alternateTexture = data.profile().altSprite().orElse(null);
-        */
-        //?}
         int fishSize = isLarge ? data.profile().altSpriteSize().orElse(16) : 16;
         int itemCenterX = tlX + 109;
         int itemCenterY = tlY + 100;
@@ -280,4 +341,99 @@ public class FishProfile implements Renderable {
             cursorY += area.getRequiredHeight() + padding;
         }
     }
+    */
+    //?} else {
+    /*
+    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        // render background
+        int tlX = (graphics.guiWidth() - BG_WIDTH) / 2;
+        int tlY = (graphics.guiHeight() - BG_HEIGHT) / 2;
+        graphics.blit(BORDERS, tlX, tlY, 0, 0, BG_WIDTH, BG_HEIGHT, BG_WIDTH, BG_HEIGHT);
+
+        // render title
+        int titleX = tlX + 110;
+        int titleY = tlY + 30;
+        Component title = TideUtils.removeRawTextInName(fish.getHoverName());
+        int titleWidth = font.width(title);
+        int underlineWidth = titleWidth + 6;
+        graphics.drawString(font, title, titleX - titleWidth / 2, titleY, TEXT_COLOR, false);
+        TideUtils.blitNineSliced(graphics, FishingJournal.LINE_BOTTOM, titleX - underlineWidth / 2,
+                titleY + font.lineHeight + 2, underlineWidth, 2, 3, 0,
+                71, 2, 0, 0, 71, 2);
+
+        // get fish sizing and offsets
+        boolean isLarge = data.profile().altSprite().isPresent();
+        ResourceLocation alternateTexture = data.profile().altSprite().orElse(null);
+        int fishSize = isLarge ? data.profile().altSpriteSize().orElse(16) : 16;
+        int itemCenterX = tlX + 109;
+        int itemCenterY = tlY + 100;
+        final int shadowOffset = 2;
+        final float scale = 2f;
+
+        // scale around the fish's center
+        graphics.pose().pushPose();
+        graphics.pose().translate(itemCenterX, itemCenterY, 0);
+        graphics.pose().scale(scale, scale, 1f);
+        graphics.pose().translate(-itemCenterX, -itemCenterY, 0);
+
+        // offset for shadow rendering
+        graphics.pose().pushPose();
+        graphics.pose().translate(shadowOffset / scale, shadowOffset / scale, 0f);
+
+        // set shadow color
+        graphics.flush();
+        RenderSystem.setShaderColor(0.8431f, 0.7098f, 0.5804f, 1f);
+
+        // render fish silhouette
+        if (!isLarge) FishingJournal.renderItemSilhouette(graphics, fish,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2);
+        else FishingJournal.renderTextureSilhouette(graphics, alternateTexture,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2, fishSize, fishSize);
+
+        // reset shader color
+        graphics.flush();
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+
+        // pop shadow offset
+        graphics.pose().popPose();
+
+        if (!isLarge) graphics.renderItem(fish, itemCenterX - fishSize / 2, itemCenterY - fishSize / 2);
+        else graphics.blit(alternateTexture,
+                itemCenterX - fishSize / 2, itemCenterY - fishSize / 2,
+                0, 0, fishSize, fishSize, fishSize, fishSize);
+
+        // pop fish scaling
+        graphics.pose().popPose();
+
+        // render rarity text
+        int stars = rarity.getNumStars();
+        int rarityX = tlX + 40;
+        int rarityY = tlY + 167;
+        graphics.drawString(font, rarityPrefix, rarityX, rarityY, TEXT_COLOR, false);
+        for (int i = 0; i < stars; i++) graphics.blit(STAR,
+                rarityX + font.width(rarityPrefix) + i * 8, rarityY, 0, 0,
+                7, 6, 7, 6);
+        graphics.drawString(font, ")", rarityX + font.width(rarityPrefix) + stars * 8, rarityY, TEXT_COLOR, false);
+
+        // render description
+        int descX = tlX + 38;
+        int descY = tlY + 207;
+        List<FormattedCharSequence> descriptionLines = font.split(this.description, 156);
+        descY -= (descriptionLines.size() * font.lineHeight) / 2;
+        for (int i = 0; i < descriptionLines.size(); i++) {
+            graphics.drawString(font, descriptionLines.get(i), descX,
+                    descY + i * font.lineHeight, TEXT_COLOR, false);
+        }
+
+        // render profile components
+        int padding = 4;
+        int cursorY = padding + 8;
+        for (ProfileComponent area : profileComponents) {
+            area.render(graphics, font, tlX + ProfileComponent.AREA_X,
+                    tlY + ProfileComponent.AREA_Y + cursorY, mouseX, mouseY, partialTick);
+            cursorY += area.getRequiredHeight() + padding;
+        }
+    }
+    */
+    //?}
 }

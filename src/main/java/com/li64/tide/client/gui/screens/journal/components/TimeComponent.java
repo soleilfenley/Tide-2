@@ -52,7 +52,7 @@ public class TimeComponent extends BarComponent {
         int center = x + ProfileComponent.AREA_WIDTH / 2;
 
         // render empty time bar
-        // //? if >=26.2 {
+        //? if >=26.2 {
         graphics.text(font, TITLE, center - font.width(TITLE) / 2, y, ProfileComponent.TEXT_COLOR, false);
         graphics.blit(RenderPipelines.GUI_TEXTURED, EMPTY_BAR, x + BAR_X, y + BAR_Y, 0, 0, BAR_WIDTH, BAR_HEIGHT, BAR_WIDTH, BAR_HEIGHT, ARGB.white(1f));
         //?} else {

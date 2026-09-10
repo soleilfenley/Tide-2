@@ -1,5 +1,5 @@
 //? if <26.2 {
-package com.li64.tide.compat.hybridaquatic;
+/*package com.li64.tide.compat.hybridaquatic;
 
 import com.li64.tide.registries.entities.misc.fishing.TideFishingHook;
 import dev.hybridlabs.aquatic.entity.fish.StingrayEntity;
@@ -11,20 +11,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 //? if <1.21 {
-/*import dev.hybridlabs.aquatic.entity.HAEntityTypes;
+/^import dev.hybridlabs.aquatic.entity.HAEntityTypes;
 import dev.hybridlabs.aquatic.item.HAItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
-*/ //?}
+^/ //?}
 
 public class HybridAquaticCompat {
         public static Entity convertEntity(ItemEntity itemEntity, Player player, TideFishingHook hook) {
                 Entity newEntity = null;
                 //? if <1.21 {
-                /*
+                /^
                 ItemStack hookItem = hook.getHook();
 
                 if (hookItem.is(HAItems.INSTANCE.getOMINOUS_HOOK().get())) {
@@ -37,14 +37,14 @@ public class HybridAquaticCompat {
                 newEntity = createAndLaunchEntityAtPlayer(creeperType, player, hook.blockPosition());
                 if (newEntity != null) hook.clearHookItem();
                 }
-                */
+                ^/
                 //?}
 
                 return newEntity == null ? itemEntity : newEntity;
         }
 
         //? if <1.21 {
-        /*
+        /^
         private static Entity createAndLaunchEntityAtPlayer(EntityType<?> entityType, Player player, BlockPos pos) {
                 if (player.level() instanceof ServerLevel serverLevel) {
                         Entity entity = entityType.spawn(serverLevel, pos, MobSpawnType.MOB_SUMMONED);
@@ -64,12 +64,12 @@ public class HybridAquaticCompat {
                 }
                 return null;
         }
-        */
+        ^/
         //?}
 
         // Im not sure how to change this appropriately but its probably not needed anymore -Mystic
         //? if <26.2 {
-        /*
+        /^
         public static void applyVariant(Entity entity, ItemStack stack) {
                 if (entity instanceof StingrayEntity stingray) {
                         if (
@@ -80,8 +80,8 @@ public class HybridAquaticCompat {
                         else stingray.setVariant(Type.SPOTTED_EAGLE);
                 }
         }
-        */
+        ^/
         //?}
         
 }
-//?}
+*///?}

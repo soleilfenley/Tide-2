@@ -4,12 +4,16 @@ import com.li64.tide.Tide;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import com.li64.tide.data.fishing.conditions.types.WeatherType;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
@@ -34,9 +38,15 @@ public class WeatherComponent extends ProfileComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int center = x + AREA_WIDTH / 2;
-        graphics.drawString(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
 
         int count = weatherTypes.size();
         int spriteY = y + 12;
@@ -47,10 +57,16 @@ public class WeatherComponent extends ProfileComponent {
             int spriteX = center - ((count - 1) * cellSize / 2) + (i * cellSize) - 4;
 
             int offset = getOffset(weatherTypes.get(i)) * 10;
+            //? if >=26.2 {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, ICONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10, ARGB.white(1f));
+            //?} else {
+            /*
             graphics.blit(ICONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10);
+            */
+            //?}
 
             if (mouseX >= spriteX && mouseX <= spriteX + 10 && mouseY >= spriteY && mouseY <= spriteY + 10)
-                graphics.renderTooltip(font, Component.translatable("journal.info.weather." + weatherTypes.get(i).getSerializedName()), mouseX, mouseY);
+                graphics./*? if >=26.2 {*/setTooltipForNextFrame/*?} else*//*renderTooltip*//*?*/(font, Component.translatable("journal.info.weather." + weatherTypes.get(i).getSerializedName()), mouseX, mouseY);
         }
     }
 

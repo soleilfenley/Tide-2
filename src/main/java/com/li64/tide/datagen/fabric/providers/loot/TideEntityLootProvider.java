@@ -61,7 +61,7 @@ public class TideEntityLootProvider extends TideAbstractLootProvider {
         });
     }
 
-    //? if >= 26.2 {    
+    //? if >= 26.2 {
     protected static AnyOfCondition.Builder shouldSmeltLoot(HolderLookup.Provider registries) {
         HolderLookup.RegistryLookup<Enchantment> registryLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         return AnyOfCondition.anyOf(LootItemEntityPropertyCondition.hasProperties(

@@ -2,9 +2,16 @@ package com.li64.tide.client.gui.screens.journal.components;
 
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+//?} else {
+/*
+import net.minecraft.client.gui.GuiGraphics;
+*/
+//?}
 
 public class LocationComponent extends ProfileComponent {
     private final Component text;
@@ -14,9 +21,15 @@ public class LocationComponent extends ProfileComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int center = x + AREA_WIDTH / 2;
-        graphics.drawString(font, text, center - font.width(text) / 2, y, TEXT_COLOR, false);
+        graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, text, center - font.width(text) / 2, y, TEXT_COLOR, false);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.li64.tide.data.player.CatchTimestamp;
 import com.li64.tide.data.player.FishStats;
 import com.li64.tide.util.TideUtils;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +16,14 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
+
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+//?} else {
+/*
+import net.minecraft.client.gui.GuiGraphics;
+*/
+//?}
 
 public class StatsComponent extends ProfileComponent {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
@@ -56,11 +63,17 @@ public class StatsComponent extends ProfileComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int center = x + AREA_WIDTH / 2;
         int cursorY = 0;
         for (Component line : lines) {
-            graphics.drawString(font, line, center - font.width(line) / 2, y + cursorY, TEXT_COLOR, false);
+            graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, line, center - font.width(line) / 2, y + cursorY, TEXT_COLOR, false);
             cursorY += 11;
         }
     }

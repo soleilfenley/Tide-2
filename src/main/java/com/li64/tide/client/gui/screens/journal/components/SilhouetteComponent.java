@@ -3,16 +3,20 @@ package com.li64.tide.client.gui.screens.journal.components;
 import com.li64.tide.client.gui.screens.journal.FishingJournal;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import com.li64.tide.data.fishing.FishData;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import com.mojang.blaze3d.systems.RenderSystem;
 */
 //?}
+// 
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +30,13 @@ public class SilhouetteComponent extends ProfileComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int centerX = x + AREA_WIDTH / 2;
         int centerY = y + getRequiredHeight() / 2;
 
@@ -40,8 +50,8 @@ public class SilhouetteComponent extends ProfileComponent {
         */
         //?}
         int fishSize = isLarge ? data.profile().altSpriteSize().orElse(16) : 16;
-        final int shadowOffset = 1;
 //
+        // final int shadowOffset = 1;
 //        // set shadow color
 //        graphics.flush();
 //        RenderSystem.setShaderColor(0.8431f, 0.7098f, 0.5804f, 1f);
@@ -55,6 +65,14 @@ public class SilhouetteComponent extends ProfileComponent {
 //                centerY - fishSize / 2 + shadowOffset, fishSize, fishSize);
 
         // setup shader color for silhouette
+        //? if >=26.2 {
+        int silhouetteColor = ARGB.color(255, 215, 181, 148);
+        if (!isLarge) FishingJournal.renderItemSilhouette(graphics, fish, 
+            centerX - fishSize / 2, centerY - fishSize / 2, silhouetteColor);
+        else FishingJournal.renderTextureSilhouette(graphics, alternateTexture, 
+            centerX - fishSize / 2, centerY - fishSize / 2, fishSize, fishSize);
+        //?} else {
+        /*
         graphics.flush();
 //        RenderSystem.setShaderColor(0.8431f, 0.7098f, 0.5804f, 1f); // #d7b694
         RenderSystem.setShaderColor(215 / 255f, 181 / 255f, 148 / 255f, 1f); // #b08561
@@ -68,6 +86,8 @@ public class SilhouetteComponent extends ProfileComponent {
         // reset shader color
         graphics.flush();
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+        */
+        //?}
     }
 
     @Override

@@ -22,7 +22,7 @@ public class HorizontalLineComponent extends ProfileComponent {
     }
 
     @Override
-    //? if >=1.21 {
+    //? if >=26.2 {
     public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, top ? ProfileComponent.LINE_TOP : ProfileComponent.LINE_BOTTOM, x, y + 4, ProfileComponent.AREA_WIDTH, 2);
     //?} else {

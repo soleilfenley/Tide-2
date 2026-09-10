@@ -11,13 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 //?} else {
 /*
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
-import net.minecraft.util.ARGB;
 
 public class RarityComponent extends ProfileComponent {
         //? if >=26.2 {

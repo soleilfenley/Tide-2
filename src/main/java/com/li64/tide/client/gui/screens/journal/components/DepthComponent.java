@@ -2,18 +2,25 @@ package com.li64.tide.client.gui.screens.journal.components;
 
 import com.li64.tide.Tide;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
+
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+
+import org.jetbrains.annotations.NotNull;
+
 //? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.util.ARGB;
 import net.minecraft.resources.Identifier;
 //?} else {
 /*
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 */
 //?}
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+// 
 
 public class DepthComponent extends BarComponent {
     public static final int MIN_Y = -64; // min build height
@@ -37,12 +44,25 @@ public class DepthComponent extends BarComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int center = x + ProfileComponent.AREA_WIDTH / 2;
 
         // render temperature bar
+        //? if >=26.2 {
+        graphics.text(font, TITLE, center - font.width(TITLE) / 2, y, ProfileComponent.TEXT_COLOR, false);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, EMPTY_BAR, x + BAR_X, y + BAR_Y, 0, 0, BAR_WIDTH, BAR_HEIGHT, BAR_WIDTH, BAR_HEIGHT, ARGB.white(1f));
+        //?} else {
+        /*
         graphics.drawString(font, TITLE, center - font.width(TITLE) / 2, y, ProfileComponent.TEXT_COLOR, false);
         graphics.blit(EMPTY_BAR, x + BAR_X, y + BAR_Y, 0, 0, BAR_WIDTH, BAR_HEIGHT, BAR_WIDTH, BAR_HEIGHT);
+        */
+        //?}
         renderFilledBar(DEPTH_BAR, graphics, x + BAR_X, y + BAR_Y, minDepth, maxDepth);
 
         // render temperature mouse cursor
@@ -50,8 +70,15 @@ public class DepthComponent extends BarComponent {
                 && mouseY >= y + BAR_Y && mouseY <= y + BAR_Y + BAR_HEIGHT) {
             float depthFloat = Mth.clamp((float) (mouseX - (x + BAR_X)) / BAR_WIDTH, 0f, 1f);
             int depthMeters = Math.abs(floatToDepth(depthFloat) - MAX_Y);
+            //? if >=26.2 {
+            graphics.setTooltipForNextFrame(font, Component.literal(depthMeters + " m"), mouseX, y + BAR_Y);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, CURSOR, mouseX - 1, y + BAR_Y, 0, 0, 3, 9, 3, 9, ARGB.white(1f));
+            //?} else {
+            /*
             graphics.renderTooltip(font, Component.literal(depthMeters + " m"), mouseX, y + BAR_Y);
             graphics.blit(CURSOR, mouseX - 1, y + BAR_Y, 0, 0, 3, 9, 3, 9);
+            */
+            //?}
         }
     }
 

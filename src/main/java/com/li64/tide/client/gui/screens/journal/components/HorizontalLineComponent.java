@@ -3,8 +3,15 @@ package com.li64.tide.client.gui.screens.journal.components;
 import com.li64.tide.client.gui.screens.journal.ProfileComponent;
 import com.li64.tide.util.TideUtils;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import org.jetbrains.annotations.NotNull;
+
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+//?} else {
+/*
+import net.minecraft.client.gui.GuiGraphics;
+*/
+//?}
 
 public class HorizontalLineComponent extends ProfileComponent {
     private final boolean top;

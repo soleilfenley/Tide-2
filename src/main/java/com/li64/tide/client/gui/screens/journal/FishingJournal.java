@@ -9,6 +9,8 @@ import com.li64.tide.data.player.TidePlayerData;
 import com.li64.tide.network.messages.ReadProfileMsg;
 import com.li64.tide.registries.TideSoundEvents;
 import com.li64.tide.util.TideUtils;
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -26,15 +28,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 //? if >=26.2 {
+import com.li64.tide.mixin.ItemFeatureRendererMixin;
+
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.SubmitNodeStorage;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.LightCoordsUtil;
 //?} else {
 /*
 import com.li64.tide.client.TideCoreShaders;
@@ -392,8 +398,8 @@ public class FishingJournal extends Screen {
                                 FishData data = FishData.get(stack).orElse(null);
                                 if (data != null) {
                                         // TODO: render rarity in a tooltip
-                                        int numStars = data.profile().rarity().getNumStars();
-                                        Component stars = Component.literal("* ".repeat(numStars).stripTrailing());
+                                        //int numStars = data.profile().rarity().getNumStars();
+                                        //Component stars = Component.literal("* ".repeat(numStars).stripTrailing());
                                         //graphics.renderTooltip(this.font, stars, mouseX, mouseY);
                                 }
                                 if (hasNote && didClick && !updatePage) {
@@ -571,8 +577,26 @@ public class FishingJournal extends Screen {
         
         //? if >=26.2 {
         public static void renderItemSilhouette(GuiGraphicsExtractor graphics, ItemStack stack, int x, int y, int color) {
-                // TODO(26.2): restore renderItemSilhouette's original functionality.
-                graphics.item(stack, x, y);
+                Minecraft minecraft = Minecraft.getInstance();
+                ItemModelResolver resolver = minecraft.getItemModelResolver();
+                ItemStackRenderState state = new ItemStackRenderState();
+                resolver.updateForTopItem(state, stack, ItemDisplayContext.GUI, minecraft.level, null, 0);
+
+                if (state.isEmpty()) return;
+
+                PoseStack poseStack = new PoseStack();
+                poseStack.pushPose();
+                poseStack.translate(x + 8f, y + 8f, 150f);
+                poseStack.scale(16.0f, -16.0f, 16.0f);
+                poseStack.translate(-0.5f, -0.5f, -0.5f);
+
+                SubmitNodeStorage storage = new SubmitNodeStorage();
+                ItemFeatureRendererMixin.pushSilhouetteColor(color);
+                try {
+                        state.submit(poseStack, storage, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
+                } finally {
+                        ItemFeatureRendererMixin.popSilhouetteColor();
+                }
         }
         //?} else {
         /*

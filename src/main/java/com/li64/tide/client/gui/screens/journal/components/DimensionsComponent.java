@@ -6,21 +6,26 @@ import com.li64.tide.data.fishing.conditions.FishingCondition;
 import com.li64.tide.data.fishing.conditions.types.DimensionsCondition;
 import com.li64.tide.data.fishing.conditions.types.FishingMediumCondition;
 import com.li64.tide.data.fishing.mediums.FishingMedium;
+
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
-import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.world.level.Level;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+//? if >=26.2 {
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.util.ARGB;
+import net.minecraft.resources.Identifier;
+//?} else {
+/*
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+*/
+//?}
 
 public class DimensionsComponent extends ProfileComponent {
         //? if >=26.2 {
@@ -47,9 +52,15 @@ public class DimensionsComponent extends ProfileComponent {
     }
 
     @Override
+    //? if >=26.2 {
+    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    //?} else {
+    /*
     public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+    */
+    //?}
         int center = x + AREA_WIDTH / 2;
-        graphics.drawString(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
 
         int count = dimensions.size();
         int spriteY = y + 12;
@@ -60,11 +71,19 @@ public class DimensionsComponent extends ProfileComponent {
             int spriteX = center - ((count - 1) * cellSize / 2) + (i * cellSize) - 4;
 
             int offset = getOffset(dimensions.get(i));
-            graphics.blit(DIMENSIONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10);
 
-            if (mouseX >= spriteX && mouseX <= spriteX + 10 && mouseY >= spriteY && mouseY <= spriteY + 10)
             //? if >=26.2 {
-            graphics.renderTooltip(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).identifier().getPath()), mouseX, mouseY);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, DIMENSIONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10, ARGB.white(1f));
+            //?} else {
+            /*
+            graphics.blit(DIMENSIONS, spriteX, spriteY, offset, 0, 10, 10, 30, 10);
+            */
+            //?}
+            
+            if (mouseX >= spriteX && mouseX <= spriteX + 10 && mouseY >= spriteY && mouseY <= spriteY + 10)
+            
+            //? if >=26.2 {
+            graphics.setTooltipForNextFrame(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).identifier().getPath()), mouseX, mouseY);
             //?} else {
             /*
             graphics.renderTooltip(font, Component.translatable("journal.info.dimensions." + dimensions.get(i).location().getPath()), mouseX, mouseY);

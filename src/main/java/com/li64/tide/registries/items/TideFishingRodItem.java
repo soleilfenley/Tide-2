@@ -431,9 +431,17 @@ public class TideFishingRodItem extends FishingRodItem {
         // return CustomRodManager.getLine(rod).is(TideItems.BRAIDED_LINE) ? 15 : 25;
     }
 
-    public @NotNull /*? if >=26.2 {*/ItemUseAnimation/*?} else {*//*UseAnim*//*?}*/ getUseAnimation(@NotNull ItemStack stack) {
-        return /*? if >=26.2 {*/ItemUseAnimation/*?} else {*//*UseAnim*//*?}*/.BOW;
+    //? if >=26.2 {
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+        return ItemUseAnimation.BOW;
     }
+    //?} else {
+    /*
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
+        return UseAnim.BOW;
+    }
+    */
+    //?}
 
     public void onItemBroken(ItemStack stack, ServerPlayer player) {
         List<ItemStack> accessories = CustomRodManager.getAccessoryList(stack);

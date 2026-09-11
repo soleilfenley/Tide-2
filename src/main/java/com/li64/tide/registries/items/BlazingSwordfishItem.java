@@ -12,7 +12,13 @@ import net.minecraft.world.item.Tiers;
 //?}
 
 public class BlazingSwordfishItem extends SwordfishItem {
-    public BlazingSwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/ tier, int damageMod, float speedMod, Properties properties) {
+                //? if >=26.2 {
+                public BlazingSwordfishItem(ToolMaterial tier, int damageMod, float speedMod, Properties properties) {
+                //?} else {
+                /*
+                public BlazingSwordfishItem(Tiers tier, int damageMod, float speedMod, Properties properties) {
+                */
+                //?}
         super(tier, damageMod, speedMod, properties);
     }
 

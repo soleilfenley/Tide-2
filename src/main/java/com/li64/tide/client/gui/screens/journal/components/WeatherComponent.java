@@ -46,7 +46,13 @@ public class WeatherComponent extends ProfileComponent {
     */
     //?}
         int center = x + AREA_WIDTH / 2;
-        graphics./*? if >=26.2 {*/text/*?} else {*//*drawString*//*?}*/(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        //? if >=26.2 {
+        graphics.text(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        //?} else {
+        /*
+        graphics.drawString(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        */
+        //?}
 
         int count = weatherTypes.size();
         int spriteY = y + 12;
@@ -66,7 +72,13 @@ public class WeatherComponent extends ProfileComponent {
             //?}
 
             if (mouseX >= spriteX && mouseX <= spriteX + 10 && mouseY >= spriteY && mouseY <= spriteY + 10)
-                graphics./*? if >=26.2 {*/setTooltipForNextFrame/*?} else {*//*renderTooltip*//*?}*/(font, Component.translatable("journal.info.weather." + weatherTypes.get(i).getSerializedName()), mouseX, mouseY);
+            //? if >=26.2 {
+            graphics.setTooltipForNextFrame(font, Component.translatable("journal.info.weather." + weatherTypes.get(i).getSerializedName()), mouseX, mouseY);
+            //?} else {
+            /*
+            graphics.renderTooltip(font, Component.translatable("journal.info.weather." + weatherTypes.get(i).getSerializedName()), mouseX, mouseY);
+            */
+            //?}
         }
     }
 

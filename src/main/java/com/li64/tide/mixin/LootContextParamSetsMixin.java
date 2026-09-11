@@ -34,7 +34,13 @@ public class LootContextParamSetsMixin {
         //?}
 
     @Inject(at = @At(value = "HEAD"), method = "register", cancellable = true)
-    private static void register(String registryName, Consumer</*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/.Builder> builderConsumer, CallbackInfoReturnable</*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/> cir) {
+    //? if >=26.2 {
+    private static void register(String registryName, Consumer<ContextKeySet.Builder> builderConsumer, CallbackInfoReturnable<ContextKeySet> cir) {
+    //?} else {
+    /*
+    private static void register(String registryName, Consumer<LootContextParamSet.Builder> builderConsumer, CallbackInfoReturnable<LootContextParamSet> cir) {
+    */
+    //?}
         if (registryName.matches("fishing")) {
             builderConsumer = builder -> {
                 builder.required(LootContextParams.ORIGIN)
@@ -42,17 +48,23 @@ public class LootContextParamSetsMixin {
                         .optional(LootContextParams.THIS_ENTITY)
                         .optional(LootContextParams.BLOCK_STATE); // This entire mixin is just to add this line :(
             };
-            /*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/.Builder builder = new /*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/.Builder();
-            builderConsumer.accept(builder);
-            /*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/ paramSet = builder.build();
+
             //? if >=26.2 {
+            ContextKeySet.Builder builder = new ContextKeySet.Builder();
+            builderConsumer.accept(builder);
+            ContextKeySet paramSet = builder.build();
             Identifier registry = Tide.resource("minecraft", registryName);
+            ContextKeySet newParamSet = REGISTRY.put(registry, paramSet);
             //?} else {
             /*
+            LootContextParamSet.Builder builder = new LootContextParamSet.Builder();
+            builderConsumer.accept(builder);
+            LootContextParamSet paramSet = builder.build();
             ResourceLocation registry = Tide.resource("minecraft", registryName);
+            LootContextParamSet newParamSet = REGISTRY.put(registry, paramSet);
             */
             //?}
-            /*? if >=26.2 {*/ContextKeySet/*?} else {*//*LootContextParamSet*//*?}*/ newParamSet = REGISTRY.put(registry, paramSet);
+            
             if (newParamSet != null) {
                 throw new IllegalStateException("Loot table parameter set " + registry + " is already registered");
             } else {

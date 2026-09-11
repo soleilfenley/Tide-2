@@ -26,57 +26,63 @@ import net.minecraft.client.gui.GuiGraphics;
 //?}
 
 public class StatsComponent extends ProfileComponent {
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-
-    private final List<Component> lines;
-
-    public StatsComponent(FishStats stats) {
-        ImmutableList.Builder<Component> builder = ImmutableList.builder();
-        // add total caught
-        builder.add(Component.translatable("journal.info.stats.total", stats.getAmountCaught()));
-
-        if (!stats.isEmpty()) {
-            // add timestamp
-            if (stats.getInitialCatchDate().isPresent()) {
-                CatchTimestamp timestamp = stats.getInitialCatchDate().get();
-                Component formatted;
-
-                if (Tide.CLIENT_CONFIG.journal.useRealDate) {
-                    Instant instant = timestamp.date();
-                    ZonedDateTime localTime = instant.atZone(ZoneId.systemDefault());
-                    formatted = Component.literal(localTime.format(DATE_FORMAT));
+        private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        
+        private final List<Component> lines;
+        
+        public StatsComponent(FishStats stats) {
+                ImmutableList.Builder<Component> builder = ImmutableList.builder();
+                // add total caught
+                builder.add(Component.translatable("journal.info.stats.total", stats.getAmountCaught()));
+        
+                if (!stats.isEmpty()) {
+                // add timestamp
+                if (stats.getInitialCatchDate().isPresent()) {
+                        CatchTimestamp timestamp = stats.getInitialCatchDate().get();
+                        Component formatted;
+        
+                        if (Tide.CLIENT_CONFIG.journal.useRealDate) {
+                        Instant instant = timestamp.date();
+                        ZonedDateTime localTime = instant.atZone(ZoneId.systemDefault());
+                        formatted = Component.literal(localTime.format(DATE_FORMAT));
+                        }
+                        else formatted = Component.translatable("journal.info.stats.day", (int)(timestamp.ticks() / 24000L));
+        
+                        builder.add(Component.translatable("journal.info.stats.first", formatted));
                 }
-                else formatted = Component.translatable("journal.info.stats.day", (int)(timestamp.ticks() / 24000L));
-
-                builder.add(Component.translatable("journal.info.stats.first", formatted));
-            }
-
-            // add largest/smallest catch
-            if (stats.getLargestCatch() > 0.0) {
-                builder.add(Component.translatable("journal.info.stats.largest",
-                        TideUtils.getFormattedLength(stats.getLargestCatch())));
-                builder.add(Component.translatable("journal.info.stats.smallest",
-                        TideUtils.getFormattedLength(stats.getSmallestCatch())));
-            }
+        
+                // add largest/smallest catch
+                if (stats.getLargestCatch() > 0.0) {
+                        builder.add(Component.translatable("journal.info.stats.largest",
+                                TideUtils.getFormattedLength(stats.getLargestCatch())));
+                        builder.add(Component.translatable("journal.info.stats.smallest",
+                                TideUtils.getFormattedLength(stats.getSmallestCatch())));
+                }
+                }
+                this.lines = builder.build();
         }
-        this.lines = builder.build();
-    }
 
-    @Override
-    //? if >=26.2 {
-    public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
-    //?} else {
-    /*
-    public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
-    */
-    //?}
-        int center = x + AREA_WIDTH / 2;
-        int cursorY = 0;
-        for (Component line : lines) {
-            graphics./*? if >=26.2 {*/text/*?} else {*//*drawString*//*?}*/(font, line, center - font.width(line) / 2, y + cursorY, TEXT_COLOR, false);
-            cursorY += 11;
+        @Override
+        //? if >=26.2 {
+        public void render(@NotNull GuiGraphicsExtractor graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+        //?} else {
+        /*
+        public void render(@NotNull GuiGraphics graphics, Font font, int x, int y, int mouseX, int mouseY, float partialTick) {
+        */
+        //?}
+                int center = x + AREA_WIDTH / 2;
+                int cursorY = 0;
+                for (Component line : lines) {
+                        //? if >=26.2 {
+                        graphics.text(font, line, center - font.width(line) / 2, y, TEXT_COLOR, false);
+                        //?} else {
+                        /*
+                        graphics.drawString(font, line, center - font.width(line) / 2, y, TEXT_COLOR, false);
+                        */
+                        //?}
+                        cursorY += 11;
+                }
         }
-    }
 
     @Override
     public int getRequiredHeight() {

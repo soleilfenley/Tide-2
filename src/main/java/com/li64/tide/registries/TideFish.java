@@ -1041,72 +1041,84 @@ public class TideFish {
             .build();
 
     public static final Item SAILFISH = new Builder("sailfish")
-            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 2, -3.0f, properties))
-            .food(TideFoods.BIG_RAW_FISH)
-            .cookedItem(TideItems.LARGE_COOKED_FISH)
-            .fishData(builder -> builder
-                    .size(180.0, 270.0, 380.0)
-                    .strength(0.8f)
-                    .speed(1.4f)
-                    .behavior(MinigameBehavior.DARTS)
-                    .selectionWeight(8)
-                    .temperature(0.7f, 0.5f)
-                    .saltwater()
-                    .overworld()
-                    .water()
-                    .surface()
-                    .journalLocation("journal.info.location.saltwater")
-                    .journalAltSprite(48)
-                    .journalGroup(JournalGroup.SALTWATER)
-                    .journalRarity(FishRarity.RARE)
-                    .displayData(display -> display
-                            .shape(FishDisplayShape.SHAPE_3x1)
-                            .offsets(-0.06f, -0.15f, 0f))
-            )
-            .entityData(FishEntityData.of(
-                    SmoothSwimmingFish::new,
-                    builder -> builder
-                            .sized(1.25f, 0.65f)
-                            .clientTrackingRange(4),
-                    Mob.createMobAttributes()
-                            .add(Attributes.MAX_HEALTH, 10.0f)
-                            .add(Attributes.MOVEMENT_SPEED, 1.3f)
-            ))
-            .build();
+                //? if >=26.2 {
+                .item(properties -> new SwordfishItem(ToolMaterial.IRON, 2, -3.0f, properties))
+                //?} else {
+                /*
+                .item(properties -> new SwordfishItem(Tiers.IRON, 2, -3.0f, properties))
+                */
+                //?}
+                .food(TideFoods.BIG_RAW_FISH)
+                .cookedItem(TideItems.LARGE_COOKED_FISH)
+                .fishData(builder -> builder
+                        .size(180.0, 270.0, 380.0)
+                        .strength(0.8f)
+                        .speed(1.4f)
+                        .behavior(MinigameBehavior.DARTS)
+                        .selectionWeight(8)
+                        .temperature(0.7f, 0.5f)
+                        .saltwater()
+                        .overworld()
+                        .water()
+                        .surface()
+                        .journalLocation("journal.info.location.saltwater")
+                        .journalAltSprite(48)
+                        .journalGroup(JournalGroup.SALTWATER)
+                        .journalRarity(FishRarity.RARE)
+                        .displayData(display -> display
+                        .shape(FishDisplayShape.SHAPE_3x1)
+                        .offsets(-0.06f, -0.15f, 0f))
+                )
+                .entityData(FishEntityData.of(
+                        SmoothSwimmingFish::new,
+                        builder -> builder
+                                .sized(1.25f, 0.65f)
+                                .clientTrackingRange(4),
+                        Mob.createMobAttributes()
+                                .add(Attributes.MAX_HEALTH, 10.0f)
+                                .add(Attributes.MOVEMENT_SPEED, 1.3f)
+                ))
+                .build();
 
     public static final Item SWORDFISH = new Builder("swordfish")
-            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 3, -2.8f, properties))
-            .food(TideFoods.BIG_RAW_FISH)
-            .cookedItem(TideItems.LARGE_COOKED_FISH)
-            .fishData(builder -> builder
-                    .size(180.0, 290.0, 455.0)
-                    .strength(0.8f)
-                    .speed(1.4f)
-                    .behavior(MinigameBehavior.DARTS)
-                    .selectionWeight(8)
-                    .temperature(0.6f, 0.5f)
-                    .saltwater()
-                    .overworld()
-                    .water()
-                    .surface()
-                    .journalLocation("journal.info.location.saltwater")
-                    .journalAltSprite(48)
-                    .journalGroup(JournalGroup.SALTWATER)
-                    .journalRarity(FishRarity.RARE)
-                    .displayData(display -> display
-                            .shape(FishDisplayShape.SHAPE_3x1)
-                            .offsets(-0.06f, -0.15f, 0f))
-            )
-            .entityData(FishEntityData.of(
-                    SmoothSwimmingFish::new,
-                    builder -> builder
-                            .sized(1.3f, 0.6f)
-                            .clientTrackingRange(4),
-                    Mob.createMobAttributes()
-                            .add(Attributes.MAX_HEALTH, 12.0f)
-                            .add(Attributes.MOVEMENT_SPEED, 1.32f)
-            ))
-            .build();
+                //? if >=26.2 {
+                .item(properties -> new SwordfishItem(ToolMaterial.IRON, 3, -2.8f, properties))
+                //?} else {
+                /*
+                .item(properties -> new SwordfishItem(Tiers.IRON, 3, -2.8f, properties))
+                */
+                //?}
+                .food(TideFoods.BIG_RAW_FISH)
+                .cookedItem(TideItems.LARGE_COOKED_FISH)
+                .fishData(builder -> builder
+                        .size(180.0, 290.0, 455.0)
+                        .strength(0.8f)
+                        .speed(1.4f)
+                        .behavior(MinigameBehavior.DARTS)
+                        .selectionWeight(8)
+                        .temperature(0.6f, 0.5f)
+                        .saltwater()
+                        .overworld()
+                        .water()
+                        .surface()
+                        .journalLocation("journal.info.location.saltwater")
+                        .journalAltSprite(48)
+                        .journalGroup(JournalGroup.SALTWATER)
+                        .journalRarity(FishRarity.RARE)
+                        .displayData(display -> display
+                                .shape(FishDisplayShape.SHAPE_3x1)
+                                .offsets(-0.06f, -0.15f, 0f))
+                )
+                .entityData(FishEntityData.of(
+                        SmoothSwimmingFish::new,
+                        builder -> builder
+                                .sized(1.3f, 0.6f)
+                                .clientTrackingRange(4),
+                        Mob.createMobAttributes()
+                                .add(Attributes.MAX_HEALTH, 12.0f)
+                                .add(Attributes.MOVEMENT_SPEED, 1.32f)
+                ))
+                .build();
     
     public static final Item MANTA_RAY = new Builder("manta_ray")
             .food(TideFoods.BIG_RAW_FISH)
@@ -2575,7 +2587,7 @@ public class TideFish {
             ))
             .build();
 
-    public static final Item CRIMSON_FANGJAW = new Builder("crimson_fangjaw")
+        public static final Item CRIMSON_FANGJAW = new Builder("crimson_fangjaw")
             .food(TideFoods.FIERY_FISH)
             .fireproof()
             .fishData(builder -> builder
@@ -2603,7 +2615,7 @@ public class TideFish {
             ))
             .build();
 
-    public static final Item SOULSCALE = new Builder("soulscale")
+        public static final Item SOULSCALE = new Builder("soulscale")
             .food(TideFoods.FIERY_FISH)
             .fireproof()
             .fishData(builder -> builder
@@ -2631,7 +2643,7 @@ public class TideFish {
             ))
             .build();
 
-    public static final Item WITHERFIN = new Builder("witherfin")
+        public static final Item WITHERFIN = new Builder("witherfin")
             .food(TideFoods.RAW_FISH.withEffects(List.of(new TideFoods.FoodEffect(
                     new MobEffectInstance(MobEffects.WITHER, 140, 3), 1.0f))))
             .fireproof()
@@ -2661,38 +2673,44 @@ public class TideFish {
             ))
             .build();
 
-    public static final Item BLAZING_SWORDFISH = new Builder("blazing_swordfish")
-            .item(properties -> new BlazingSwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 4, -2.8f, properties))
-            .food(TideFoods.BIG_FIERY_FISH)
-            .fireproof()
-            .fishData(builder -> builder
-                    .size(180.0, 290.0, 455.0)
-                    .strength(0.85f)
-                    .speed(1.48f)
-                    .selectionWeight(5)
-                    .selectionQuality(0.5)
-                    .nether()
-                    .medium(FishingMedium.LAVA)
-                    .journalLocation("journal.info.location.lava")
-                    .journalAltSprite(48)
-                    .journalGroup(JournalGroup.LAVA)
-                    .journalRarity(FishRarity.VERY_RARE)
-                    .displayData(display -> display
-                            .shape(FishDisplayShape.SHAPE_3x1)
-                            .offsets(-0.06f, -0.15f, 0f))
-            )
-            .entityData(FishEntityData.of(
-                    BlazingSwordfish::new,
-                    builder -> builder
-                            .sized(1.3f, 0.6f)
-                            .clientTrackingRange(4),
-                    Mob.createMobAttributes()
-                            .add(Attributes.MAX_HEALTH, 15.0f)
-                            .add(Attributes.MOVEMENT_SPEED, 1.3f),
-                    (type, properties) -> new MobBucketItem(
-                            type, Fluids.LAVA, SoundEvents.BUCKET_EMPTY_LAVA, properties)
-            ))
-            .build();
+        public static final Item BLAZING_SWORDFISH = new Builder("blazing_swordfish")
+                //? if >=26.2 {
+                .item(properties -> new BlazingSwordfishItem(ToolMaterial.IRON, 4, -2.8f, properties))
+                //?} else {
+                /*
+                .item(properties -> new BlazingSwordfishItem(Tiers.IRON, 4, -2.8f, properties))
+                */
+                //?}
+                .food(TideFoods.BIG_FIERY_FISH)
+                .fireproof()
+                .fishData(builder -> builder
+                        .size(180.0, 290.0, 455.0)
+                        .strength(0.85f)
+                        .speed(1.48f)
+                        .selectionWeight(5)
+                        .selectionQuality(0.5)
+                        .nether()
+                        .medium(FishingMedium.LAVA)
+                        .journalLocation("journal.info.location.lava")
+                        .journalAltSprite(48)
+                        .journalGroup(JournalGroup.LAVA)
+                        .journalRarity(FishRarity.VERY_RARE)
+                        .displayData(display -> display
+                                .shape(FishDisplayShape.SHAPE_3x1)
+                                .offsets(-0.06f, -0.15f, 0f))
+                )
+                .entityData(FishEntityData.of(
+                        BlazingSwordfish::new,
+                        builder -> builder
+                                .sized(1.3f, 0.6f)
+                                .clientTrackingRange(4),
+                        Mob.createMobAttributes()
+                                .add(Attributes.MAX_HEALTH, 15.0f)
+                                .add(Attributes.MOVEMENT_SPEED, 1.3f),
+                        (type, properties) -> new MobBucketItem(
+                                type, Fluids.LAVA, SoundEvents.BUCKET_EMPTY_LAVA, properties)
+                ))
+                .build();
 
     // End fish
 

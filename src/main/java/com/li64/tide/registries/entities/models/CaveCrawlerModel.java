@@ -9,7 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 
 //? if >=26.2 {
-import com.li64.tide.registries.entities.renderers.FishRenderState;
+import com.li64.tide.client.renderer.state.FishRenderState;
 //?}
 
 public class CaveCrawlerModel extends FishModel {

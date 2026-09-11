@@ -1,8 +1,8 @@
-package com.li64.tide.registries.entities.renderers;
-
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+package com.li64.tide.client.renderer.state;
 
 //? if >=26.2 {
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+
 public class FishRenderState extends LivingEntityRenderState {
         public boolean isInLava;
         public float partialTick;

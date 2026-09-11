@@ -102,12 +102,16 @@ public record FishDisplayRenderer(
                                 );
                         }
                         if (entity != null) {
+                                //?if <26.2 {
+                                /*
                                 if (
                                         CompatHelper.isHybridAquaticLoaded()
                                 ) CompatHelper.hybridAquaticApplyVariant(
                                         entity,
                                         display.getDisplayStack()
                                 );
+                                */
+                                //?}
                                 entity.xRotO = entity.getXRot();
                                 entity.yRotO = entity.getYRot();
                         }

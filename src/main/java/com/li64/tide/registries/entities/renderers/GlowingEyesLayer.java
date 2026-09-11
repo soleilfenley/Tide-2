@@ -3,17 +3,35 @@ package com.li64.tide.registries.entities.renderers;
 import com.li64.tide.registries.entities.models.FishModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 
 //? if >=26.2 {
+import com.li64.tide.client.renderer.state.FishRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 //?} else {
 /*
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.entity.Mob;
 */
 //?}
 
+//? if >=26.2 {
+public class GlowingEyesLayer<M extends FishModel> extends EyesLayer<FishRenderState, M> {
+    private final RenderType eyeRenderType;
+
+    public GlowingEyesLayer(RenderLayerParent<FishRenderState, M> parent, Identifier eyeTexture) {
+        super(parent);
+        this.eyeRenderType = RenderTypes.beaconBeam(eyeTexture, true);
+    }
+
+    public @NotNull RenderType renderType() {
+            return eyeRenderType;
+        }
+}
+//?} else {
+/*
 public class GlowingEyesLayer<M extends FishModel> extends EyesLayer<Mob, M> {
     private final RenderType eyeRenderType;
 
@@ -27,3 +45,5 @@ public class GlowingEyesLayer<M extends FishModel> extends EyesLayer<Mob, M> {
             return eyeRenderType;
         }
 }
+*/
+//?}

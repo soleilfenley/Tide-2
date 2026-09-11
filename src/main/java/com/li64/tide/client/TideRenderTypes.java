@@ -1,10 +1,14 @@
 package com.li64.tide.client;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+
 //? if >=26.2 {
 import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.ColorTargetState;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
@@ -12,9 +16,7 @@ import net.minecraft.resources.Identifier;
 //?} else {
 /*
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.resources.ResourceLocation;

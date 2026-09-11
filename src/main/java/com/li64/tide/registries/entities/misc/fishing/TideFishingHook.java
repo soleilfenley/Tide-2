@@ -647,9 +647,13 @@ public class TideFishingHook extends Projectile {
                         double dz = player.getZ() - this.getZ();
 
                         entity.setDeltaMovement(dx * 0.1, dy * 0.11 + Math.sqrt(Math.sqrt(dx * dx + dy * dy + dz * dz)) * 0.08, dz * 0.1);
+                        //?if <26.2 {
+                        /*
                         if (CompatHelper.isHybridAquaticLoaded() && entity instanceof ItemEntity itemEntity) {
                             entity = CompatHelper.hybridAquaticPullEntity(itemEntity, player, this);
                         }
+                        */
+                        //?}
                         if (Tide.PLATFORM.isModLoaded("fishingreal") && entity instanceof ItemEntity) {
                             //? if forge || neoforge {
                             /*// fishing real handles catches automatically on neo/forge

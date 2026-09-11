@@ -2,7 +2,6 @@ package com.li64.tide.compat;
 
 import com.li64.tide.Tide;
 import com.li64.tide.compat.fishingreal.FishingRealCompat;
-import com.li64.tide.compat.hybridaquatic.HybridAquaticCompat;
 import com.li64.tide.registries.entities.misc.fishing.HookAccessor;
 import com.li64.tide.registries.entities.misc.fishing.TideFishingHook;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +14,10 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//?if <26.2 {
+import com.li64.tide.compat.hybridaquatic.HybridAquaticCompat;
+//?}
 
 //? if fabric {
 import com.li64.tide.compat.accessories.TrinketsCompat;

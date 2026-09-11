@@ -20,6 +20,9 @@ import java.util.function.Supplier;
 /*
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.Util;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 
 import java.util.EnumMap;
 import java.util.List;

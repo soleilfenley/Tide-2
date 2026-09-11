@@ -27,10 +27,13 @@ import net.minecraft.resources.ResourceLocation;
 //? if >=26.2 {
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 //?} elif >= 1.21 {
 /*
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SwordItem;
 */
 //?} else {
 /*

@@ -105,6 +105,70 @@ public class FishRenderer<M extends FishModel> extends MobRenderer<Mob, FishRend
                 return this.model.tint();
         }
 }
+//?} elif >= 1.21 {
+/*
+public class FishRenderer<M extends FishModel> extends MobRenderer<Mob, FishModel> {
+        private final ResourceLocation texLocation;
+        private final double xTiltScale;
+        private final float swimAnimSpeed;
+        private final float swimAnimScale;
+        private final boolean renderTranslucent;
+        
+        public FishRenderer(String key, M model, EntityRendererProvider.Context context) {
+                super(context, model, model.shadowRadius());
+                this.texLocation = Tide.resource("textures/entity/fish/" + key + ".png");
+                this.xTiltScale = model.xTiltScale();
+                this.swimAnimSpeed = model.swimAnimSpeed();
+                this.swimAnimScale = model.swimAnimScale();
+                this.renderTranslucent = model.renderTranslucent();
+        }
+
+        public @NotNull ResourceLocation getTextureLocation() {
+                return this.texLocation;
+        }
+        
+        @Override
+        public @NotNull ResourceLocation getTextureLocation(@NotNull Mob entity) {
+                return this.getTextureLocation();
+        }
+        
+        @Override
+        protected void setupRotations(Mob fish, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
+                super.setupRotations(fish, poseStack, bob, yBodyRot, partialTick, scale);
+                float f = swimAnimScale * 4.3f * Mth.sin(swimAnimSpeed * (fish.tickCount + partialTick));
+                poseStack.mulPose(Axis.YP.rotationDegrees(f));
+                if (!(fish.isInWaterOrBubble() || fish.isInLava()) && flipInAir()) {
+                poseStack.translate(0.1f, 0.1f, -0.1f);
+                poseStack.mulPose(Axis.ZP.rotationDegrees(90f));
+                }
+                else {
+                // temp workaround for a bug with alex's caves
+                float tilt = Mth.clamp((float) (fish.getDeltaMovement().y() * 1.5 * xTiltScale), -Mth.HALF_PI, Mth.HALF_PI);
+                if (Tide.PLATFORM.isModLoaded("alexscaves")) poseStack.mulPose(Axis.XP.rotation(tilt));
+                else {
+                        fish.setXRot(tilt);
+                        poseStack.mulPose(Axis.XP.rotation(Mth.lerp(partialTick, fish.xRotO, fish.getXRot())));
+                }
+                }
+        }
+        
+        private boolean flipInAir() {
+                return model.flipInAir();
+        }
+        
+        @Override
+        protected @Nullable RenderType getRenderType(@NotNull Mob fish, boolean isVisible, boolean renderTranslucent, boolean appearsGlowing) {
+                ResourceLocation texture = this.getTextureLocation(fish);
+                if (this.renderTranslucent) return RenderType.entityTranslucent(texture);
+                return super.getRenderType(fish, isVisible, renderTranslucent, appearsGlowing);
+        }
+        
+        @Override
+        protected int getBlockLightLevel(@NotNull Mob fish, @NotNull BlockPos pos) {
+                return Math.max(super.getBlockLightLevel(fish, pos), model.brightnessOverride());
+        }
+}
+*/
 //?} else {
 /*
 public class FishRenderer<M extends FishModel> extends MobRenderer<Mob, FishModel> {

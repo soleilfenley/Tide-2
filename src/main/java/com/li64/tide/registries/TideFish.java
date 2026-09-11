@@ -30,7 +30,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.material.Fluids;
 
-//? if >=1.21 {
+//? if >=26.2 {
 import net.minecraft.world.item.ToolMaterial;
 //?}
 

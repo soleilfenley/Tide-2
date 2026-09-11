@@ -62,7 +62,7 @@ public class TideLootFunctions {
     public static final LootItemFunctionType<RandomizeFishLengthFunction> RANDOMIZE_FISH_LENGTH = register(
             "randomize_fish_length", new LootItemFunctionType<>(RandomizeFishLengthFunction.CODEC));
 
-    public static <T extends LootItemFunction> LootItemFunctionType<T> register(String key,LootItemFunctionTyp<T> type) {
+    public static <T extends LootItemFunction> LootItemFunctionType<T> register(String key,LootItemFunctionType<T> type) {
         LOOT_FUNCTIONS.put(key, type);
         return Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, Tide.resource(key), type);
     }

@@ -52,7 +52,7 @@ public class SonarOverlay {
         graphics.setColor(1f, 1f, 1f, alpha);
 
         /*? if >=1.21 {*/graphics.blitSprite(SLOT_BACKGROUND_SPRITE, x - 4, y - 4, 24, 24);
-        /*?} else*//*graphics.blit(SLOT_BACKGROUND_SPRITE, x - 4, y - 4, 0, 0, 24, 24, 24, 24);*/
+        /*?} else {*//*graphics.blit(SLOT_BACKGROUND_SPRITE, x - 4, y - 4, 0, 0, 24, 24, 24, 24);*//*?}*/
         graphics.renderItem(stack, x, y);
 
         RenderSystem.disableBlend();

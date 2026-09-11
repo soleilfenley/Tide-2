@@ -53,7 +53,7 @@ public class TideFoods {
             FoodProperties.Builder builder = new FoodProperties.Builder()
                     .nutrition(nutrition())
                     /*? if >=1.21 {*/.saturationModifier(saturation());
-                    /*?} else*//*.saturationMod(saturation());*/
+                    /*?} else {*//*.saturationMod(saturation());*//*?}*/
 
             if (fast()) builder.fast();
             if (alwaysEdible()) builder/*? if >=1.21 {*/.alwaysEdible()/*?} else {*//*.alwaysEat()*//*?}*/;

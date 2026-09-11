@@ -55,7 +55,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
-                       /*?} else*//*ResourceKey<Item> fishKey,*/
+                       /*?} else {*//*ResourceKey<Item> fishKey,*//*?}*/
                        Optional<Holder<Item>> bucket,
                        List<String> associatedMods,
                        boolean showInJournal,
@@ -76,7 +76,7 @@ public record FishData(/*? if >=1.21 {*/ Holder<Item> fish,
 
     public static final Codec<FishData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             /*? if >=1.21 {*/BuiltInRegistries.ITEM.holderByNameCodec().fieldOf("fish").forGetter(FishData::fish),
-            /*?} else*//*ResourceKey.codec(Registries.ITEM).fieldOf("fish").forGetter(FishData::fishKey),*/
+            /*?} else {*//*ResourceKey.codec(Registries.ITEM).fieldOf("fish").forGetter(FishData::fishKey),*//*?}*/
             BuiltInRegistries.ITEM.holderByNameCodec().optionalFieldOf("bucket").forGetter(FishData::bucket),
             Codec.STRING.listOf().optionalFieldOf("associated_mods", List.of()).forGetter(FishData::associatedMods),
             Codec.BOOL.optionalFieldOf("show_in_journal", true).forGetter(FishData::showInJournal),

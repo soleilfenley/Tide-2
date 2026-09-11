@@ -76,7 +76,7 @@ public class MagicChain extends TextureSheetParticle {
         float moveT = Mth.clamp(((float) this.age + partialTicks) * MOVE_SPEED / this.lifetime, 0f, 1.0f);
         float yOffset = OFFSET;
         float vOffset = MOVE_DST * moveT;
-        final int order = /*? if >=1.21 {*/1;/*?} else*//*-1;*/
+        final int order = /*? if >=1.21 {*/1;/*?} else {*//*-1;*//*?}*/
         this.renderVertex(buffer, quaternion, x, y, z, 1f * order, 1f + yOffset - vOffset, size, u1, v1, color);
         this.renderVertex(buffer, quaternion, x, y, z, 1f * order, 1f + yOffset, size, u1, Mth.lerp(moveT, v1, v0), color);
         this.renderVertex(buffer, quaternion, x, y, z, -1f * order, 1f + yOffset, size, u0, Mth.lerp(moveT, v1, v0), color);

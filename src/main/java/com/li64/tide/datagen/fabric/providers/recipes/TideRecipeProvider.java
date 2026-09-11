@@ -57,7 +57,7 @@ public class TideRecipeProvider extends FabricRecipeProvider {
 
     @Override
     /*? if >=1.21 {*/public void buildRecipes(RecipeOutput output) {
-     /*?} else*//*public void buildRecipes(Consumer<FinishedRecipe> output) {*/
+     /*?} else {*//*public void buildRecipes(Consumer<FinishedRecipe> output) {*//*?}*/
         // -- Shapeless --
         shapeless(RecipeCategory.BUILDING_BLOCKS, Items.OBSIDIAN, 1)
                 .requires(TideItems.OBSIDIAN_FRAGMENT)
@@ -549,7 +549,7 @@ public class TideRecipeProvider extends FabricRecipeProvider {
 
         // -- Special --
         /*? if >=1.21 {*/SpecialRecipeBuilder.special(FishyNoteRecipe::new).save(output, "fishy_note_from_fish");
-        /*?} else*//*SpecialRecipeBuilder.special(TideRecipeSerializers.FISHY_NOTE_RECIPE).save(output, "fishy_note_from_fish");*/
+        /*?} else {*//*SpecialRecipeBuilder.special(TideRecipeSerializers.FISHY_NOTE_RECIPE).save(output, "fishy_note_from_fish");*//*?}*/
     }
 
     @Override

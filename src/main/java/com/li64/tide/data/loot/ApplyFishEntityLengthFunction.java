@@ -47,7 +47,7 @@ public class ApplyFishEntityLengthFunction implements LootItemFunction {
     }
 
     @Override
-    public @NotNull Set</*? if >=26.2 {*/ContextKey/*?} else*//*LootContextParam*//*?*/<?>> getReferencedContextParams() {
+    public @NotNull Set</*? if >=26.2 {*/ContextKey/*?} else {*//*LootContextParam*//*?}*/<?>> getReferencedContextParams() {
         return Set.of(LootContextParams.THIS_ENTITY);
     }
 

@@ -49,3 +49,12 @@ bin/
 /src/generated-1.20.1/forge-resources/.cache/
 build_log.txt
 .tmp_api/
+
+### Stonecutter ###
+.stitcher-inspect/
+
+### Local test scratch ###
+*.py
+
+### Eclipse Configurations ###
+versions/*/.eclipse/

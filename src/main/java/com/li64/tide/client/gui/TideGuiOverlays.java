@@ -18,7 +18,7 @@ public class TideGuiOverlays {
         public static void render(/*? if >=26.2 {*/GuiGraphicsExtractor/*?} else {*//*GuiGraphics*//*?}*/ graphics) {
                 /*? if >=26.2 {*/float dt = Minecraft.getInstance().getDeltaTracker().getRealtimeDeltaTicks();
                 /*?} elif >=1.21 {*//*float dt = Minecraft.getInstance().getTimer().getRealtimeDeltaTicks();*/
-                /*?} else*//*float dt = Minecraft.getInstance().getDeltaFrameTime();*/
+                /*?} else {*//*float dt = Minecraft.getInstance().getDeltaFrameTime();*//*?}*/
                 CatchMinigameOverlay.render(graphics, dt);
                 CastBarOverlay.render(graphics, dt);
                 SonarOverlay.render(graphics, dt);

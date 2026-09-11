@@ -68,7 +68,7 @@ public class TideBlocks {
 
     private static BlockBehaviour.Properties copyProperties(Block copyOf) {
         /*? if >=1.21 {*/return BlockBehaviour.Properties.ofFullCopy(copyOf);
-        /*?} else*//*return BlockBehaviour.Properties.copy(copyOf);*/
+        /*?} else {*//*return BlockBehaviour.Properties.copy(copyOf);*//*?}*/
     }
 
     public static void init() {}

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable,
-                              /*?} else*//*ResourceLocation lootTable,*/
+                              /*?} else {*//*ResourceLocation lootTable,*//*?}*/
                               List<String> associatedMods,
                               List<FishingCondition> conditions,
                               List<FishingModifier> modifiers,
@@ -41,7 +41,7 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
 
     public static final Codec<FishingLootData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             /*? if >= 1.21 {*/ResourceKey.codec(Registries.LOOT_TABLE).fieldOf("loot_table").forGetter(FishingLootData::lootTable),
-             /*?} else*//*ResourceLocation.CODEC.fieldOf("loot_table").forGetter(FishingLootData::lootTable),*/
+             /*?} else {*//*ResourceLocation.CODEC.fieldOf("loot_table").forGetter(FishingLootData::lootTable),*//*?}*/
             Codec.STRING.listOf().optionalFieldOf("associated_mods", List.of()).forGetter(FishingLootData::associatedMods),
             FishingCondition.CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter(FishingLootData::conditions),
             FishingModifier.CODEC.listOf().optionalFieldOf("modifiers", List.of()).forGetter(FishingLootData::modifiers),
@@ -85,7 +85,7 @@ public record FishingLootData(/*? if >= 1.21 {*/ResourceKey<LootTable> lootTable
 
     public static class Builder {
         /*? if >= 1.21 {*/private ResourceKey<LootTable> lootKey;
-         /*?} else*//*private ResourceLocation lootKey;*/
+         /*?} else {*//*private ResourceLocation lootKey;*//*?}*/
 
         private final List<FishingCondition> conditions = new ArrayList<>();
         private final List<FishingModifier> modifiers = new ArrayList<>();

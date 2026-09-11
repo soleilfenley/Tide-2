@@ -70,7 +70,7 @@ public abstract class AbstractFishMixin implements FishLengthHolder {
         Entity self = (Entity)(Object)this;
         this.tide$length = FishData.get(self)
                 /*? if >=1.21.1 {*/.map(data -> data.getRandomLength(self.getRandom()))
-                /*?} else*//*.map(data -> data.getRandomLength(self.random))*/
+                /*?} else {*//*.map(data -> data.getRandomLength(self.random))*//*?}*/
                 .orElse(0.0);
     }
 

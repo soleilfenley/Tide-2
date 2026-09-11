@@ -76,8 +76,9 @@ public abstract class ItemMixin {
             /*? if >=1.21 {*/CustomData.update(DataComponents.BUCKET_ENTITY_DATA, newStack, tag -> {
                 if (TideItemData.FISH_LENGTH.isPresent(fish)) tag.putDouble(FishLengthHolder.tide$LENGTH_KEY, length);
             });
-            /*?} else*/
+            /*?} else {*/
             /*newStack.getOrCreateTag().putDouble(FishLengthHolder.tide$LENGTH_KEY, length);*/
+/*?}*/
             
         }
 

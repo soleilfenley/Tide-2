@@ -197,7 +197,7 @@ public class FishSatchelItem extends AbstractTooltipItem {
         if (contents == null) return;
         TideItemData.SATCHEL_CONTENTS.set(entity.getItem(), new SatchelContents());
         /*? if >=1.21 {*/ItemUtils.onContainerDestroyed(entity, List.copyOf(contents.items()));
-        /*?} else*//*ItemUtils.onContainerDestroyed(entity, contents.items().stream());*/
+        /*?} else {*//*ItemUtils.onContainerDestroyed(entity, contents.items().stream());*//*?}*/
     }
 
     private void playRemoveOneSound(Entity entity) {

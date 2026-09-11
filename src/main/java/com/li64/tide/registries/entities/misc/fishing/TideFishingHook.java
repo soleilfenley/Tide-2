@@ -401,7 +401,7 @@ public class TideFishingHook extends Projectile {
     private void checkCollision() {
         HitResult result = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         /*? if >=1.21 {*/this.hitTargetOrDeflectSelf(result);
-        /*?} else*//*this.onHit(result);*/
+        /*?} else {*//*this.onHit(result);*//*?}*/
     }
 
     @Override

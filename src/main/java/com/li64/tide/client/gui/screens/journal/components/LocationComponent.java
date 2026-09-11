@@ -29,7 +29,7 @@ public class LocationComponent extends ProfileComponent {
     */
     //?}
         int center = x + AREA_WIDTH / 2;
-        graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, text, center - font.width(text) / 2, y, TEXT_COLOR, false);
+        graphics./*? if >=26.2 {*/text/*?} else {*//*drawString*//*?}*/(font, text, center - font.width(text) / 2, y, TEXT_COLOR, false);
     }
 
     @Override

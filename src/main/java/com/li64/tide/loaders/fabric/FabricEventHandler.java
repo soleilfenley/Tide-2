@@ -66,7 +66,7 @@ public class FabricEventHandler {
                 TideEventHandler.onPlayerJoinWorld(handler.getPlayer()));
 
         /*? if >=1.21 {*/LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-        /*?} else*//*LootTableEvents.MODIFY.register((resourceManager, lootDataManager, key, tableBuilder, source) -> {*/
+        /*?} else {*//*LootTableEvents.MODIFY.register((resourceManager, lootDataManager, key, tableBuilder, source) -> {*//*?}*/
             if (key == BuiltInLootTables.FISHING_JUNK) {
                 tableBuilder.modifyPools(builder -> builder
                         .add(LootItem.lootTableItem(TideItems.FISH_BONE).setWeight(8)));
@@ -128,7 +128,7 @@ public class FabricEventHandler {
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FISHERMAN, 4, (factories) -> {
             factories.add((entity, random) -> new MerchantOffer(
                     /*? if >=1.21 {*/new ItemCost(Items.EMERALD, 15),
-                    /*?} else*//*new ItemStack(Items.EMERALD, 15),*/
+                    /*?} else {*//*new ItemStack(Items.EMERALD, 15),*//*?}*/
                     new ItemStack(TideItems.VILLAGE_FISHING_ROD, 1),
                     1, 15, 0.05f
             ));

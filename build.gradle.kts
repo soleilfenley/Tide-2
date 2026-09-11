@@ -131,13 +131,11 @@ sourceSets["main"].resources.srcDir(file("src/main/resources-$minecraft"))
 // Stonecutter constants for mod loaders.
 // See https://stonecutter.kikugie.dev/stonecutter/guide/comments#condition-constants
 var constraint: String = name.split("-")[1]
-stonecutter {
-    consts(
-        "fabric" to (constraint == "fabric"),
-        "neoforge" to (constraint == "neoforge"),
-        "forge" to (constraint == "forge"),
-        "vanilla" to (constraint == "vanilla")
-    )
+stonecutter.constants {
+        put("fabric", constraint == "fabric")
+        put("neoforge", constraint == "neoforge")
+        put("forge", constraint == "forge")
+        put("vanilla", constraint == "vanilla")
 }
 
 // All dependencies should be specified through modstitch's proxy configuration.

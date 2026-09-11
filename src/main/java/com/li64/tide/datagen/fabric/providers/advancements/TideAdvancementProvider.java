@@ -60,10 +60,10 @@ public class TideAdvancementProvider extends FabricAdvancementProvider {
 
     @Override
     /*? if >=1.21 {*/public void generateAdvancement(HolderLookup.Provider registries, Consumer<AdvancementHolder> output) {
-    /*?} else*//*public void generateAdvancement(Consumer<Advancement> output) {*/
-        var TASK_FRAME = /*? if >=1.21 {*/AdvancementType.TASK;/*?} else*//*FrameType.TASK;*/
-        var GOAL_FRAME = /*? if >=1.21 {*/AdvancementType.GOAL;/*?} else*//*FrameType.GOAL;*/
-        var CHALLENGE_FRAME = /*? if >=1.21 {*/AdvancementType.CHALLENGE;/*?} else*//*FrameType.CHALLENGE;*/
+    /*?} else {*//*public void generateAdvancement(Consumer<Advancement> output) {*//*?}*/
+        var TASK_FRAME = /*? if >=1.21 {*/AdvancementType.TASK;/*?} else {*//*FrameType.TASK;*//*?}*/
+        var GOAL_FRAME = /*? if >=1.21 {*/AdvancementType.GOAL;/*?} else {*//*FrameType.GOAL;*//*?}*/
+        var CHALLENGE_FRAME = /*? if >=1.21 {*/AdvancementType.CHALLENGE;/*?} else {*//*FrameType.CHALLENGE;*//*?}*/
 
         var root = Advancement.Builder.advancement()
                 .display(

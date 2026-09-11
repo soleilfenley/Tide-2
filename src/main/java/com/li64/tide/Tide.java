@@ -43,7 +43,7 @@ public class Tide {
         //? if fabric {
         PLATFORM = new FabricPlatform();
         NETWORK = /*? if >=1.21 {*/new FabricNetworkPlatform();
-                  /*?} else*/ /*new FabricLegacyNetworkPlatform();*/
+                  /*?} else {*/ /*new FabricLegacyNetworkPlatform();*//*?}*/
         //?}
         //? if neoforge {
         /*PLATFORM = new NeoforgePlatform();

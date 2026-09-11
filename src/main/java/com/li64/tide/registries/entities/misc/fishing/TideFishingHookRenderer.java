@@ -281,9 +281,9 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
                         double d4 = 960.0 / (fovOption);
                         double fovScalar = /*? if >=26.2 {*/
                                         (this.entityRenderDispatcher.camera.getFov() / fovOption - 1.0) * 2.5 + 1.0
-                                        /*?} else*//*(Minecraft.getInstance().gameRenderer.getFov(this.entityRenderDispatcher.camera, partialTick, true) / fovOption - 1.0) * 2.5 + 1.0*//*?*/;
+                                        /*?} else {*//*(Minecraft.getInstance().gameRenderer.getFov(this.entityRenderDispatcher.camera, partialTick, true) / fovOption - 1.0) * 2.5 + 1.0*//*?}*/;
                         Vec3 vec3 = this.entityRenderDispatcher.camera
-                                .getNearPlane(/*? if >=26.2 {*/partialTick/*?*/)
+                                .getNearPlane(/*? if >=26.2 {*/partialTick/*?}*/)
                                 .getPointOnPlane(
                                         i * (0.525F + stringOffset.x) * (float) fovScalar,
                                         (-0.1F + stringOffset.y) * (float) fovScalar)
@@ -323,7 +323,7 @@ public class TideFishingHookRenderer extends EntityRenderer<TideFishingHook> imp
                 Color color = Color.decode(colorHex);
                 BlockPos samplePos = player.blockPosition().above();
         
-                float skyDarken = (1 - ((ClientLevel) player.level()).getSkyDarken(/*? if <26.2 {*//*partialTick*//*?*/)) * 15;
+                float skyDarken = (1 - ((ClientLevel) player.level()).getSkyDarken(/*? if <26.2 {*//*partialTick*//*?}*/)) * 15;
                 float blockBrightness = player.level().getBrightness(LightLayer.BLOCK, samplePos);
                 float skyBrightness = player.level().getBrightness(LightLayer.SKY, samplePos) - skyDarken + 1;
         

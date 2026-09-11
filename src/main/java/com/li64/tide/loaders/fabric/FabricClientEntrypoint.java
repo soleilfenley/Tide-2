@@ -83,7 +83,7 @@ public class FabricClientEntrypoint implements ClientModInitializer {
         });
 
         /*? if >=1.21 {*/ItemTooltipCallback.EVENT.register((stack, ctx, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));
-        /*?} else*//*ItemTooltipCallback.EVENT.register((stack, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));*/
+        /*?} else {*//*ItemTooltipCallback.EVENT.register((stack, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));*//*?}*/
 
         TideItemModelProperties.registerAll();
 

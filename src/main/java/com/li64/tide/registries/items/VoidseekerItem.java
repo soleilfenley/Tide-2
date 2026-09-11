@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 /*? if >=1.21 {*/import net.minecraft.world.level.portal.DimensionTransition;
-/*?} else*//*import net.minecraft.world.entity.player.Player;*/
+/*?} else {*//*import net.minecraft.world.entity.player.Player;*//*?}*/
 
 import java.util.Optional;
 import java.util.function.Consumer;

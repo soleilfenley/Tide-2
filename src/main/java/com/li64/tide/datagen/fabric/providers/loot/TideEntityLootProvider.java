@@ -106,7 +106,7 @@ public class TideEntityLootProvider extends TideAbstractLootProvider {
                         .apply(ApplyFishEntityLengthFunction::new)
                         .apply(SmeltItemFunction.smelted()
                                 /*? if >=1.21 {*/.when(shouldSmeltLoot(registries))
-                                /*?} else*//*.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))*/
+                                /*?} else {*//*.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))*//*?}*/
                         )));
     }
 }

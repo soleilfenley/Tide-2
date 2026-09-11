@@ -1041,7 +1041,7 @@ public class TideFish {
             .build();
 
     public static final Item SAILFISH = new Builder("sailfish")
-            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else*//*Tiers*//*?*/.IRON, 2, -3.0f, properties))
+            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 2, -3.0f, properties))
             .food(TideFoods.BIG_RAW_FISH)
             .cookedItem(TideItems.LARGE_COOKED_FISH)
             .fishData(builder -> builder
@@ -1075,7 +1075,7 @@ public class TideFish {
             .build();
 
     public static final Item SWORDFISH = new Builder("swordfish")
-            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else*//*Tiers*//*?*/.IRON, 3, -2.8f, properties))
+            .item(properties -> new SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 3, -2.8f, properties))
             .food(TideFoods.BIG_RAW_FISH)
             .cookedItem(TideItems.LARGE_COOKED_FISH)
             .fishData(builder -> builder
@@ -2662,7 +2662,7 @@ public class TideFish {
             .build();
 
     public static final Item BLAZING_SWORDFISH = new Builder("blazing_swordfish")
-            .item(properties -> new BlazingSwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else*//*Tiers*//*?*/.IRON, 4, -2.8f, properties))
+            .item(properties -> new BlazingSwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/.IRON, 4, -2.8f, properties))
             .food(TideFoods.BIG_FIERY_FISH)
             .fireproof()
             .fishData(builder -> builder

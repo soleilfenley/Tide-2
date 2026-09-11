@@ -33,15 +33,11 @@ import net.minecraft.data.models.blockstates.PropertyDispatch;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.*;
-//? if >=26.2 {
-import net.minecraft.resources.Identifier;
-//?} else {
-/*
 import net.minecraft.resources.ResourceLocation;
-*/
-//?}
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
+*/
+//?}
 
 import java.util.Map;
 import java.util.Optional;

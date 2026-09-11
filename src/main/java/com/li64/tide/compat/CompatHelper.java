@@ -53,7 +53,7 @@ public class CompatHelper {
 
     public static boolean starcatcherStartMinigame(ServerPlayer player, HookAccessor hook, ItemStack rod, List<ItemStack> hookedItems) {
         /*? if neoforge {*/ /*return StarcatcherCompat.start(player, hook, rod, hookedItems);
-        *//*?} else*/ return false;
+        *//*?} else {*/ return false;/*?}*/
     }
 
     public static void starcatcherCompleteCatch(ServerPlayer player, TideFishingHook hook, boolean perfectCatch) {
@@ -69,17 +69,17 @@ public class CompatHelper {
 
     public static boolean stardewFishingStartMinigame(ServerPlayer player, HookAccessor hook, ItemStack rod, List<ItemStack> hookedItems) {
         /*? if neoforge || forge || (fabric && =1.20.1) {*/ /*return StardewFishingCompat.start(player, hook, rod, hookedItems);
-         *//*?} else*/ return false;
+         *//*?} else {*/ return false;/*?}*/
     }
 
     public static List<ItemStack> stardewFishingGetRewards(HookAccessor hook) {
         /*? if neoforge || forge {*/ /*return StardewFishingCompat.getRewards(hook);
-        *//*?} else*/ return List.of();
+        *//*?} else {*/ return List.of();/*?}*/
     }
 
     public static double stardewFishingBiteTimeMultiplier() {
         /*? if neoforge || forge {*/ /*return StardewFishingCompat.getBiteTimeMultiplier();
-        *//*?} else*/ return 1.0;
+        *//*?} else {*/ return 1.0;/*?}*/
     }
 
     // -- fishing real --
@@ -92,6 +92,6 @@ public class CompatHelper {
 
     public static void addInformationItemsFromAccessories(Player player, ArrayList<Item> items) {
         /*? if fabric {*/if (Tide.PLATFORM.isModLoaded("trinkets")) TrinketsCompat.addInformationalItems(player, items);
-        /*?} else*//*if (Tide.PLATFORM.isModLoaded("curios")) CuriosCompat.addInformationalItems(player, items);*/
+        /*?} else {*//*if (Tide.PLATFORM.isModLoaded("curios")) CuriosCompat.addInformationalItems(player, items);*//*?}*/
     }
 }

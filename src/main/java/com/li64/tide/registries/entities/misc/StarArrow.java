@@ -35,7 +35,7 @@ public class StarArrow extends AbstractArrow {
     @SuppressWarnings("unused")
     public StarArrow(Level level, LivingEntity entity, ItemStack pickupStack, ItemStack firedFromWeapon) {
         /*? if >=1.21 {*/super(TideEntityTypes.STAR_ARROW, entity, level, pickupStack, firedFromWeapon);
-        /*?} else*//*super(TideEntityTypes.STAR_ARROW, entity, level);*/
+        /*?} else {*//*super(TideEntityTypes.STAR_ARROW, entity, level);*//*?}*/
     }
 
     @Override

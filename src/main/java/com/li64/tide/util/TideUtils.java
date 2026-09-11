@@ -191,7 +191,7 @@ public class TideUtils {
     */
     //?}
         /*? if >=1.21 {*/ return Tide.resource(path);
-        /*?} else*//*return Tide.resource("textures/gui/sprites/" + path + ".png");*/
+        /*?} else {*//*return Tide.resource("textures/gui/sprites/" + path + ".png");*//*?}*/
     }
 
     //? if >=26.2 {

@@ -13,9 +13,9 @@ import net.minecraft.world.item.Tiers;
 //?}
 
 public class SwordfishItem extends SwordItem {
-    public SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else*//*Tiers*//*?*/ tier, int damageMod, float speedMod, Properties properties) {
+    public SwordfishItem(/*? if >=26.2 {*/ToolMaterial/*?} else {*//*Tiers*//*?}*/ tier, int damageMod, float speedMod, Properties properties) {
         /*? if >=1.21 {*/super(tier, properties.attributes(SwordItem.createAttributes(tier, damageMod, speedMod)));
-        /*?} else*//*super(tier, damageMod, speedMod, properties);*/
+        /*?} else {*//*super(tier, damageMod, speedMod, properties);*//*?}*/
     }
 
     @Override

@@ -46,7 +46,7 @@ public class SeasonsComponent extends ProfileComponent {
     */
     //?}
         int center = x + AREA_WIDTH / 2;
-        graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
+        graphics./*? if >=26.2 {*/text/*?} else {*//*drawString*//*?}*/(font, TITLE, center - font.width(TITLE) / 2, y, TEXT_COLOR, false);
 
         int seasonCount = seasons.size();
         int seasonY = y + 12;
@@ -71,7 +71,7 @@ public class SeasonsComponent extends ProfileComponent {
             //?}
 
             if (mouseX >= seasonX && mouseX <= seasonX + 8 && mouseY >= seasonY && mouseY <= seasonY + 8)
-                graphics./*? if >=26.2 {*/setTooltipForNextFrame/*?} else*//*renderTooltip*//*?*/(font, Component.translatable("journal.info.seasons." + seasons.get(i).getSerializedName()), mouseX, mouseY);
+                graphics./*? if >=26.2 {*/setTooltipForNextFrame/*?} else {*//*renderTooltip*//*?}*/(font, Component.translatable("journal.info.seasons." + seasons.get(i).getSerializedName()), mouseX, mouseY);
         }
     }
 

@@ -38,7 +38,7 @@ import java.util.Optional;
 
 public record CrateData(BlockStateProvider blockProvider,
                         /*? if >= 1.21 {*/Optional<ResourceKey<LootTable>> lootTable,
-                        /*?} else*//*Optional<ResourceLocation> lootTable,*/
+                        /*?} else {*//*Optional<ResourceLocation> lootTable,*//*?}*/
                         List<String> associatedMods,
                         List<FishingCondition> conditions,
                         List<FishingModifier> modifiers,
@@ -47,7 +47,7 @@ public record CrateData(BlockStateProvider blockProvider,
     public static final Codec<CrateData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             BlockStateProvider.CODEC.fieldOf("block").forGetter(CrateData::blockProvider),
             /*? if >= 1.21 {*/ResourceKey.codec(Registries.LOOT_TABLE).optionalFieldOf("loot_table").forGetter(CrateData::lootTable),
-            /*?} else*//*ResourceLocation.CODEC.optionalFieldOf("loot_table").forGetter(CrateData::lootTable),*/
+            /*?} else {*//*ResourceLocation.CODEC.optionalFieldOf("loot_table").forGetter(CrateData::lootTable),*//*?}*/
             Codec.STRING.listOf().optionalFieldOf("associated_mods", List.of()).forGetter(CrateData::associatedMods),
             FishingCondition.CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter(CrateData::conditions),
             FishingModifier.CODEC.listOf().optionalFieldOf("modifiers", List.of()).forGetter(CrateData::modifiers),
@@ -99,7 +99,7 @@ public record CrateData(BlockStateProvider blockProvider,
     public static class Builder {
         private BlockStateProvider block;
         /*? if >= 1.21 {*/private ResourceKey<LootTable> lootKey;
-         /*?} else*//*private ResourceLocation lootKey;*/
+         /*?} else {*//*private ResourceLocation lootKey;*//*?}*/
 
         private final List<FishingCondition> conditions = new ArrayList<>();
         private final List<FishingModifier> modifiers = new ArrayList<>();

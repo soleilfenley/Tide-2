@@ -84,7 +84,7 @@ public class TideFishEntity extends AbstractSchoolingFish {
     public static <T extends Mob> boolean checkWaterFishSpawnRules(
             EntityType<T> entityType, 
             ServerLevelAccessor level,
-            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else {*//*MobSpawnType*//*?}*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > level.getSeaLevel()
                 || !level.getFluidState(pos.below()).is(FluidTags.WATER)
                 || !level.getBlockState(pos.above()).is(Blocks.WATER)) return false;
@@ -96,7 +96,7 @@ public class TideFishEntity extends AbstractSchoolingFish {
     public static <T extends Mob> boolean checkLavaFishSpawnRules(
             EntityType<T> entityType, 
             ServerLevelAccessor level, 
-            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else {*//*MobSpawnType*//*?}*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > level.getSeaLevel()
                 || !level.getFluidState(pos.below()).is(FluidTags.LAVA)
                 || !level.getBlockState(pos.above()).is(Blocks.LAVA)) return false;
@@ -107,7 +107,7 @@ public class TideFishEntity extends AbstractSchoolingFish {
     public static <T extends Mob> boolean checkVoidFishSpawnRules(
             EntityType<T> entityType, 
             ServerLevelAccessor level,
-            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, BlockPos pos, RandomSource random) {
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else {*//*MobSpawnType*//*?}*/ spawnType, BlockPos pos, RandomSource random) {
         if (pos.getY() > VoidMedium.VOID.getVoidSurface(level.getLevel())
                 || !level.getBlockState(pos).isAir()) return false;
 

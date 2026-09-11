@@ -45,7 +45,7 @@ public record SatchelContents(List<ItemStack> items) {
         //noinspection DeconstructionCanBeUsed
         if (other instanceof SatchelContents contents)
             /*? if >=1.21 {*/return ItemStack.listMatches(this.items, contents.items);
-            /*?} else*//*return listMatches(this.items, contents.items);*/
+            /*?} else {*//*return listMatches(this.items, contents.items);*//*?}*/
 
         return false;
     }
@@ -110,7 +110,7 @@ public record SatchelContents(List<ItemStack> items) {
         private int findStackIndex(ItemStack stack) {
             for (int i = 0; i < this.items.size(); i++) {
                 /*? if >=1.21 {*/if (ItemStack.isSameItemSameComponents(this.items.get(i), stack)) return i;
-                /*?} else*//*if (ItemStack.isSameItemSameTags(this.items.get(i), stack)) return i;*/
+                /*?} else {*//*if (ItemStack.isSameItemSameTags(this.items.get(i), stack)) return i;*//*?}*/
             }
             return -1;
         }

@@ -35,7 +35,7 @@ public class CustomRodManager {
             return;
         }
         /*? if >=1.21 {*/dataKey.set(rod, (CompoundTag) ItemStack.CODEC.encode(accessory, NbtOps.INSTANCE, new CompoundTag()).getOrThrow());
-        /*?} else*/ /*dataKey.set(rod, accessory.save(new CompoundTag()));*/
+        /*?} else {*/ /*dataKey.set(rod, accessory.save(new CompoundTag()));*//*?}*/
     }
 
     public static ItemStack getBobber(ItemStack rod) {
@@ -70,7 +70,7 @@ public class CustomRodManager {
         CompoundTag data = dataKey.get(rod);
         if (data == null || data.isEmpty()) return defaultItem;
         /*? if >=1.21 {*/Optional<ItemStack> accessory = ItemStack.CODEC.parse(NbtOps.INSTANCE, data).result();
-        /*?} else*//*Optional<ItemStack> accessory = Optional.of(ItemStack.of(data)).map(s -> s.isEmpty() ? null : s);*/
+        /*?} else {*//*Optional<ItemStack> accessory = Optional.of(ItemStack.of(data)).map(s -> s.isEmpty() ? null : s);*//*?}*/
         return accessory.orElse(defaultItem);
     }
 

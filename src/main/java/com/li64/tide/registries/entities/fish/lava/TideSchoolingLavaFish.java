@@ -113,7 +113,7 @@ public class TideSchoolingLavaFish extends TideLavaFish {
     public @Nullable SpawnGroupData finalizeSpawn(
             ServerLevelAccessor level, 
             DifficultyInstance difficulty, 
-            /*? if >=26.2 {*/EntitySpawnReason/*?} else*//*MobSpawnType*//*?*/ spawnType, 
+            /*? if >=26.2 {*/EntitySpawnReason/*?} else {*//*MobSpawnType*//*?}*/ spawnType, 
             @Nullable SpawnGroupData groupData
     ) {
         super.finalizeSpawn(level, difficulty, spawnType, groupData);

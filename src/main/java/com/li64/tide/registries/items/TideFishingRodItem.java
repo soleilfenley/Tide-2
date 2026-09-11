@@ -391,7 +391,7 @@ public class TideFishingRodItem extends FishingRodItem {
             if (!level.isClientSide) {
                 int durabilityLoss = activeHook.retrieve(rod, (ServerLevel) level, player);
                 /*? if >=1.21 {*/rod.hurtAndBreak(durabilityLoss, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
-                /*?} else*//*rod.hurtAndBreak(durabilityLoss, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));*/
+                /*?} else {*//*rod.hurtAndBreak(durabilityLoss, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));*//*?}*/
             }
 
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
@@ -431,8 +431,8 @@ public class TideFishingRodItem extends FishingRodItem {
         // return CustomRodManager.getLine(rod).is(TideItems.BRAIDED_LINE) ? 15 : 25;
     }
 
-    public @NotNull /*? if >=26.2 {*/ItemUseAnimation/*?} else*//*UseAnim*//*?*/ getUseAnimation(@NotNull ItemStack stack) {
-        return /*? if >=26.2 {*/ItemUseAnimation/*?} else*//*UseAnim*//*?*/.BOW;
+    public @NotNull /*? if >=26.2 {*/ItemUseAnimation/*?} else {*//*UseAnim*//*?}*/ getUseAnimation(@NotNull ItemStack stack) {
+        return /*? if >=26.2 {*/ItemUseAnimation/*?} else {*//*UseAnim*//*?}*/.BOW;
     }
 
     public void onItemBroken(ItemStack stack, ServerPlayer player) {

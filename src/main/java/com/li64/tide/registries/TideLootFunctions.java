@@ -45,12 +45,12 @@ public class TideLootFunctions {
     > LOOT_FUNCTIONS = new HashMap<>();
 
     //? if >=1.21 {
-    public static final /*? if >=26.2 {*/MapCodec<ApplyFishEntityLengthFunction>/*?} else*//*LootItemFunctionType<ApplyFishEntityLengthFunction>*//*?*/ APPLY_FISH_ENTITY_LENGTH = register(
-            "apply_fish_entity_length", /*? if >=26.2 {*/ApplyFishEntityLengthFunction.CODEC/*?} else*//*new LootItemFunctionType<>(ApplyFishEntityLengthFunction.CODEC)*//*?*/);
-    public static final /*? if >=26.2 {*/MapCodec<RandomizeFishLengthFunction>/*?} else*//*LootItemFunctionType<RandomizeFishLengthFunction>*//*?*/ RANDOMIZE_FISH_LENGTH = register(
-            "randomize_fish_length", /*? if >=26.2 {*/RandomizeFishLengthFunction.CODEC/*?} else*//*new LootItemFunctionType<>(RandomizeFishLengthFunction.CODEC)*//*?*/);
+    public static final /*? if >=26.2 {*/MapCodec<ApplyFishEntityLengthFunction>/*?} else {*//*LootItemFunctionType<ApplyFishEntityLengthFunction>*//*?}*/ APPLY_FISH_ENTITY_LENGTH = register(
+            "apply_fish_entity_length", /*? if >=26.2 {*/ApplyFishEntityLengthFunction.CODEC/*?} else {*//*new LootItemFunctionType<>(ApplyFishEntityLengthFunction.CODEC)*//*?}*/);
+    public static final /*? if >=26.2 {*/MapCodec<RandomizeFishLengthFunction>/*?} else {*//*LootItemFunctionType<RandomizeFishLengthFunction>*//*?}*/ RANDOMIZE_FISH_LENGTH = register(
+            "randomize_fish_length", /*? if >=26.2 {*/RandomizeFishLengthFunction.CODEC/*?} else {*//*new LootItemFunctionType<>(RandomizeFishLengthFunction.CODEC)*//*?}*/);
 
-    public static <T extends LootItemFunction> /*? if >=26.2 {*/MapCodec/*?} else*//*LootItemFunctionType*//*?*/<T> register(String key, /*? if >=26.2 {*/MapCodec/*?} else*//*LootItemFunctionType*//*?*/<T> type) {
+    public static <T extends LootItemFunction> /*? if >=26.2 {*/MapCodec/*?} else {*//*LootItemFunctionType*//*?}*/<T> register(String key, /*? if >=26.2 {*/MapCodec/*?} else {*//*LootItemFunctionType*//*?}*/<T> type) {
         LOOT_FUNCTIONS.put(key, type);
         return Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, Tide.resource(key), type);
     }

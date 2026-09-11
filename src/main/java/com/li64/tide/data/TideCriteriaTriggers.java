@@ -40,7 +40,7 @@ public class TideCriteriaTriggers {
         SimpleCriterionTrigger<T> trigger = triggerFunc.apply(key);
         CRITERIA_TRIGGERS.put(key, trigger);
         /*? if >=1.21 {*/return Tide.PLATFORM.register(BuiltInRegistries.TRIGGER_TYPES, Tide.resource(key), trigger);
-        /*?} else*//*return CriteriaTriggers.register(trigger);*/
+        /*?} else {*//*return CriteriaTriggers.register(trigger);*//*?}*/
     }
 
     public static void init() {}

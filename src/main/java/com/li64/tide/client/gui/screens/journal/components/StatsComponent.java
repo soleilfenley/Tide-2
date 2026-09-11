@@ -73,7 +73,7 @@ public class StatsComponent extends ProfileComponent {
         int center = x + AREA_WIDTH / 2;
         int cursorY = 0;
         for (Component line : lines) {
-            graphics./*? if >=26.2 {*/text/*?} else*//*drawString*//*?*/(font, line, center - font.width(line) / 2, y + cursorY, TEXT_COLOR, false);
+            graphics./*? if >=26.2 {*/text/*?} else {*//*drawString*//*?}*/(font, line, center - font.width(line) / 2, y + cursorY, TEXT_COLOR, false);
             cursorY += 11;
         }
     }

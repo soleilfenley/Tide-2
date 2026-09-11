@@ -30,9 +30,9 @@ import java.util.function.Supplier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.Util;
+import net.minecraft.util.StringRepresentable;
 */
 //?}
-
 //? if >=1.21 {
 public class TideArmorMaterials {
     public static final Holder<ArmorMaterial> DRAGONFIN = register("dragonfin", Util.make(new EnumMap<>(ArmorItem.Type.class),enumMap -> {

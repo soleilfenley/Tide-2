@@ -6,13 +6,13 @@ import org.jetbrains.annotations.NotNull;
 
 //? if >=26.2 {
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 //?} else {
 /*
 import com.li64.tide.util.TideUtils;
 import net.minecraft.client.gui.GuiGraphics;
 */
 //?}
-import net.minecraft.client.renderer.RenderPipelines;
 
 public class HorizontalLineComponent extends ProfileComponent {
     private final boolean top;

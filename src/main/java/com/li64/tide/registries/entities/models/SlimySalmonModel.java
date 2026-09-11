@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 //? if >=26.2 {
 import net.minecraft.util.ARGB;
-//?} elif >= 1.21 {
+//?} else {
 /*
 import net.minecraft.util.FastColor;
 */

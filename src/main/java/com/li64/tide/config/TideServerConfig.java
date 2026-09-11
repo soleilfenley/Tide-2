@@ -78,7 +78,13 @@ public final class TideServerConfig implements ConfigData {
             public VoidHeightEntry() {}
 
             public VoidHeightEntry(ResourceKey<Level> dimension, Type type, int height) {
-                this.dimension = dimension.identifier().toString();
+                    //? if >=26.2 {
+                    this.dimension = dimension.identifier().toString();
+                    //?} else {
+                    /*
+                    this.dimension = dimension.location().toString();
+                    */
+                    //?}
                 this.type = type;
                 this.height = height;
             }

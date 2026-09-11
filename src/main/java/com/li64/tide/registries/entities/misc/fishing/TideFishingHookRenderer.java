@@ -2,7 +2,6 @@ package com.li64.tide.registries.entities.misc.fishing;
 
 import com.li64.tide.Tide;
 import com.li64.tide.registries.TideItems;
-import com.li64.tide.registries.items.FishingHookItem;
 import com.li64.tide.registries.items.FishingLineItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -10,7 +9,6 @@ import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -34,18 +32,22 @@ import java.util.Map;
 //? if >=26.2 {
 import com.li64.tide.client.renderer.state.TideFishingHookRenderState;
 
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 
-import org.joml.Matrix4fc;
 //?} else {
 /*
+import com.li64.tide.registries.items.FishingHookItem;
+
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
+
 */
 //?}
 

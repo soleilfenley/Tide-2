@@ -3,8 +3,8 @@ package com.li64.tide.data;
 import com.li64.tide.data.triggers.TideSimpleTrigger;
 //? if >= 26.2 {
 import net.minecraft.advancements.triggers.Criterion;
-import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 //?} elif >=1.21 {
 /*
 import com.li64.tide.Tide;
@@ -16,6 +16,7 @@ import java.util.Optional;
 */
 //?} else {
 /*import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;

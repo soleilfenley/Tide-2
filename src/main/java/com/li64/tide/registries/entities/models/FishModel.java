@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 
 //? if >=26.2 {
 import com.li64.tide.client.renderer.state.FishRenderState;
-//?} elif >= 1.21 {
+//?} else {
 /*
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

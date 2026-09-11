@@ -5,9 +5,8 @@ import com.li64.tide.Tide;
 import com.li64.tide.data.loot.ApplyFishEntityLengthFunction;
 import com.li64.tide.data.loot.LootTableRef;
 import com.li64.tide.registries.TideFish;
+
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.predicates.DataComponentPredicate;
-import net.minecraft.core.component.predicates.DataComponentPredicates;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -22,34 +21,52 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 //? if >= 26.2 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.advancements.predicates.entity.EntityFlagsPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.core.component.predicates.DataComponentPredicate;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
 import net.minecraft.advancements.predicates.entity.*;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.predicates.EnchantmentPredicate;
 import net.minecraft.advancements.predicates.DataComponentMatchers;
 import net.minecraft.advancements.predicates.entity.EntityEquipmentPredicate;
-import net.minecraft.advancements.predicates.entity.EntityFlagsPredicate;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
 import net.minecraft.core.registries.Registries;
+
 import java.util.List;
 //?} elif >=1.21 {
 /*
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
 import net.minecraft.core.registries.Registries;
+
 import java.util.List;
+*/
+//?} else {
+/*
+import net.minecraft.advancements.critereon.EntityFlagsPredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 */
 //?}
 
 import java.util.concurrent.CompletableFuture;
 
+//? if >=26.2 {
+public class TideEntityLootProvider extends TideAbstractLootProvider {
+    public TideEntityLootProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+//?} else {
+/*
 public class TideEntityLootProvider extends TideAbstractLootProvider {
     public TideEntityLootProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+*/
+//?}
         super(output, registryLookup, LootContextParamSets.ENTITY);
     }
 

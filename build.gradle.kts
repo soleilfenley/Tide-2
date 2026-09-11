@@ -85,6 +85,7 @@ modstitch {
         if (isModDevGradleRegular) "src/generated-$minecraft/neoforge-resources"
         else "src/generated-$minecraft/forge-resources"
 
+
     moddevgradle {
         prop("deps.forge") { forgeVersion = it }
         prop("deps.neoform") { neoFormVersion = it }
@@ -100,6 +101,12 @@ modstitch {
             sourceSets["main"].resources.srcDir(file(datagenPath))
             val at = rootProject.file("src/main/resources/accesstransformers/$minecraft.cfg")
             if (at.exists()) accessTransformers.from(at)
+        }
+    }
+
+    if (isModDevGradle) {
+        tasks.matching { it.name == "createMinecraftArtifacts" }.configureEach {
+            dependsOn("stonecutterGenerate")
         }
     }
 

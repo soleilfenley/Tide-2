@@ -3,11 +3,14 @@ package com.li64.tide.datagen.fabric.providers.tags;
 
 import com.li64.tide.Tide;
 import com.li64.tide.data.TideTags;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 //? if >=26.2 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
-import net.minecraft.resources.ResourceKey;
 //?} else {
 /*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

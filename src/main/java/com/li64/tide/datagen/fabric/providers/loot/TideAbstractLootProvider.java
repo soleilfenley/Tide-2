@@ -33,7 +33,13 @@ public abstract class TideAbstractLootProvider extends SimpleFabricLootTableProv
     /*? if >=1.21*/protected final HolderLookup.Provider registries;
 
     @SuppressWarnings("unused")
+    //? if >=26.2 {
     public TideAbstractLootProvider(FabricPackOutput output,
+    //?} else {
+    /*
+    public TideAbstractLootProvider(FabricDataOutput output,
+    */
+    //?}
                                     CompletableFuture<HolderLookup.Provider> registryLookup,
                                     //? if >=26.2 {                                    
                                     ContextKeySet lootType) {

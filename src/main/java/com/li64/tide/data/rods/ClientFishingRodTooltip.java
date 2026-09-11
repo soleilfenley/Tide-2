@@ -35,10 +35,16 @@ public record ClientFishingRodTooltip(int slots, BaitContents contents) implemen
         private static final int SLOT_SIZE_Y = 20;
         
         @Override
+        //? if >=26.2 {
         public int getHeight(@NotNull Font font) {
+        //?} else {
+        /*
+        public int getHeight() {
+        */
+        //?}
                 return this.backgroundHeight() + MARGIN_Y + OFFSET_Y;
         }
-        
+
         public int getWidth(@NotNull Font font) {
                 return Math.max(this.backgroundWidth(), font.width(MESSAGE));
         }

@@ -79,7 +79,8 @@ public class TideFishingHookModel<T extends TideFishingHook> extends EntityModel
         */
         //?}
 
-        //? if <26.2 {
+        //? if >=26.2 {
+        //?} elif >=1.21 {
         /*
         @Override
         public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {

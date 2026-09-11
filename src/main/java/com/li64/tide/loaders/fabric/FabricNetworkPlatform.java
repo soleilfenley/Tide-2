@@ -35,7 +35,13 @@ public class FabricNetworkPlatform implements NetworkPlatform {
     */
     //?}
         CustomPacketPayload.Type<T> type = this.idToType(id);
+        //? if >=26.2 {
+        PayloadTypeRegistry.clientboundPlay().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
+        //?} else {
+        /*
         PayloadTypeRegistry.playS2C().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
+        */
+        //?}
         clientMessages.add(new ClientMsgRegistration<>(type, handler));
     }
 
@@ -48,9 +54,21 @@ public class FabricNetworkPlatform implements NetworkPlatform {
     */
     //?}
         CustomPacketPayload.Type<T> type = this.idToType(id);
+        //? if >=26.2 {
+        PayloadTypeRegistry.serverboundPlay().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
+        //?} else {
+        /*
         PayloadTypeRegistry.playC2S().register(type, CustomPacketPayload.codec(encoder::accept, decoder::apply));
+        */
+        //?}
         ServerPlayNetworking.registerGlobalReceiver(type, (payload, context) ->
+                //? if >=26.2 {
+                context.player().level().getServer().execute(() -> handler.accept(payload, context.player())));
+                //?} else {
+                /*
                 context.player().server.execute(() -> handler.accept(payload, context.player())));
+                */
+                //?}
     }
 
     //? if >=26.2 {

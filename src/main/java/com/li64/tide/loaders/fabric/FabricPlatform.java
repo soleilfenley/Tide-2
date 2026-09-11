@@ -45,7 +45,13 @@ public class FabricPlatform implements LoaderPlatform {
 
     @Override
     public <T> Registry<T> createRegistry(ResourceKey<Registry<T>> registryKey) {
+            //? if >=26.2 {
+        return FabricRegistryBuilder.create(registryKey)
+            //?} else {
+            /*
         return FabricRegistryBuilder.createSimple(registryKey)
+            */
+            //?}
                 .attribute(RegistryAttribute.SYNCED)
                 .buildAndRegister();
     }

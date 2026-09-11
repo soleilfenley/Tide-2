@@ -3,7 +3,6 @@ package com.li64.tide.loaders.fabric;
 
 import com.li64.tide.Tide;
 import com.li64.tide.client.FishDisplayRenderer;
-import com.li64.tide.client.TideCoreShaders;
 import com.li64.tide.client.TideItemModelProperties;
 import com.li64.tide.client.VoidParticleSpawner;
 import com.li64.tide.client.gui.TideMenuTypes;
@@ -15,11 +14,9 @@ import com.li64.tide.events.TideClientEventHandler;
 import com.li64.tide.registries.*;
 import com.li64.tide.registries.particles.MagicChain;
 import com.li64.tide.registries.particles.VoidRipple;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -28,18 +25,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 
 //? if >=26.2 {
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
 //?} else {
 /*
+import com.li64.tide.client.TideCoreShaders;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.renderer.RenderType;
 */
@@ -48,61 +46,103 @@ import net.minecraft.client.renderer.RenderType;
 import java.util.function.Supplier;
 
 public class FabricClientEntrypoint implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        Tide.NETWORK.registerHandlers();
+        @Override
+        public void onInitializeClient() {
+                Tide.NETWORK.registerHandlers();
+        
+                MenuScreens.register(TideMenuTypes.ANGLING_TABLE, AnglingTableScreen::new);
+                //?if <26.2 {
+                /*
+                CoreShaderRegistrationCallback.EVENT.register(ctx -> {
+                ctx.register(Tide.resource("full_white"), DefaultVertexFormat.POSITION_TEX_COLOR, instance -> TideCoreShaders.FULL_WHITE = instance);
+                ctx.register(Tide.resource("full_white_item"), DefaultVertexFormat.NEW_ENTITY, instance -> TideCoreShaders.FULL_WHITE_ITEM = instance);
+                });
+                */
+                //?}
+                
+                //? if >=26.2 {
+                ParticleProviderRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_LARGE, VoidRipple.LargeProvider::new);
+                ParticleProviderRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_SMALL, VoidRipple.SmallProvider::new);
+                ParticleProviderRegistry.getInstance().register(TideParticleTypes.MAGIC_CHAIN, MagicChain.Provider::new);
+                //?} else {
+                /*
+                ParticleFactoryRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_LARGE, VoidRipple.LargeProvider::new);
+                ParticleFactoryRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_SMALL, VoidRipple.SmallProvider::new);
+                ParticleFactoryRegistry.getInstance().register(TideParticleTypes.MAGIC_CHAIN, MagicChain.Provider::new);
+                */
+                //?}
+        
+                ClientTickEvents.END_CLIENT_TICK.register(tick -> {
+                if (tick.player == null) return;
+                if (!tick.isPaused() && tick.player.getRandom().nextFloat() > 0.5f) {
+                        VoidParticleSpawner.spawnParticles(tick.player, 1);
+                }
+                if (tick.player.getItemBySlot(EquipmentSlot.FEET).is(TideItems.DRAGONFIN_BOOTS)
+                        && tick.player instanceof DoubleJumper jumper) {
+                        if (!jumper.tide$hasDoubleJump() && tick.player.onGround()) jumper.tide$restoreDoubleJump();
+                        //? if >=26.2 {
+                        if (tick.player.input.keyPresses.jump()) jumper.tide$doDoubleJump();
+                        jumper.tide$setWasJumpPressed(tick.player.input.keyPresses.jump());
+                        //?} else {
+                        /*
+                        if (tick.player.input.jumping) jumper.tide$doDoubleJump();
+                        jumper.tide$setWasJumpPressed(tick.player.input.jumping);
+                        */
+                        //?}
+                }
+                });
+        
+                //? if >=26.2 {
+                ClientTooltipComponentCallback.EVENT.register((component) -> {
+                //?} else {
+                /*
+                TooltipComponentCallback.EVENT.register((component) -> {
+                */
+                //?}
+                //noinspection DeconstructionCanBeUsed
+                if (component instanceof FishingRodTooltip tooltip)
+                        return new ClientFishingRodTooltip(tooltip.slots(), tooltip.contents());
+                return null;
+                });
+        
+                /*? if >=1.21 {*/ItemTooltipCallback.EVENT.register((stack, ctx, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));
+                /*?} else {*//*ItemTooltipCallback.EVENT.register((stack, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));*//*?}*/
+        
+                TideItemModelProperties.registerAll();
+        
+                //? if >=26.2 {
+                //?} else {
+                /*
+                BlockRenderLayerMap.INSTANCE.putBlock(TideBlocks.JELLY_TORCH, RenderType.cutout());
+                BlockRenderLayerMap.INSTANCE.putBlock(TideBlocks.JELLY_WALL_TORCH, RenderType.cutout());
+                */
+                //?}
+        
+                BlockEntityRenderers.register(TideBlockEntities.FISH_DISPLAY, FishDisplayRenderer::new);
+        
+                TideEntityModels.init();
+                TideEntityModels.RENDERERS.forEach(FabricClientEntrypoint::registerRenderer);
+                TideEntityModels.LAYER_DEFS.forEach(FabricClientEntrypoint::registerLayer);
+        }
 
-        MenuScreens.register(TideMenuTypes.ANGLING_TABLE, AnglingTableScreen::new);
-        CoreShaderRegistrationCallback.EVENT.register(ctx -> {
-            ctx.register(Tide.resource("full_white"), DefaultVertexFormat.POSITION_TEX_COLOR, instance -> TideCoreShaders.FULL_WHITE = instance);
-            ctx.register(Tide.resource("full_white_item"), DefaultVertexFormat.NEW_ENTITY, instance -> TideCoreShaders.FULL_WHITE_ITEM = instance);
-        });
+        public static <T extends Entity> void registerRenderer(TideEntityModels.RendererRegistration<T> reg) {
+                //? if >=26.2 {
+                EntityRenderers.register(reg.entityType(), reg.renderer());
+                //?} else {
+                /*
+                EntityRendererRegistry.register(reg.entityType(), reg.renderer());
+                */
+                //?}
+        }
 
-        ParticleFactoryRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_LARGE, VoidRipple.LargeProvider::new);
-        ParticleFactoryRegistry.getInstance().register(TideParticleTypes.VOID_RIPPLE_SMALL, VoidRipple.SmallProvider::new);
-        ParticleFactoryRegistry.getInstance().register(TideParticleTypes.MAGIC_CHAIN, MagicChain.Provider::new);
-
-        ClientTickEvents.END_CLIENT_TICK.register(tick -> {
-            if (tick.player == null) return;
-            if (!tick.isPaused() && tick.player.getRandom().nextFloat() > 0.5f) {
-                VoidParticleSpawner.spawnParticles(tick.player, 1);
-            }
-            if (tick.player.getItemBySlot(EquipmentSlot.FEET).is(TideItems.DRAGONFIN_BOOTS)
-                    && tick.player instanceof DoubleJumper jumper) {
-                if (!jumper.tide$hasDoubleJump() && tick.player.onGround()) jumper.tide$restoreDoubleJump();
-                if (tick.player.input.jumping) jumper.tide$doDoubleJump();
-                jumper.tide$setWasJumpPressed(tick.player.input.jumping);
-            }
-        });
-
-        TooltipComponentCallback.EVENT.register((component) -> {
-            //noinspection DeconstructionCanBeUsed
-            if (component instanceof FishingRodTooltip tooltip)
-                return new ClientFishingRodTooltip(tooltip.slots(), tooltip.contents());
-            return null;
-        });
-
-        /*? if >=1.21 {*/ItemTooltipCallback.EVENT.register((stack, ctx, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));
-        /*?} else {*//*ItemTooltipCallback.EVENT.register((stack, flag, lines) -> TideClientEventHandler.onTooltipRender(stack, lines));*//*?}*/
-
-        TideItemModelProperties.registerAll();
-
-        BlockRenderLayerMap.INSTANCE.putBlock(TideBlocks.JELLY_TORCH, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(TideBlocks.JELLY_WALL_TORCH, RenderType.cutout());
-
-        BlockEntityRenderers.register(TideBlockEntities.FISH_DISPLAY, FishDisplayRenderer::new);
-
-        TideEntityModels.init();
-        TideEntityModels.RENDERERS.forEach(FabricClientEntrypoint::registerRenderer);
-        TideEntityModels.LAYER_DEFS.forEach(FabricClientEntrypoint::registerLayer);
-    }
-
-    public static <T extends Entity> void registerRenderer(TideEntityModels.RendererRegistration<T> reg) {
-        EntityRendererRegistry.register(reg.entityType(), reg.renderer());
-    }
-
-    public static void registerLayer(ModelLayerLocation location, Supplier<LayerDefinition> definition) {
-        EntityModelLayerRegistry.registerModelLayer(location, definition::get);
-    }
+        public static void registerLayer(ModelLayerLocation location, Supplier<LayerDefinition> definition) {
+            //? if >=26.2 {
+            ModelLayerRegistry.registerModelLayer(location, definition::get);
+            //?} else {
+            /*
+            EntityModelLayerRegistry.registerModelLayer(location, definition::get);
+            */
+            //?}
+        }
 }
 //?}

@@ -18,11 +18,14 @@ import com.li64.tide.registries.TooltipRegistry;
 
 public class JellyTorchBlockItem extends StandingAndWallBlockItem implements TooltipItem {
         public JellyTorchBlockItem(Block normal, Block wall, Direction direction, Properties properties) {
-                
-                super(normal, wall, properties, direction);
 
-                //?if >=26.2 {
+                //? if >=26.2 {
+                super(normal, wall, direction, properties);
                 TooltipRegistry.register(this, this);
+                //?} else {
+                /*
+                super(normal, wall, properties, direction);
+                */
                 //?}
         }
 

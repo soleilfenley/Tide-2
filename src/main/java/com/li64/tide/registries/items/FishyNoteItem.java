@@ -15,9 +15,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+
+
 import org.jetbrains.annotations.NotNull;
 
 //? if >=26.2 {
+import net.minecraft.core.Holder.Reference;
 import net.minecraft.world.InteractionResult;
 //?} else {
 /*
@@ -58,7 +61,7 @@ public class FishyNoteItem extends Item {
 
     public static ItemStack getFish(ItemStack note) {
         ResourceKey<Item> key = getFishKey(note);
-        Item item = BuiltInRegistries.ITEM.get(key);
+        Item item = BuiltInRegistries.ITEM.get(key)/*? if >=26.2 {*/.map(Reference::value).orElse(null)/*?}*/;
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -80,7 +83,7 @@ public class FishyNoteItem extends Item {
             Tide.NETWORK.sendToPlayer(new ViewNoteMsg(getFish(note)), serverPlayer);
 
             TidePlayerData data = TidePlayerData.getOrCreate(serverPlayer);
-            Item fish = BuiltInRegistries.ITEM.get(getFishKey(note));
+            Item fish = BuiltInRegistries.ITEM.get(getFishKey(note))/*? if >=26.2 {*/.map(Reference::value).orElse(null)/*?}*/;
             if (fish != null) {
                 data.markNoteUnlocked(fish);
                 data.syncTo(serverPlayer);

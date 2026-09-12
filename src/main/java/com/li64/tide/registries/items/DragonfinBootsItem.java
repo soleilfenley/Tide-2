@@ -45,7 +45,7 @@ public class DragonfinBootsItem extends ArmorItem implements TooltipItem {
     }
 */
 //?}
-    //? if >=1.21.1 {
+    //? if >=1.21.1 && <26.2 {
     /*
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {

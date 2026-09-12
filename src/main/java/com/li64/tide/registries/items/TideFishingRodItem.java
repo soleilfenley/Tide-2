@@ -37,7 +37,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -46,21 +45,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 //? if >= 26.2 {
 import net.minecraft.core.component.DataComponents;
 import com.li64.tide.data.item.TideDataComponents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.component.TooltipDisplay;
 //?} elif >=1.21 {
 /*
 import net.minecraft.core.component.DataComponents;
 import com.li64.tide.data.item.TideDataComponents;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 */
 //?} else {
 /*
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 */
 //?}
@@ -76,7 +79,8 @@ public class TideFishingRodItem extends FishingRodItem {
         this.baitSlots = baitSlots;
     }
 
-    //? if >=1.21 {
+    //? if >=1.21 && <26.2 {
+    /* 
     @Override
     public void verifyComponentsAfterLoad(ItemStack stack) {
         super.verifyComponentsAfterLoad(stack);
@@ -87,6 +91,7 @@ public class TideFishingRodItem extends FishingRodItem {
             TideItemData.BAIT_CONTENTS.set(stack, new BaitContents(List.copyOf(fitted)));
         }
     }
+    */
     //?}
 
     public static List<Component> getDescriptionLines(ItemStack stack) {
@@ -130,8 +135,16 @@ public class TideFishingRodItem extends FishingRodItem {
 
         return ImmutableList.copyOf(builder);
     }
-
-    //? if >=1.21 {
+    //? if >= 1.21 {
+    public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+            TooltipDisplay tooltipDisplay = stack.getOrDefault(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT);
+            return tooltipDisplay.shows(TideDataComponents.BAIT_CONTENTS)
+                ? Optional.ofNullable(TideItemData.BAIT_CONTENTS.get(stack))
+                        .map(contents -> new FishingRodTooltip(this.baitSlots, contents))
+                : Optional.empty();
+    }
+    //?} elif >=1.21 {
+    /* 
     @Override
     public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
         return !stack.has(DataComponents.HIDE_TOOLTIP) && !stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
@@ -139,12 +152,15 @@ public class TideFishingRodItem extends FishingRodItem {
                         .map(contents -> new FishingRodTooltip(this.baitSlots, contents))
                 : Optional.empty();
     }
+    */
     //?} else {
-    /*@Override
+    /*
+    @Override
     public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack stack) {
         return Optional.of(new FishingRodTooltip(this.baitSlots, TideItemData.BAIT_CONTENTS.getOrDefault(stack, new BaitContents())));
     }
-    *///?}
+    */
+    //?}
 
     @Override
     public boolean overrideStackedOnOther(@NotNull ItemStack stack, @NotNull Slot slot, @NotNull ClickAction action, @NotNull Player player) {
@@ -214,47 +230,53 @@ public class TideFishingRodItem extends FishingRodItem {
             if (isMinigameStopped(player, level.isClientSide()) && Tide.SERVER_CONFIG.minigame.doMinigame) {
                 // No minigame active, create a new one if necessary
                 if (CompatHelper.useStarcatcherMinigame()) {
-                    if (hook.getCatchType() == TideFishingHook.CatchType.FISH) {
-                        if (!level.isClientSide()) {
-                            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
-                                    SoundSource.NEUTRAL, 1.2F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-                            if (!CompatHelper.starcatcherStartMinigame((ServerPlayer) player, (HookAccessor) player.fishing,
-                                    player.getItemInHand(hand), hook.getHookedItems())) {
-                                retrieveHook(player.getItemInHand(hand), player, level);
-                            }
-                            else hook.setMinigameActive(true);
+                        if (hook.getCatchType() == TideFishingHook.CatchType.FISH) {
+                                if (!level.isClientSide()) {
+                                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
+                                        SoundSource.NEUTRAL, 1.2F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+                                if (!CompatHelper.starcatcherStartMinigame((ServerPlayer) player, (HookAccessor) player.fishing,
+                                        player.getItemInHand(hand), hook.getHookedItems())) {
+                                        retrieveHook(player.getItemInHand(hand), player, level);
+                                }
+                                else hook.setMinigameActive(true);
+                                }
                         }
-                    }
-                    else retrieveHook(player.getItemInHand(hand), player, level);
+                        else retrieveHook(player.getItemInHand(hand), player, level);
                 }
                 else if (CompatHelper.useStardewMinigame()) {
-                    if (hook.getCatchType() == TideFishingHook.CatchType.FISH
-                            || hook.getCatchType() == TideFishingHook.CatchType.ITEM) {
-
-                        if (!level.isClientSide()) {
-                            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
-                                    SoundSource.NEUTRAL, 1.2F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-
-                            if (!CompatHelper.stardewFishingStartMinigame((ServerPlayer) player, (HookAccessor) player.fishing,
-                                    player.getItemInHand(hand), hook.getHookedItems())) {
-                                retrieveHook(player.getItemInHand(hand), player, level);
-                            }
+                        if (hook.getCatchType() == TideFishingHook.CatchType.FISH
+                                || hook.getCatchType() == TideFishingHook.CatchType.ITEM) {
+        
+                                if (!level.isClientSide()) {
+                                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
+                                        SoundSource.NEUTRAL, 1.2F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+                
+                                        if (!CompatHelper.stardewFishingStartMinigame((ServerPlayer) player, (HookAccessor) player.fishing,
+                                                player.getItemInHand(hand), hook.getHookedItems())) {
+                                                retrieveHook(player.getItemInHand(hand), player, level);
+                                        }
+                                }
                         }
-                    }
-                    else retrieveHook(player.getItemInHand(hand), player, level);
+                        else retrieveHook(player.getItemInHand(hand), player, level);
                 }
                 else if (hook.getCatchType() == TideFishingHook.CatchType.FISH) {
-                    if (!level.isClientSide() && isMinigameStopped(player, level.isClientSide())) {
-                        // start fishing minigame
-                        FishCatchMinigame.create(player);
-                        level.playSound(null, player.getX(), player.getY(), player.getZ(), TideSoundEvents.FISHING_REEL,
-                                SoundSource.NEUTRAL, 0.7f, 0.85f + (level.getRandom().nextFloat() * 0.25f));
-                    }
+                        if (!level.isClientSide() && isMinigameStopped(player, level.isClientSide())) {
+                                // start fishing minigame
+                                FishCatchMinigame.create(player);
+                                level.playSound(null, player.getX(), player.getY(), player.getZ(), TideSoundEvents.FISHING_REEL,
+                                        SoundSource.NEUTRAL, 0.7f, 0.85f + (level.getRandom().nextFloat() * 0.25f));
+                        }
                 }
                 else {
-                    if (!level.isClientSide() && FishCatchMinigame.delayActive((ServerPlayer) player))
-                        return InteractionResultHolder.consume(player.getItemInHand(hand));
-                    retrieveHook(player.getItemInHand(hand), player, level);
+                        if (!level.isClientSide() && FishCatchMinigame.delayActive((ServerPlayer) player))
+                                //? if >=26.2 {
+                                return InteractionResult.CONSUME.heldItemTransformedTo(player.getItemInHand(hand));
+                                //?} else {
+                                /*
+                                return InteractionResultHolder.consume(player.getItemInHand(hand));
+                                */
+                                //?}
+                        retrieveHook(player.getItemInHand(hand), player, level);
                 }
             }
             else {
@@ -290,7 +312,13 @@ public class TideFishingRodItem extends FishingRodItem {
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,
                         SoundSource.NEUTRAL, 1.5F, 0.3F / (level.getRandom().nextFloat() * 0.4F + 0.7F));
                 player.startUsingItem(hand);
+                //? if >=26.2 {
+                return InteractionResult.CONSUME.heldItemTransformedTo(player.getItemInHand(hand));
+                //?} else {
+                /*
                 return InteractionResultHolder.consume(player.getItemInHand(hand));
+                */
+                //?}
             }
             else {
                 // Cast the hook normally
@@ -311,7 +339,13 @@ public class TideFishingRodItem extends FishingRodItem {
     }
 
     @Override
+    //? if >=26.2 {
+    public boolean releaseUsing(@NotNull ItemStack rod, @NotNull Level level, @NotNull LivingEntity user, int charge) {
+    //?} else {
+    /*
     public void releaseUsing(@NotNull ItemStack rod, @NotNull Level level, @NotNull LivingEntity user, int charge) {
+    */
+    //?}
         if (user instanceof Player player) {
             int chargeDifference = this.getUseDuration(rod, user) - charge;
             int chargeDuration = getChargeDuration(rod, user);
@@ -321,6 +355,9 @@ public class TideFishingRodItem extends FishingRodItem {
             float chargeMultiplier = ((float) chargeDifference / (float) chargeDuration) + 0.5f;
             castHook(rod, player, level, chargeMultiplier);
         }
+        //?if >=26.2 {
+        return true;
+        //?}
     }
 
     public boolean isHookActive(Player player) {
@@ -365,15 +402,28 @@ public class TideFishingRodItem extends FishingRodItem {
                 // sunflower rod perk
                 if (rod.is(TideItems.SUNFLOWER_FISHING_ROD)) {
                     boolean canSeeSky = level.canSeeSky(player.blockPosition());
+                    //? if >=26.2 {
+                    boolean isSunny = level.getOverworldClockTime() % 24000L < 12000L && level.dimensionType().hasSkyLight() && !level.isRaining();
+                    //?} else {
+                    /*
                     boolean isSunny = level.isDay() && level.dimensionType().hasSkyLight() && !level.isRaining();
+                    */
+                    //?}
                     if (canSeeSky && isSunny) luck += 1;
                 }
 
                 // hybrid aquatic hook perks
                 if (CompatHelper.isHybridAquaticLoaded()) {
-                    if (CustomRodManager.getHook(rod).getItem().toString().matches("barbed_hook") && level.isDay()) speed += 1;
-                    if (CustomRodManager.getHook(rod).getItem().toString().matches("glowing_hook") && level.isNight()) speed += 1;
-                    if (CustomRodManager.getHook(rod).getItem().toString().matches("magnetic_hook")) luck += 1;
+                        //? if >=26.2 {
+                        if (CustomRodManager.getHook(rod).getItem().toString().matches("barbed_hook") && level.getOverworldClockTime() % 24000L < 12000L) speed += 1;
+                        if (CustomRodManager.getHook(rod).getItem().toString().matches("glowing_hook") && level.getOverworldClockTime() % 24000L >= 12000L) speed += 1;
+                        //?} else {
+                        /*
+                        if (CustomRodManager.getHook(rod).getItem().toString().matches("barbed_hook") && level.isDay()) speed += 1;
+                        if (CustomRodManager.getHook(rod).getItem().toString().matches("glowing_hook") && level.isNight()) speed += 1;
+                        */
+                        //?}
+                        if (CustomRodManager.getHook(rod).getItem().toString().matches("magnetic_hook")) luck += 1;
                 }
 
                 level.addFreshEntity(new TideFishingHook(TideEntityTypes.FISHING_BOBBER,
@@ -388,9 +438,10 @@ public class TideFishingRodItem extends FishingRodItem {
     public void retrieveHook(ItemStack rod, Player player, Level level) {
         TideFishingHook activeHook = HookAccessor.getHook(player);
         if (activeHook != null) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide/*? if >=1.21 {*/()/*?}*/) {
                 int durabilityLoss = activeHook.retrieve(rod, (ServerLevel) level, player);
-                /*? if >=1.21 {*/rod.hurtAndBreak(durabilityLoss, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
+                /*? if >=26.2 {*/rod.hurtAndBreak(durabilityLoss, player, player.getUsedItemHand());
+                /*? if >=1.21 {*//*rod.hurtAndBreak(durabilityLoss, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));*/
                 /*?} else {*//*rod.hurtAndBreak(durabilityLoss, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));*//*?}*/
             }
 
@@ -454,8 +505,12 @@ public class TideFishingRodItem extends FishingRodItem {
         if (item != null) item.setNoPickUpDelay();
     }
 
+    //?if <26.2 {
+    /* 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
         return repairCandidate.is(Items.STRING);
     }
+    */
+    //?}
 }

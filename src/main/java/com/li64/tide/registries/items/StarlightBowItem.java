@@ -71,9 +71,17 @@ public class StarlightBowItem extends BowItem implements TooltipItem {
     @Override
     protected void shoot(@NotNull ServerLevel level, @NotNull LivingEntity shooter, @NotNull InteractionHand hand, @NotNull ItemStack weapon, @NotNull List<ItemStack> projectileItems, float velocity, float inaccuracy, boolean isCrit, @Nullable LivingEntity target) {
         super.shoot(level, shooter, hand, weapon, projectileItems, velocity, inaccuracy, isCrit, target);
+        //? if >=26.2 {
+        level.playSound(null, shooter.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.5f, 1.0f - (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.1f);
+        //?} else {
+        /*
         level.playSound(null, shooter.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.5f, 1.0f - (level.random.nextFloat() - level.random.nextFloat()) * 0.1f);
+        */
+        //?}
     }
-    //?} elif <26.2 >=1.21 {
+    //?}
+    
+    //? if >=1.21 && <26.2 {
     /* 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> lines, TooltipFlag flag) {

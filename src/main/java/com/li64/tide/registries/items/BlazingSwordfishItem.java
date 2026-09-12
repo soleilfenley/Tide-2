@@ -21,11 +21,28 @@ public class BlazingSwordfishItem extends SwordfishItem {
                 //?}
         super(tier, damageMod, speedMod, properties);
     }
-
+    
+    //? if >=26.2 {
+    @Override
+    public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.igniteForTicks(80);
+        super.postHurtEnemy(stack, target, attacker);
+    }
+    //?} elif >= 1.21 {
+    /*
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        /*? if >=1.21 {*/target.igniteForTicks(80);
-        /*?} else {*//*target.setSecondsOnFire(4);*//*?}*/
+        target.igniteForTicks(80);
         return super.hurtEnemy(stack, target, attacker);
     }
+    */
+    //?} else {
+    /*
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.setSecondsOnFire(4);
+        return super.hurtEnemy(stack, target, attacker);
+    }
+    */
+    //?}
 }

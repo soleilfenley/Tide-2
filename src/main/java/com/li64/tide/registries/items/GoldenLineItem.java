@@ -4,9 +4,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
+
+//?if <26.2 {
+/* 
+import net.minecraft.world.item.ItemStack;
+*/
+//?}
 
 public class GoldenLineItem extends FishingLineItem {
     public GoldenLineItem(Properties properties) {
@@ -18,10 +23,10 @@ public class GoldenLineItem extends FishingLineItem {
     public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
     //?} else {
     /*
-    public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    public void addTooltip(ItemStack getter, Consumer<Component> tooltip) {
     */
     //?}
-        super.addTooltip(stack, tooltip);
+        super.addTooltip(getter, tooltip);
         Style blue = Component.empty().getStyle().withColor(ChatFormatting.BLUE);
         tooltip.accept(Component.translatable("item.tide.golden_line.desc_1").setStyle(blue));
     }

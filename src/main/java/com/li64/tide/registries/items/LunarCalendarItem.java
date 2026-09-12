@@ -8,16 +8,23 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
-import java.util.List;
 import java.util.function.Consumer;
 
-//?if >=26.2 {
-import net.minecraft.core.component.DataComponentGetter;
+//? if >=26.2 {
 import com.li64.tide.registries.TooltipRegistry;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.world.level.MoonPhase;
+//?} elif <1.21 {
+/* 
+import net.minecraft.world.level.Level;
+*/
+//?} else {
+/* 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import java.util.List;
+*/
 //?}
 
         public class LunarCalendarItem extends BlockItem implements InformationalItem, TooltipItem {
@@ -44,7 +51,10 @@ import com.li64.tide.registries.TooltipRegistry;
         @Override
         public String getResult(ServerLevel level, ServerPlayer player) {
                 //? if >=26.2 {
-                return Integer.toString(level.getMoonPhase());
+                MoonPhase phase = MoonPhase.values()[
+                        (int) ((level.getGameTime() / MoonPhase.PHASE_LENGTH) % MoonPhase.COUNT)
+                ];
+                return Integer.toString(phase.index());
                 //?} else {
                 /*
                 return Integer.toString(level.getMoonPhase());
@@ -62,7 +72,7 @@ import com.li64.tide.registries.TooltipRegistry;
                 return 20;
         }
         
-        //? if <26.2 >=1.21.1 {
+        //? if >=1.21.1 && <26.2 {
         /*
         @Override
         public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {

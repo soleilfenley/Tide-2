@@ -2,6 +2,7 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.registries.TideItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
@@ -24,7 +25,13 @@ public class FishFinderItem extends AbstractTooltipItem implements InfoItemConta
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         tooltip.accept(Component.translatable("item.tide.fish_finder.desc").setStyle(gray));
     }

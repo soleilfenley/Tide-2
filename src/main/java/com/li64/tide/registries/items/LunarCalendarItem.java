@@ -1,6 +1,7 @@
 package com.li64.tide.registries.items;
 
 import com.li64.tide.registries.TideBlocks;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -14,43 +15,68 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LunarCalendarItem extends BlockItem implements InformationalItem, TooltipItem {
-    public LunarCalendarItem(Properties properties) {
-        super(TideBlocks.LUNAR_CALENDAR, properties);
-    }
+//?if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
+import com.li64.tide.registries.TooltipRegistry;
+//?}
 
-    @Override
-    public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
-        Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
-        tooltip.accept(Component.translatable("item.tide.lunar_calendar.desc").setStyle(gray));
-    }
-
-    @Override
-    public String getResult(ServerLevel level, ServerPlayer player) {
-        return Integer.toString(level.getMoonPhase());
-    }
-
-    @Override
-    public Component parseResult(String result) {
-        return Component.translatable("journal.info.moon_phase." + Integer.parseInt(result));
-    }
-
-    @Override
-    public int updatePeriod() {
-        return 20;
-    }
-
-    //? if >=1.21.1 {
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
-        super.appendHoverText(stack, context, lines, flag);
-        this.addTooltip(stack, lines::add);
-    }
-    //?} else {
-    /*@Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> lines, TooltipFlag flag) {
-        super.appendHoverText(stack, level, lines, flag);
-        this.addTooltip(stack, lines::add);
-    }
-    *///?}
+        public class LunarCalendarItem extends BlockItem implements InformationalItem, TooltipItem {
+        public LunarCalendarItem(Properties properties) {
+                super(TideBlocks.LUNAR_CALENDAR, properties);
+        
+                //?if >=26.2 {
+                TooltipRegistry.register(this, this);
+                //?}
+        }
+        
+        @Override
+        //? if >=26.2 {
+        public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+        //?} else {
+        /*
+        public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+        */
+        //?}
+                Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
+                tooltip.accept(Component.translatable("item.tide.lunar_calendar.desc").setStyle(gray));
+        }
+        
+        @Override
+        public String getResult(ServerLevel level, ServerPlayer player) {
+                //? if >=26.2 {
+                return Integer.toString(level.getMoonPhase());
+                //?} else {
+                /*
+                return Integer.toString(level.getMoonPhase());
+                */
+                //?}
+        }
+        
+        @Override
+        public Component parseResult(String result) {
+                return Component.translatable("journal.info.moon_phase." + Integer.parseInt(result));
+        }
+        
+        @Override
+        public int updatePeriod() {
+                return 20;
+        }
+        
+        //? if <26.2 >=1.21.1 {
+        /*
+        @Override
+        public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
+                super.appendHoverText(stack, context, lines, flag);
+                this.addTooltip(stack, lines::add);
+        }
+        */
+        //?} else {
+        /*
+        @Override
+        public void appendHoverText(ItemStack stack, Level level, List<Component> lines, TooltipFlag flag) {
+                super.appendHoverText(stack, level, lines, flag);
+                this.addTooltip(stack, lines::add);
+        }
+        */
+        //?}
 }

@@ -6,6 +6,7 @@ import com.li64.tide.data.TideCriteriaTriggers;
 import com.li64.tide.data.TideTags;
 import com.li64.tide.registries.TideParticleTypes;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -24,45 +25,52 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 public class EnchantedPocketWatchItem extends PocketWatchItem {
-    public EnchantedPocketWatchItem(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        if (!(target instanceof Mob mob) || !(target instanceof FreezableMob freezable)
-                || player.getCooldowns().isOnCooldown(this) || target.getType().is(TideTags.Entities.IGNORES_POCKET_WATCH)
-                || Tide.SERVER_CONFIG.items.pocketWatchBlacklist.contains(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType()).toString())) {
-            return super.interactLivingEntity(stack, player, target, hand);
+        public EnchantedPocketWatchItem(Properties properties) {
+                super(properties);
         }
-        if (!(player.level() instanceof ServerLevel level)) return InteractionResult.SUCCESS;
-        if (freezable.tide$isFrozen()) {
-            level.playSound(null, mob.blockPosition(), SoundEvents.CHAIN_BREAK, SoundSource.PLAYERS, 1.0f, 1.0f);
-            freezable.tide$setFrozen(false);
-            player.getCooldowns().addCooldown(this, 20);
+        
+        @Override
+        public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+                if (!(target instanceof Mob mob) || !(target instanceof FreezableMob freezable)
+                        || player.getCooldowns().isOnCooldown(this) || target.getType().is(TideTags.Entities.IGNORES_POCKET_WATCH)
+                        || Tide.SERVER_CONFIG.items.pocketWatchBlacklist.contains(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType()).toString())) {
+                return super.interactLivingEntity(stack, player, target, hand);
+                }
+                if (!(player.level() instanceof ServerLevel level)) return InteractionResult.SUCCESS;
+                if (freezable.tide$isFrozen()) {
+                level.playSound(null, mob.blockPosition(), SoundEvents.CHAIN_BREAK, SoundSource.PLAYERS, 1.0f, 1.0f);
+                freezable.tide$setFrozen(false);
+                player.getCooldowns().addCooldown(this, 20);
+                }
+                else {
+                if (BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getPath().equals("coelacanth")) TideCriteriaTriggers.FROZE_COELACANTH.trigger((ServerPlayer) player);
+                level.playSound(null, mob.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.PLAYERS, 0.8f, 1.0f);
+                level.playSound(null, mob.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 0.8f, 0.9f);
+                level.sendParticles(TideParticleTypes.MAGIC_CHAIN, mob.getX(), mob.getY() + mob.getBbHeight() / 2, mob.getZ(), 8, 0, 0, 0, 0);
+                freezable.tide$setFrozen(true);
+                player.getCooldowns().addCooldown(this, 200);
+                }
+                return InteractionResult.SUCCESS;
         }
-        else {
-            if (BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getPath().equals("coelacanth")) TideCriteriaTriggers.FROZE_COELACANTH.trigger((ServerPlayer) player);
-            level.playSound(null, mob.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.PLAYERS, 0.8f, 1.0f);
-            level.playSound(null, mob.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 0.8f, 0.9f);
-            level.sendParticles(TideParticleTypes.MAGIC_CHAIN, mob.getX(), mob.getY() + mob.getBbHeight() / 2, mob.getZ(), 8, 0, 0, 0, 0);
-            freezable.tide$setFrozen(true);
-            player.getCooldowns().addCooldown(this, 200);
+        
+        @Override
+        //? if >=26.2 {
+        public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+                super.addTooltip(getter, tooltip);
+        //?} else {
+        /*
+        public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+                super.addTooltip(stack, tooltip);
+        */
+        //?}
+                Style gold = Component.empty().getStyle().withColor(ChatFormatting.GOLD);
+                tooltip.accept(Component.translatable("item.tide.enchanted_pocket_watch.desc").setStyle(gold));
         }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
-        super.addTooltip(stack, tooltip);
-        Style gold = Component.empty().getStyle().withColor(ChatFormatting.GOLD);
-        tooltip.accept(Component.translatable("item.tide.enchanted_pocket_watch.desc").setStyle(gold));
-    }
-
-    //? if <1.21 {
-    /*@Override
-    public boolean isFoil(ItemStack itemStack) {
-        return true;
-    }
-    *///?}
+        
+        //? if <1.21 {
+        /*@Override
+        public boolean isFoil(ItemStack itemStack) {
+                return true;
+        }
+        *///?}
 }

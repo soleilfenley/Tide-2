@@ -2,9 +2,11 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.Tide;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+
 //? if >=26.2 {
 import net.minecraft.resources.Identifier;
 //?} else {
@@ -29,7 +31,13 @@ public class FishingHookItem extends AbstractTooltipItem {
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         if (description.isEmpty()) return;
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         Style blue = Component.empty().getStyle().withColor(ChatFormatting.BLUE);

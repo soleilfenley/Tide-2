@@ -2,6 +2,7 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.registries.entities.misc.StarArrow;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 //? if >= 26.2 {
+import com.li64.tide.registries.TooltipRegistry;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
@@ -40,10 +42,20 @@ import java.util.function.Consumer;
 public class StarlightBowItem extends BowItem implements TooltipItem {
     public StarlightBowItem(Properties properties) {
         super(properties);
+
+        //?if >=26.2 {
+        TooltipRegistry.register(this, this);
+        //?}
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         Style gold = Component.empty().getStyle().withColor(ChatFormatting.GOLD);
         tooltip.accept(Component.translatable("item.tide.starlight_bow.desc_0").setStyle(gold));
         tooltip.accept(Component.translatable("item.tide.starlight_bow.desc_1").setStyle(gold));
@@ -61,16 +73,17 @@ public class StarlightBowItem extends BowItem implements TooltipItem {
         super.shoot(level, shooter, hand, weapon, projectileItems, velocity, inaccuracy, isCrit, target);
         level.playSound(null, shooter.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.5f, 1.0f - (level.random.nextFloat() - level.random.nextFloat()) * 0.1f);
     }
-
+    //?} elif <26.2 >=1.21 {
+    /* 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> lines, TooltipFlag flag) {
         super.appendHoverText(stack, context, lines, flag);
         this.addTooltip(stack, lines::add);
     }
-
+    */
     //?} else {
-
-    /*@Override
+    /*
+    @Override
     public void releaseUsing(ItemStack weapon, Level level, LivingEntity shooter, int i) {
         if (shooter instanceof Player player) {
             boolean hasInfinity = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, weapon) > 0;
@@ -127,5 +140,6 @@ public class StarlightBowItem extends BowItem implements TooltipItem {
         super.appendHoverText(stack, level, lines, flag);
         this.addTooltip(stack, lines::add);
     }
-    *///?}
+    */
+    //?}
 }

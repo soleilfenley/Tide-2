@@ -1,6 +1,7 @@
 package com.li64.tide.registries.items;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
@@ -49,7 +50,13 @@ public class VoidseekerItem extends AbstractTooltipItem {
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         tooltip.accept(Component.translatable("item.tide.voidseeker.desc").setStyle(gray));
     }

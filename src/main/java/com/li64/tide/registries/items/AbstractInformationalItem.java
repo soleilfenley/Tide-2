@@ -1,6 +1,7 @@
 package com.li64.tide.registries.items;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -67,7 +68,13 @@ public abstract class AbstractInformationalItem extends AbstractTooltipItem impl
     //?}
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         this.description.forEach(component -> tooltip.accept(component.setStyle(gray)));
     }

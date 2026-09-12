@@ -2,7 +2,9 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.data.fishing.conditions.types.WeatherType;
 import com.li64.tide.registries.TideBlocks;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
@@ -17,13 +19,27 @@ import net.minecraft.world.level.storage.ServerLevelData;
 import java.util.List;
 import java.util.function.Consumer;
 
+//?if >=26.2 {
+import com.li64.tide.registries.TooltipRegistry;
+//?}
+
 public class WeatherRadioItem extends BlockItem implements InformationalItem, TooltipItem {
     public WeatherRadioItem(Properties properties) {
         super(TideBlocks.WEATHER_RADIO, properties);
+
+        //?if >=26.2 {
+        TooltipRegistry.register(this, this);
+        //?}
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
+    */
+    //?}
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         tooltip.accept(Component.translatable("item.tide.weather_radio.desc").setStyle(gray));
     }
@@ -85,12 +101,14 @@ public class WeatherRadioItem extends BlockItem implements InformationalItem, To
         return 20;
     }
 
-    //? if >=1.21.1 {
+    //? if <26.2 >=1.21.1 {
+    /*
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
         super.appendHoverText(stack, context, lines, flag);
         this.addTooltip(stack, lines::add);
     }
+    */
     //?} else {
     /*@Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> lines, TooltipFlag flag) {

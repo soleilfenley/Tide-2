@@ -1,28 +1,26 @@
 package com.li64.tide.registries;
 
-import com.li64.tide.Tide;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 
 //? if >=26.2 {
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.util.Util;
-
-import java.util.EnumMap;
-import java.util.List;
-import java.util.function.Supplier;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 //?} elif >= 1.21 {
 /*
+import com.li64.tide.Tide;
+
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.Util;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.Util;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -36,7 +34,24 @@ import net.minecraft.Util;
 import net.minecraft.util.StringRepresentable;
 */
 //?}
-//? if >=1.21 {
+
+//? if >=26.2 {
+public class TideArmorMaterials {
+    public static final Holder<ArmorMaterial> DRAGONFIN = Holder.direct(new ArmorMaterial(
+            12, 
+            ArmorMaterials.makeDefense(5, 6, 8, 3, 11),
+            12, 
+            SoundEvents.ARMOR_EQUIP_NETHERITE, 
+            3.0f, 
+            0.1f, 
+            ItemTags.REPAIRS_NETHERITE_ARMOR, 
+            EquipmentAssets.createId("dragonfin")
+    ));
+
+    public static void init() {}
+}
+//?} elif >=1.21 {
+/*
 public class TideArmorMaterials {
     public static final Holder<ArmorMaterial> DRAGONFIN = register("dragonfin", Util.make(new EnumMap<>(ArmorItem.Type.class),enumMap -> {
         enumMap.put(ArmorItem.Type.BOOTS, 5);
@@ -77,6 +92,7 @@ public class TideArmorMaterials {
 
     public static void init() {}
 }
+*/
 //?} else {
 /*
 import org.jetbrains.annotations.NotNull;

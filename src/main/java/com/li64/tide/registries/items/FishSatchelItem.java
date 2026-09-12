@@ -24,8 +24,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+
 //? if >= 26.2 {
+import com.li64.tide.data.item.TideDataComponents; 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.component.BundleContents;
 import java.util.List;
@@ -209,9 +212,17 @@ public class FishSatchelItem extends AbstractTooltipItem {
     }
 
     @Override
+    //? if >=26.2 {
+    public void addTooltip(DataComponentGetter getter, Consumer<Component> tooltip) {
+        Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
+        SatchelContents contents = TideItemData.SATCHEL_CONTENTS.get(getter);
+    //?} else {
+    /*
     public void addTooltip(ItemStack stack, Consumer<Component> tooltip) {
         Style gray = Component.empty().getStyle().withColor(ChatFormatting.GRAY);
         SatchelContents contents = TideItemData.SATCHEL_CONTENTS.get(stack);
+    */
+    //?}
         if (contents != null) tooltip.accept(Component.translatable("item.minecraft.bundle.fullness",
                 contents.size(), SatchelContents.MAX_STACKS).withStyle(ChatFormatting.GRAY));
         tooltip.accept(Component.translatable("item.tide.fish_satchel.desc_0").setStyle(gray));

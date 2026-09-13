@@ -28,9 +28,6 @@
     "rarity": "uncommon"
   },
   "selection_weight": 17.0,
-  "shiny_data": {
-    "sprite": "tide:item/crystal_shrimp_shiny"
-  },
   "size": {
     "record_high_cm": 15.0,
     "typical_high_cm": 8.0,

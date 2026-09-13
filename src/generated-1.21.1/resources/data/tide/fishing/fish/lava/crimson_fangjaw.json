@@ -25,9 +25,6 @@
     "rarity": "rare"
   },
   "selection_weight": 24.0,
-  "shiny_data": {
-    "sprite": "tide:item/crimson_fangjaw_shiny"
-  },
   "size": {
     "record_high_cm": 100.0,
     "typical_high_cm": 65.0,

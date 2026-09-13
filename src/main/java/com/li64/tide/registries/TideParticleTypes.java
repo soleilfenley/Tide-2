@@ -5,13 +5,29 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 public class TideParticleTypes {
-    public static final SimpleParticleType VOID_RIPPLE_LARGE = register("void_ripple_large", new SimpleParticleType(true));
-    public static final SimpleParticleType VOID_RIPPLE_SMALL = register("void_ripple_small", new SimpleParticleType(true));
-    public static final SimpleParticleType MAGIC_CHAIN = register("magic_chain", new SimpleParticleType(true));
+        //? if >=26.2 {
+        public static final SimpleParticleType VOID_RIPPLE_LARGE = register("void_ripple_large", new TideSimpleParticleType(true));
+        public static final SimpleParticleType VOID_RIPPLE_SMALL = register("void_ripple_small", new TideSimpleParticleType(true));
+        public static final SimpleParticleType MAGIC_CHAIN = register("magic_chain", new TideSimpleParticleType(true));
+        //?} else {
+        /*
+        public static final SimpleParticleType VOID_RIPPLE_LARGE = register("void_ripple_large", new SimpleParticleType(true));
+        public static final SimpleParticleType VOID_RIPPLE_SMALL = register("void_ripple_small", new SimpleParticleType(true));
+        public static final SimpleParticleType MAGIC_CHAIN = register("magic_chain", new SimpleParticleType(true));
+        */
+        //?}
+        
+        public static SimpleParticleType register(String key, SimpleParticleType particleType) {
+                return Tide.PLATFORM.register(BuiltInRegistries.PARTICLE_TYPE, Tide.resource(key), particleType);
+        }
+        
+        public static void init() {}
 
-    public static SimpleParticleType register(String key, SimpleParticleType particleType) {
-        return Tide.PLATFORM.register(BuiltInRegistries.PARTICLE_TYPE, Tide.resource(key), particleType);
-    }
-
-    public static void init() {}
+        //? if >=26.2 {
+        private static class TideSimpleParticleType extends SimpleParticleType {
+                protected TideSimpleParticleType(boolean overrideLimiter) {
+                        super(overrideLimiter);
+                }
+        }
+        //?}
 }

@@ -1,142 +1,142 @@
 import kotlin.io.path.absolutePathString
 
 plugins {
-    id("dev.isxander.modstitch.base") version "0.8.5"
+        id("dev.isxander.modstitch.base") version "0.8.5"
 }
 
 fun prop(name: String, consumer: (prop: String) -> Unit) {
-    (findProperty(name) as? String?)
-        ?.let(consumer)
+        (findProperty(name) as? String?)
+                ?.let(consumer)
 }
 
 val minecraft = property("deps.minecraft") as String
 
 modstitch {
-    if (isLoom) base.archivesName = "tide-fabric-$minecraft"
-    if (isModDevGradleRegular) base.archivesName = "tide-neoforge-$minecraft"
-    if (isModDevGradleLegacy) base.archivesName = "tide-forge-$minecraft"
+        if (isLoom) base.archivesName = "tide-fabric-$minecraft"
+        if (isModDevGradleRegular) base.archivesName = "tide-neoforge-$minecraft"
+        if (isModDevGradleLegacy) base.archivesName = "tide-forge-$minecraft"
 
-    minecraftVersion = minecraft
+        minecraftVersion = minecraft
 
-    // If parchment doesn't exist for a version yet, you can safely
-    // omit the "deps.parchment" property from your versioned gradle.properties
-    parchment {
-        prop("deps.parchment") { mappingsVersion = it }
-    }
-
-    // This metadata is used to fill out the information inside
-    // the metadata files found in the templates folder.
-    metadata {
-        modId = "tide"
-        modName = "Tide"
-        modVersion = "2.1.1"
-        modGroup = "com.li64.tide"
-        modAuthor = "Lightning64"
-        modDescription = "Expands the fishing system and adds 100+ new fish."
-        modLicense = "MPL-2.0"
-
-        fun <K : Any, V: Any> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
-            block()
+        // If parchment doesn't exist for a version yet, you can safely
+        // omit the "deps.parchment" property from your versioned gradle.properties
+        parchment {
+                prop("deps.parchment") { mappingsVersion = it }
         }
 
-        replacementProperties.populate {
-            // You can put any other replacement properties/metadata here that
-            // modstitch doesn't initially support. Some examples below.
-            put("mod_homepage", "https://www.curseforge.com/minecraft/mc-mods/tide")
-            put("mod_issue_tracker", "https://github.com/Lightning-64/Tide-2/issues")
-            put("pack_format", when (property("deps.minecraft")) {
-                "1.20.1" -> 15
-                "1.21.1" -> 34
-                "26.2" -> 88
-                else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
-            }.toString())
-            put("mc_version", minecraft)
+        // This metadata is used to fill out the information inside
+        // the metadata files found in the templates folder.
+        metadata {
+                modId = "tide"
+                modName = "Tide"
+                modVersion = "2.1.1"
+                modGroup = "com.li64.tide"
+                modAuthor = "Lightning64"
+                modDescription = "Expands the fishing system and adds 100+ new fish."
+                modLicense = "MPL-2.0"
+
+                fun <K : Any, V: Any> MapProperty<K, V>.populate(block: MapProperty<K, V>.() -> Unit) {
+                block()
+                }
+
+                replacementProperties.populate {
+                // You can put any other replacement properties/metadata here that
+                // modstitch doesn't initially support. Some examples below.
+                put("mod_homepage", "https://www.curseforge.com/minecraft/mc-mods/tide")
+                put("mod_issue_tracker", "https://github.com/Lightning-64/Tide-2/issues")
+                put("pack_format", when (property("deps.minecraft")) {
+                        "1.20.1" -> 15
+                        "1.21.1" -> 34
+                        "26.2" -> 88
+                        else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
+                }.toString())
+                put("mc_version", minecraft)
+                }
         }
-    }
 
-    // Fabric Loom (Fabric)
-    loom {
-        // It's not recommended to store the Fabric Loader version in properties.
-        // Make sure it's up to date.
-        fabricLoaderVersion = "0.19.3"
+        // Fabric Loom (Fabric)
+        loom {
+                // It's not recommended to store the Fabric Loader version in properties.
+                // Make sure it's up to date.
+                fabricLoaderVersion = "0.19.3"
 
-        // Configure loom like normal in this block.
-        configureLoom {
-                val aw = rootProject.file("src/main/resources/accesswideners/tide-$minecraft.accesswidener")
-                if (aw.exists()) accessWidenerPath = aw
+                // Configure loom like normal in this block.
+                configureLoom {
+                        val aw = rootProject.file("src/main/resources/accesswideners/tide-$minecraft.accesswidener")
+                        if (aw.exists()) accessWidenerPath = aw
 
-                runs {
-                        create("data") {
-                        client()
+                        runs {
+                                create("data") {
+                                client()
 
-                        name = "Data Generation"
-                        runDir = "build/datagen"
+                                name = "Data Generation"
+                                runDir = "build/datagen"
 
-                        vmArg("-Dfabric-api.datagen")
-                        vmArg("-Dfabric-api.datagen.output-dir=" + project.rootDir.toPath().resolve("src/generated-$minecraft/resources"))
-                        vmArg("-Dfabric-api.datagen.modid=tide")
+                                vmArg("-Dfabric-api.datagen")
+                                vmArg("-Dfabric-api.datagen.output-dir=" + project.rootDir.toPath().resolve("src/generated-$minecraft/resources"))
+                                vmArg("-Dfabric-api.datagen.modid=tide")
+                                }
+                        }
+                        mixin {
+                                useLegacyMixinAp = false
                         }
                 }
-                mixin {
-                        useLegacyMixinAp = false
+        }
+
+        // ModDevGradle (NeoForge, Forge, Forgelike)
+        val datagenPath =
+                if (isModDevGradleRegular) "src/generated-$minecraft/neoforge-resources"
+                else "src/generated-$minecraft/forge-resources"
+
+
+        moddevgradle {
+                prop("deps.forge") { forgeVersion = it }
+                prop("deps.neoform") { neoFormVersion = it }
+                prop("deps.neoforge") { neoForgeVersion = it }
+                prop("deps.mcp") { mcpVersion = it }
+
+                // Configures client and server runs for MDG, it is not done by default
+                defaultRuns()
+
+                // This block configures the `neoforge` extension that MDG exposes by default,
+                // you can configure MDG like normal from here
+                configureNeoForge {
+                        sourceSets["main"].resources.srcDir(rootProject.file(datagenPath))
+                        val at = rootProject.file("src/main/resources/accesstransformers/$minecraft.cfg")
+                        if (at.exists()) accessTransformers.from(at)
                 }
         }
-    }
 
-    // ModDevGradle (NeoForge, Forge, Forgelike)
-    val datagenPath =
-        if (isModDevGradleRegular) "src/generated-$minecraft/neoforge-resources"
-        else "src/generated-$minecraft/forge-resources"
-
-
-    moddevgradle {
-        prop("deps.forge") { forgeVersion = it }
-        prop("deps.neoform") { neoFormVersion = it }
-        prop("deps.neoforge") { neoForgeVersion = it }
-        prop("deps.mcp") { mcpVersion = it }
-
-        // Configures client and server runs for MDG, it is not done by default
-        defaultRuns()
-
-        // This block configures the `neoforge` extension that MDG exposes by default,
-        // you can configure MDG like normal from here
-        configureNeoForge {
-            sourceSets["main"].resources.srcDir(file(datagenPath))
-            val at = rootProject.file("src/main/resources/accesstransformers/$minecraft.cfg")
-            if (at.exists()) accessTransformers.from(at)
-        }
-    }
-
-    if (isModDevGradle) {
-        tasks.matching { it.name == "createMinecraftArtifacts" }.configureEach {
-            dependsOn("stonecutterGenerate")
-        }
-    }
-
-    runs {
-            if (isModDevGradle) {
-                create("data") {
-                        client()
-                        datagen = true
-                        programArgs.addAll("--mod", metadata.modId.get(), "--all",
-                        "--output", project.rootDir.toPath().resolve("src/generated-$minecraft/neoforge-resources").absolutePathString())
+        if (isModDevGradle) {
+                tasks.matching { it.name == "createMinecraftArtifacts" }.configureEach {
+                dependsOn("stonecutterGenerate")
                 }
-            }
-    }
+        }
 
-    mixin {
-        // You do not need to specify mixins in any mods.json/toml file if this is set to
-        // true, it will automatically be generated.
-        addMixinsToModManifest = true
+        runs {
+                if (isModDevGradle) {
+                        create("data") {
+                                client()
+                                datagen = true
+                                programArgs.addAll("--mod", metadata.modId.get(), "--all",
+                                "--output", project.rootDir.toPath().resolve("src/generated-$minecraft/neoforge-resources").absolutePathString())
+                        }
+                }
+        }
 
-        configs.register("tide")
-        if (isModDevGradle) configs.register("tide-neoforge")
-    }
+        mixin {
+                // You do not need to specify mixins in any mods.json/toml file if this is set to
+                // true, it will automatically be generated.
+                addMixinsToModManifest = true
+
+                configs.register("tide")
+                if (isModDevGradle) configs.register("tide-neoforge")
+        }
 
 }
 
-sourceSets["main"].resources.srcDir(file("src/generated-$minecraft/resources"))
-sourceSets["main"].resources.srcDir(file("src/main/resources-$minecraft"))
+sourceSets["main"].resources.srcDir(rootProject.file("src/generated-$minecraft/resources"))
+sourceSets["main"].resources.srcDir(rootProject.file("src/main/resources-$minecraft"))
 
 // Stonecutter constants for mod loaders.
 // See https://stonecutter.kikugie.dev/stonecutter/guide/comments#condition-constants

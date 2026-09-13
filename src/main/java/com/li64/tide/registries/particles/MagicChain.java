@@ -53,9 +53,17 @@ public class MagicChain extends TideParticles {
                                                 double x, double y, double z,
                                                 double vx, double vy, double vz
                                                 /*? if >=26.2 {*/, @NotNull RandomSource random/*?}*/) {
-            return new MagicChain(level, x, y, z, sprites,
+                //? if >=26.2 {
+                return new MagicChain(level, x, y, z, sprites,
                     1.0f + random.nextFloat() * 0.6f,
                     (random.nextFloat() - 0.5f) * 200f);
+                //?} else {
+                /*
+                return new MagicChain(level, x, y, z, sprites,
+                    1.0f + level.random.nextFloat() * 0.6f,
+                    (level.random.nextFloat() - 0.5f) * 200f);
+                */
+                //?}
         }
     }
 }

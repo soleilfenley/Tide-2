@@ -4,6 +4,7 @@ import com.li64.tide.data.fishing.FishData;
 import com.li64.tide.data.item.SatchelContents;
 import com.li64.tide.data.TideTags;
 import com.li64.tide.data.item.TideItemData;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -19,7 +20,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.level.Level;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -31,11 +34,11 @@ import com.li64.tide.data.item.TideDataComponents;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.ItemStackTemplate;
 //?} elif >=1.21 {
 /*
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
@@ -46,7 +49,6 @@ import java.util.List;
 /*
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.item.component.BundleContents;
 */
 //?}
 
@@ -213,7 +215,7 @@ public class FishSatchelItem extends AbstractTooltipItem {
         /*
         @Override
         public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-                return !stack.has(DataComponents.HIDE_TOOLTIP) 
+                return !stack.has(DataComponents.HIDE_TOOLTIP)
                         && !stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
                         ? Optional.ofNullable(TideItemData.SATCHEL_CONTENTS.getOrDefault(stack, new SatchelContents()))
                         .map(contents -> new BundleTooltip(new BundleContents(contents.items())))

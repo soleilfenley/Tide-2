@@ -2,7 +2,7 @@ package com.li64.tide.client;
 
 import com.li64.tide.Tide;
 import com.li64.tide.data.fishing.mediums.FishingMedium;
-import com.li64.tide.registries.TideParticleTypes;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

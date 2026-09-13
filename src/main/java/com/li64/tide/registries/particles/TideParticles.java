@@ -21,7 +21,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 //?}
 
 
-// //? if >=26.2 {
+//? if >=26.2 {
 public abstract class TideParticles extends SingleQuadParticle {
 //?} else {
 /*
@@ -48,7 +48,11 @@ public abstract class TideParticles extends TextureSheetParticle {
         }
 
         protected Vec3 relativePos(Camera cam, float partialTicks) {
+                //? if >=26.2 {
                 Vec3 camPos = cam.position();
+                //?} else {
+                /*Vec3 camPos = cam.getPosition();*/
+                //?}
                 return new Vec3(
                         Mth.lerp(partialTicks, this.xo, this.x) - camPos.x(),
                         Mth.lerp(partialTicks, this.yo, this.y) - camPos.y(),
@@ -91,16 +95,20 @@ public abstract class TideParticles extends TextureSheetParticle {
                 return ARGB.colorFromFloat(this.alpha, this.rCol, this.gCol, this.bCol);
         }
         //?} else {
-        /*@Override
+        /*
+        @Override
         public @NotNull ParticleRenderType getRenderType() {
                 return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
         }
 
-        public final void renderVertex(VertexConsumer buffer, Quaternionf q, float x, float y, float z,
-                        float xOffset, float yOffset, float quadSize, float u, float v, int packedLight) 
+        protected void addVertexLegacy(VertexConsumer buffer, Quaternionf q, float x, float y, float z,
+                        float xOffset, float yOffset, float quadSize, float u, float v, int packedLight)
         {
                 Vector3f pos = new Vector3f(xOffset, yOffset, 0.0F).rotate(q).mul(quadSize).add(x, y, z);
-                buffer.vertex(pos.x(), pos.y(), pos.z()).uv(u, v).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(packedLight).endVertex();
+                buffer.addVertex(pos.x(), pos.y(), pos.z())
+                        .setColor(this.rCol, this.gCol, this.bCol, this.alpha)
+                        .setUv(u, v)
+                        .setUv2(packedLight & 0xFFFF, packedLight >> 16 & 0xFFFF);
         }
         */
         //?}
@@ -145,8 +153,7 @@ public abstract class TideParticles extends TextureSheetParticle {
                 int color = this.getLightColor(partialTicks);
         
                 for (Corner c : this.corners(partialTicks)) {
-                        this.renderVertex(buffer, q, (float) p.x, (float) p.y, (float) p.z,
-                                c.xOffset(), c.yOffset(), size, c.u(), c.v(), color);
+                this.addVertexLegacy(buffer, q, (float) p.x, (float) p.y, (float) p.z,c.xOffset(), c.yOffset(), size, c.u(), c.v(), color);
                 }
         }
         */

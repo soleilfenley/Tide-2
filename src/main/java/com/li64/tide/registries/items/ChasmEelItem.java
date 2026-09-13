@@ -3,7 +3,6 @@ package com.li64.tide.registries.items;
 import com.li64.tide.Tide;
 import com.li64.tide.data.TideTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -16,6 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
+
+//?if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
+//?}
 
 public class ChasmEelItem extends AbstractTooltipItem {
     public ChasmEelItem(Properties properties) {

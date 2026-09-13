@@ -1,20 +1,18 @@
 package com.li64.tide.registries.items;
 
-
 import com.li64.tide.registries.TideArmorMaterials;
-import com.li64.tide.registries.TooltipRegistry;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
+import java.util.function.Consumer;
 
 //? if >=26.2 {
+import com.li64.tide.registries.TooltipRegistry;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorType;
-
-import java.util.function.Consumer;
 //?} else {
 /*
 import net.minecraft.world.item.ArmorItem;

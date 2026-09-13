@@ -1,7 +1,6 @@
 package com.li64.tide.registries.items;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 //? if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.InteractionResult;
 //?} else {
 /*

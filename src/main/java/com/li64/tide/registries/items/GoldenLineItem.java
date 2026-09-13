@@ -1,14 +1,15 @@
 package com.li64.tide.registries.items;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
 import java.util.function.Consumer;
 
-//?if <26.2 {
-/* 
+//? if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
+//?} else {
+/*
 import net.minecraft.world.item.ItemStack;
 */
 //?}

@@ -16,7 +16,7 @@ import com.li64.tide.events.TideClientEventHandler;
 import com.li64.tide.registries.TideBlockEntities;
 import com.li64.tide.registries.TideEntityModels;
 import com.li64.tide.registries.TideItems;
-import com.li64.tide.registries.TideParticleTypes;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import com.li64.tide.registries.particles.MagicChain;
 import com.li64.tide.registries.particles.VoidRipple;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;

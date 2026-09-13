@@ -4,9 +4,8 @@ import com.li64.tide.Tide;
 import com.li64.tide.data.FreezableMob;
 import com.li64.tide.data.TideCriteriaTriggers;
 import com.li64.tide.data.TideTags;
-import com.li64.tide.registries.TideParticleTypes;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -24,6 +23,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
+//?if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
+//?}
+
 public class EnchantedPocketWatchItem extends PocketWatchItem {
         public EnchantedPocketWatchItem(Properties properties) {
                 super(properties);
@@ -33,14 +36,14 @@ public class EnchantedPocketWatchItem extends PocketWatchItem {
         public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
                 if (!(target instanceof Mob mob) 
                         || !(target instanceof FreezableMob freezable)
-                        || player.getCooldowns().isOnCooldown(stack) 
                         //? if >=26.2 {
-                        || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(target.getType()).is(TideTags.Entities.IGNORES_POCKET_WATCH)
+                        || player.getCooldowns().isOnCooldown(stack)
                         //?} else {
                         /*
-                        || target.getType().builtInRegistryHolder().is(TideTags.Entities.IGNORES_POCKET_WATCH)
+                        || player.getCooldowns().isOnCooldown(stack.getItem())
                         */
                         //?}
+                        || BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(target.getType()).is(TideTags.Entities.IGNORES_POCKET_WATCH)
                         || Tide.SERVER_CONFIG.items.pocketWatchBlacklist.contains(BuiltInRegistries.ENTITY_TYPE.getKey(target.getType()).toString())) {
                 return super.interactLivingEntity(stack, player, target, hand);
                 }
@@ -48,7 +51,11 @@ public class EnchantedPocketWatchItem extends PocketWatchItem {
                 if (freezable.tide$isFrozen()) {
                 level.playSound(null, mob.blockPosition(), SoundEvents.CHAIN_BREAK, SoundSource.PLAYERS, 1.0f, 1.0f);
                 freezable.tide$setFrozen(false);
+                //? if >=26.2 {
                 player.getCooldowns().addCooldown(stack, 20);
+                //?} else {
+                /*player.getCooldowns().addCooldown(stack.getItem(), 20);*/
+                //?}
                 }
                 else {
                 if (BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getPath().equals("coelacanth")) TideCriteriaTriggers.FROZE_COELACANTH.trigger((ServerPlayer) player);
@@ -56,7 +63,11 @@ public class EnchantedPocketWatchItem extends PocketWatchItem {
                 level.playSound(null, mob.blockPosition(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.PLAYERS, 0.8f, 0.9f);
                 level.sendParticles(TideParticleTypes.MAGIC_CHAIN, mob.getX(), mob.getY() + mob.getBbHeight() / 2, mob.getZ(), 8, 0, 0, 0, 0);
                 freezable.tide$setFrozen(true);
+                //? if >=26.2 {
                 player.getCooldowns().addCooldown(stack, 200);
+                //?} else {
+                /*player.getCooldowns().addCooldown(stack.getItem(), 200);*/
+                //?}
                 }
                 return InteractionResult.SUCCESS;
         }

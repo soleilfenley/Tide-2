@@ -14,6 +14,7 @@ import com.li64.tide.events.TideClientEventHandler;
 import com.li64.tide.registries.*;
 import com.li64.tide.registries.particles.MagicChain;
 import com.li64.tide.registries.particles.VoidRipple;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;

@@ -1,7 +1,6 @@
 package com.li64.tide.registries.items;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,12 +12,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 //? if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.level.portal.TeleportTransition;
 //?} elif >= 1.21 {
 /*
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.portal.DimensionTransition
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 */
@@ -40,7 +40,11 @@ public class VoidseekerItem extends AbstractTooltipItem {
         ItemStack result = super.finishUsingItem(stack, level, entity);
         if (!(entity instanceof ServerPlayer player)) return result;
 
+        //? if >=26.2 {
         player.getCooldowns().addCooldown(stack, 20);
+        //?} else {
+        /*player.getCooldowns().addCooldown(stack.getItem(), 20);*/
+        //?}
         player.resetFallDistance(); // secret tech?!?
 
         //? if >=26.2 {

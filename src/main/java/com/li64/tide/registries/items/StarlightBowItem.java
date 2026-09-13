@@ -2,7 +2,6 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.registries.entities.misc.StarArrow;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -16,9 +15,10 @@ import org.jetbrains.annotations.NotNull;
 //? if >= 26.2 {
 import com.li64.tide.registries.TooltipRegistry;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
-import net.minecraft.server.level.ServerLevel;
 //?} elif >=1.21 {
 /*
 import org.jetbrains.annotations.Nullable;

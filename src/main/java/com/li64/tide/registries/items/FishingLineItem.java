@@ -2,12 +2,15 @@ package com.li64.tide.registries.items;
 
 import com.li64.tide.data.rods.AccessoryData;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
+
+//?if >=26.2 {
+import net.minecraft.core.component.DataComponentGetter;
+//?}
 
 public class FishingLineItem extends AbstractTooltipItem {
     private final String description;

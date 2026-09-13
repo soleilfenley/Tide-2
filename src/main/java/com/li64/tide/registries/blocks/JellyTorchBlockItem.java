@@ -3,10 +3,8 @@ package com.li64.tide.registries.blocks;
 import com.li64.tide.registries.items.TooltipItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.block.Block;
 
@@ -14,6 +12,11 @@ import java.util.function.Consumer;
 
 //?if >=26.2 {
 import com.li64.tide.registries.TooltipRegistry;
+import net.minecraft.core.component.DataComponentGetter;
+//?} else{
+/* 
+import net.minecraft.world.item.ItemStack;
+*/
 //?}
 
 public class JellyTorchBlockItem extends StandingAndWallBlockItem implements TooltipItem {

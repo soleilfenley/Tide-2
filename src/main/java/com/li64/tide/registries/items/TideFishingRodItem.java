@@ -135,7 +135,7 @@ public class TideFishingRodItem extends FishingRodItem {
 
         return ImmutableList.copyOf(builder);
     }
-    //? if >= 1.21 {
+    //? if >= 26.2 {
     public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
             TooltipDisplay tooltipDisplay = stack.getOrDefault(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT);
             return tooltipDisplay.shows(TideDataComponents.BAIT_CONTENTS)
@@ -440,9 +440,17 @@ public class TideFishingRodItem extends FishingRodItem {
         if (activeHook != null) {
             if (!level.isClientSide/*? if >=1.21 {*/()/*?}*/) {
                 int durabilityLoss = activeHook.retrieve(rod, (ServerLevel) level, player);
-                /*? if >=26.2 {*/rod.hurtAndBreak(durabilityLoss, player, player.getUsedItemHand());
-                /*? if >=1.21 {*//*rod.hurtAndBreak(durabilityLoss, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));*/
-                /*?} else {*//*rod.hurtAndBreak(durabilityLoss, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));*//*?}*/
+                //? if >=26.2 {
+                rod.hurtAndBreak(durabilityLoss, player, player.getUsedItemHand());
+                //?} elif >=1.21 {
+                /*
+                rod.hurtAndBreak(durabilityLoss, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
+                */
+                //?} else {
+                /*
+                rod.hurtAndBreak(durabilityLoss, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));
+                */
+                //?}
             }
 
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE,

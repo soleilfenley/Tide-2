@@ -77,6 +77,9 @@ modstitch {
                         vmArg("-Dfabric-api.datagen.modid=tide")
                         }
                 }
+                mixin {
+                        useLegacyMixinAp = false
+                }
         }
     }
 

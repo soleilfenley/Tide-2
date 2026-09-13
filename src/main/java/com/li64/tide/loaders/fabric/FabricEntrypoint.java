@@ -9,6 +9,7 @@ import com.li64.tide.data.TideRecipeSerializers;
 import com.li64.tide.network.TideMessages;
 import com.li64.tide.registries.*;
 import com.li64.tide.registries.entities.TideSpawnConfigs;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;

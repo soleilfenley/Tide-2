@@ -1,7 +1,7 @@
 package com.li64.tide.mixin;
 
 import com.li64.tide.data.DoubleJumper;
-import com.li64.tide.registries.TideParticleTypes;
+import com.li64.tide.registries.particles.TideParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;

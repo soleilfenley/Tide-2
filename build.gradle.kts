@@ -40,17 +40,25 @@ modstitch {
                 }
 
                 replacementProperties.populate {
-                // You can put any other replacement properties/metadata here that
-                // modstitch doesn't initially support. Some examples below.
-                put("mod_homepage", "https://www.curseforge.com/minecraft/mc-mods/tide")
-                put("mod_issue_tracker", "https://github.com/Lightning-64/Tide-2/issues")
-                put("pack_format", when (property("deps.minecraft")) {
-                        "1.20.1" -> 15
-                        "1.21.1" -> 34
-                        "26.2" -> 88
-                        else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
-                }.toString())
-                put("mc_version", minecraft)
+                        // You can put any other replacement properties/metadata here that
+                        // modstitch doesn't initially support. Some examples below.
+                        put("mod_homepage", "https://www.curseforge.com/minecraft/mc-mods/tide")
+                        put("mod_issue_tracker", "https://github.com/Lightning-64/Tide-2/issues")
+                        put("pack_format", when (property("deps.minecraft")) {
+                                "1.20.1" -> 15
+                                "1.21.1" -> 34
+                                "26.2" -> 88
+                                else -> throw IllegalArgumentException("Please store the resource pack version for ${property("deps.minecraft")} in build.gradle.kts! https://minecraft.wiki/w/Pack_format")
+                        }.toString())
+                        put("mc_version", minecraft)
+                        put(
+                                "access_widener",
+                                if (minecraft == "26.2") {
+                                        "tide-26.2.classtweaker"
+                                } else {
+                                        "tide-$minecraft.accesswidener"
+                                }
+                        )
                 }
         }
 
@@ -62,8 +70,16 @@ modstitch {
 
                 // Configure loom like normal in this block.
                 configureLoom {
-                        val aw = rootProject.file("src/main/resources/accesswideners/tide-$minecraft.accesswidener")
-                        if (aw.exists()) accessWidenerPath = aw
+                        val accessWidenerFile = if (minecraft == "26.2") {
+                                "tide-26.2.classtweaker"
+                        } else {
+                                "tide-$minecraft.accesswidener"
+                        }
+                        
+                        val aw = rootProject.file("src/main/resources/accesswideners/$accessWidenerFile")
+                        if (aw.exists()) {
+                                accessWidenerPath = aw
+                        }
 
                         runs {
                                 create("data") {

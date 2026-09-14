@@ -28,7 +28,7 @@
          "com.li64.tide.compat.modmenu.ModMenuCompat"
       ]
    },
-   "accessWidener": "accesswideners/tide-${mc_version}.accesswidener",
+   "accessWidener": "accesswideners/${access_widener}",
    "depends": {
       "minecraft": "${mc_version}",
       "cloth-config": "*"

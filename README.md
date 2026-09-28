@@ -1,3 +1,15 @@
+# Update on my attempt at a 26.2 port of Tide 2
+This month I wanted to challenge myself and learn a bit of Java by porting one of my favorite mods to a current version to use it for an upcoming stream; I'm primarily a content creator, and wanted to include Tide 2 as a part of my forever world.
+
+And while I would still like to use Tide 2 in that world, me being a content creator is what's going to put an indefinite hold on that port. The only reason I had time this month is because I was supposed to be taking a break in that time. And coming back home soon, I want to get back on my grind; I'm incredibly excited for it!!
+
+So here's what I'll say. There's still many things to port over for the new structures and classes, but some of the brunt is handled; albeit, without a lot of knowledge on how it will work/perform until everything is ported to start testing. I'm happy to have people use it as a jumping off point, as long as credit is attributed. 
+
+All in all, I'm happy I took the time. And even so, I was able to make at least one push on a TODO I saw. So I hope in the end I make some kind of contribution; at the very least, I learned a new language. That's valuable enough to me~! 
+
+🤍🧋
+
+
 # Tide-2
 A Minecraft mod that expands the fishing experience, adding many new fish, mechanics, and rewards.
 
